@@ -1,7 +1,5 @@
 import axios from "axios";
 
-const methodWithData = ["post", "put", "patch"];
-
 const axiosInstance = axios.create({
   baseURL: "https://examination.onrender.com",
   timeout: 3000,

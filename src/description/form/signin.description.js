@@ -68,10 +68,6 @@ export const signInForm = [
         regex: oneDigitCaseLetter,
         error: "Password must include digit.",
       },
-      {
-        regex: oneSpecialCharacter,
-        error: "Password must include one special character.",
-      },
     ],
   },
 ];

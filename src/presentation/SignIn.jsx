@@ -12,17 +12,19 @@ import DDFormContainer from "../container/form/ddform.container";
 import EDButton from "../shared/EDButton";
 import { NavLink } from "react-router-dom";
 
+import SignInContainer from "../container/signin.container";
+
 const SignIn = () => {
   const {
     handelChangeType,
     state,
     validateAllField,
     error,
+    handelSubmit,
     handelChangeCheckBox,
-  } = DDFormContainer({
-    configArray: signInForm,
-    formName: SGININ_FORM_NAME,
-  });
+    configArray,
+  } = SignInContainer();
+
   return (
     <>
       <div className="container">
@@ -34,7 +36,7 @@ const SignIn = () => {
             validateAllField={validateAllField}
             error={error}
             handelChangeCheckBox={handelChangeCheckBox}
-            configArray={signInForm}
+            configArray={configArray}
             formName={SGININ_FORM_NAME}
           />
           <div className="text-end">
@@ -44,7 +46,7 @@ const SignIn = () => {
           </div>
 
           <EDButton
-            onClick={validateAllField}
+            onClick={handelSubmit}
             innerText={SGININ_SUBMIT_NAME}
             {...ATTRIBUTE_SUBMIT_BUTTON}
           />
