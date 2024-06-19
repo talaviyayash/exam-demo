@@ -24,3 +24,7 @@ export const oneSpecialCharacter = /(?=.*\W)/;
 
 export const noConsecutiveSpaces =
   /^(?!.*\s{2})[a-zA-Z]+(?:[\s.'-][a-zA-Z]+)*$/;
+
+export const passwordWithLength = /[a-zA-Z0-9]{6,10}/;
+
+export const noSpecialCharacterAllow = /[0-9a-zA-Z_.-]*/;

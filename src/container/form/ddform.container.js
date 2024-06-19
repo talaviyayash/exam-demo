@@ -12,13 +12,21 @@ import { emptyString } from "../../description/globel.description";
 const DDFormContainer = ({ configArray, formName }) => {
   const dispatch = useDispatch();
   useEffect(() => {
+    const AllValue = configArray.reduce((all, element) => {
+      return {
+        ...all,
+        [element.name]: element.value ?? "",
+      };
+    }, {});
     dispatch(
       createForm({
         name: formName,
+        value: AllValue,
       })
     );
     return () => dispatch(clearForm({ name: formName }));
   }, [dispatch, formName]);
+
   const formState = useSelector((state) => state?.form?.form?.[formName]);
   const { value: valueField = {}, error = {} } = formState ?? {};
   const singleErrorFind = useCallback(

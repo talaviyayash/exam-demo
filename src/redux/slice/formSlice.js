@@ -9,11 +9,11 @@ export const formSlice = createSlice({
   initialState,
   reducers: {
     createForm: (state, action) => {
-      const { name } = action.payload;
+      const { name, value } = action.payload;
       state.form = {
         ...state.form,
         [name]: {
-          value: {},
+          value: value,
           error: {},
         },
       };

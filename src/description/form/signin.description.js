@@ -2,7 +2,6 @@ import {
   emailRegex,
   oneDigitCaseLetter,
   oneLowerCaseLetter,
-  oneSpecialCharacter,
   oneUpperCaseLetter,
 } from "../../utils/regex";
 
@@ -10,7 +9,7 @@ export const SGININ_FORM_HEADER = "Sign In";
 
 export const SGININ_FORM_NAME = "signInForm";
 
-export const SGININ_SUBMIT_NAME = "Sign Ip";
+export const SGININ_SUBMIT_NAME = "Sign In";
 
 export const ATTRIBUTE_SUBMIT_BUTTON = {
   sx: {

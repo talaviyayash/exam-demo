@@ -1,15 +1,13 @@
-import React from "react";
+import React, { memo } from "react";
 import {
   ATTRIBUTE_SUBMIT_BUTTON,
   FORGET_PASSWORD_FORM_HEADER,
   FORGET_PASSWORD_FORM_NAME,
   FORGET_PASSWORD_SUBMIT_NAME,
-  forgetPasswordForm,
-} from "../description/form/forgetPassword.description";
-import DDForm from "../shared/DDForm/EDForm";
-import DDFormContainer from "../container/form/ddform.container";
-import EDButton from "../shared/EDButton";
-import { NavLink } from "react-router-dom";
+} from "../../description/form/forgetPassword.description";
+import DDForm from "../../shared/DDForm/EDForm";
+import EDButton from "../../shared/EDButton";
+import ForgetPasswordContainer from "../../container/authentication/forgetPassword.container";
 const ForgetPassWord = () => {
   const {
     handelChangeType,
@@ -17,10 +15,9 @@ const ForgetPassWord = () => {
     validateAllField,
     error,
     handelChangeCheckBox,
-  } = DDFormContainer({
-    configArray: forgetPasswordForm,
-    formName: FORGET_PASSWORD_FORM_NAME,
-  });
+    handelSubmit,
+    configArray,
+  } = ForgetPasswordContainer();
   return (
     <div className="container">
       <div className="style-form">
@@ -31,13 +28,13 @@ const ForgetPassWord = () => {
           validateAllField={validateAllField}
           error={error}
           handelChangeCheckBox={handelChangeCheckBox}
-          configArray={forgetPasswordForm}
+          configArray={configArray}
           formName={FORGET_PASSWORD_FORM_NAME}
         />
 
         <EDButton
           innerText={FORGET_PASSWORD_SUBMIT_NAME}
-          onChange={() => validateAllField()}
+          onClick={handelSubmit}
           {...ATTRIBUTE_SUBMIT_BUTTON}
         />
       </div>
@@ -45,4 +42,4 @@ const ForgetPassWord = () => {
   );
 };
 
-export default ForgetPassWord;
+export default memo(ForgetPassWord);

@@ -2,26 +2,21 @@ import axios from "axios";
 
 const axiosInstance = axios.create({
   baseURL: "https://examination.onrender.com",
-  timeout: 3000,
   headers: {
+    "Cache-Control": "no-cache",
     "X-Custom-Header": "foobar",
     "Content-Type": "application/json",
     Accept: "*/*",
   },
 });
 
-const callApi = async ({ method, url, data, config }) => {
-  const response = await axiosInstance({ method, url, data, config });
-  return response.data;
+const callApi = async (props) => {
+  try {
+    const response = await axiosInstance({ ...props });
+    return response.data;
+  } catch (error) {
+    return error;
+  }
 };
-
-// callApi({
-//   url: "/users/Login",
-//   method: "post",
-//   data: {
-//     email: "somyarudra@yopmail.com",
-//     password: "111111",
-//   },
-// });
 
 export default callApi;

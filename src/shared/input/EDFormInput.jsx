@@ -1,8 +1,15 @@
 import { TextField } from "@mui/material";
-import React from "react";
+import { memo } from "react";
 
-const DDFormInput = ({ value, element, handelChange }) => {
-  const { patterns, name, required, labelName, attributes, type } = element;
+const DDFormInput = ({ value, element = {}, handelChange }) => {
+  const {
+    patterns = [],
+    name,
+    required,
+    labelName,
+    attributes,
+    type,
+  } = element;
   const { isRequired } = required;
 
   return (
@@ -23,4 +30,4 @@ const DDFormInput = ({ value, element, handelChange }) => {
   );
 };
 
-export default DDFormInput;
+export default memo(DDFormInput);

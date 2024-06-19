@@ -16,8 +16,12 @@ const userInfoSlice = createSlice({
       state.isLogin = false;
       state.userInfo = {};
     },
+    addUserInfo: (state, action) => {
+      state.userInfo = { ...state.userInfo, ...action.payload };
+    },
   },
 });
 
-export const { loginSuccess, logOutSuccess } = userInfoSlice.actions;
+export const { loginSuccess, logOutSuccess, addUserInfo } =
+  userInfoSlice.actions;
 export default userInfoSlice.reducer;

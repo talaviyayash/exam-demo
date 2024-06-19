@@ -7,6 +7,7 @@ import {
   OutlinedInput,
 } from "@mui/material";
 import React from "react";
+import { memo } from "react";
 
 const DDFormPassword = ({ value, element, handelChange }) => {
   const { patterns, name, required, labelName, attributes } = element;
@@ -45,4 +46,4 @@ const DDFormPassword = ({ value, element, handelChange }) => {
   );
 };
 
-export default DDFormPassword;
+export default memo(DDFormPassword);

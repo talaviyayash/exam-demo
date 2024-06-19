@@ -4,8 +4,8 @@ import {
   noConsecutiveSpaces,
   oneDigitCaseLetter,
   oneLowerCaseLetter,
-  oneSpecialCharacter,
   oneUpperCaseLetter,
+  passwordWithLength,
 } from "../../utils/regex";
 
 export const SIGNUP_FORM_HEADER = "Sign Up";
@@ -13,6 +13,9 @@ export const SIGNUP_FORM_HEADER = "Sign Up";
 export const SIGNUP_FORM_NAME = "signupForm";
 
 export const SIGNUP_SUBMIT_NAME = "Sign UP";
+
+export const VERIFICATION_MSG =
+  "Please , Check your mail box for verification.";
 
 export const ATTRIBUTE_SUBMIT_BUTTON = {
   sx: {
@@ -95,8 +98,8 @@ export const signUpForm = [
         error: "Password must include digit.",
       },
       {
-        regex: oneSpecialCharacter,
-        error: "Password must include one special character.",
+        regex: passwordWithLength,
+        error: "Password length must be between 6 to 10 .",
       },
     ],
   },

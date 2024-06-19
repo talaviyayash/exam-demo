@@ -1,12 +1,12 @@
-import * as React from "react";
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
+import { memo } from "react";
 
 const EDSelectOption = ({ value, element, handelChange }) => {
-  const { patterns, name, required, labelName, attributes, children } = element;
+  const { patterns, name, required, labelName, children } = element;
   const { isRequired } = required;
   const labelNameWithRequired = labelName + (isRequired ? "*" : "");
 
@@ -36,4 +36,4 @@ const EDSelectOption = ({ value, element, handelChange }) => {
   );
 };
 
-export default EDSelectOption;
+export default memo(EDSelectOption);
