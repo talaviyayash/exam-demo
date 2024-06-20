@@ -29,6 +29,7 @@ const EditProfileContainer = () => {
   } = DDFormContainer({
     configArray: [configArray],
     formName: EDIT_PROFILE_FORM_NAME,
+    customValidation: {},
   });
 
   const handelSubmit = async (e) => {

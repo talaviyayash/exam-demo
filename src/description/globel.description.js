@@ -1,5 +1,5 @@
-export const emptyString = "";
+export const EMPTY_STRING = "";
 
-export const TEACHER = "";
+export const TEACHER = "teacher";
 
 export const STUDENT = "student";

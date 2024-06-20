@@ -1,8 +1,10 @@
 import ForgetPassWord from "../presentation/authentication/ForgetPassWord";
+import NewPassword from "../presentation/authentication/NewPassword";
 import SignIn from "../presentation/authentication/SignIn";
 import SignUp from "../presentation/authentication/SignUp";
 import EditProfile from "../presentation/user/profile/EditProfile";
 import Profile from "../presentation/user/profile/Profile";
+import CreateExam from "../presentation/user/teacher/CreateExam";
 import Authentication from "../router/Authentication";
 import ProtectedRoute from "../router/ProtectedRoute";
 import StudentRoute from "../router/StudentRoute";
@@ -14,6 +16,8 @@ export const SIGN_UP_PATH = "/signup";
 export const FORGET_PASSWORD_PATH = "/forget-password";
 export const PROFILE_PATH = "/profile";
 export const EDIT_PROFILE_PATH = "/edit-profile";
+export const NEW_PASSWORD_PATH = "/newPassword";
+export const CREATE_EXAM_PATH = "/create-exam";
 
 export const routingArray = [
   {
@@ -35,6 +39,10 @@ export const routingArray = [
             path: FORGET_PASSWORD_PATH,
             element: <ForgetPassWord />,
           },
+          {
+            path: NEW_PASSWORD_PATH,
+            element: <NewPassword />,
+          },
         ],
       },
       {
@@ -46,14 +54,20 @@ export const routingArray = [
           },
           {
             element: <TeacherRoute />,
+            children: [
+              {
+                path: EDIT_PROFILE_PATH,
+                element: <EditProfile />,
+              },
+              {
+                path: CREATE_EXAM_PATH,
+                element: <CreateExam />,
+              },
+            ],
           },
           {
             path: PROFILE_PATH,
             element: <Profile />,
-          },
-          {
-            path: EDIT_PROFILE_PATH,
-            element: <EditProfile />,
           },
         ],
       },

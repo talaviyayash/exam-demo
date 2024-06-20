@@ -8,10 +8,11 @@ const ProfileContainer = () => {
   );
   const navigate = useNavigate();
   const redirectToEditPage = () => navigate(EDIT_PROFILE_PATH);
-
+  const { role } = useSelector((state) => state?.userInformation?.userInfo);
   return {
     userInfo: userInfo,
     redirectToEditPage,
+    role,
   };
 };
 

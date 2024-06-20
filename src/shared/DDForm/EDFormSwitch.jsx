@@ -1,9 +1,10 @@
 import React, { memo } from "react";
 import DDFormInput from "../input/EDFormInput";
 
-import { emptyString } from "../../description/globel.description";
+import { EMPTY_STRING } from "../../description/globel.description";
 import DDFormPassword from "../input/EDFormPassword";
 import EDSelectOption from "../input/EDSelectOption";
+import EDRadioButton from "../input/EDRadioButton";
 
 const FormDynamic = ({ element, value, handelChange }) => {
   const { type, required } = element;
@@ -13,7 +14,7 @@ const FormDynamic = ({ element, value, handelChange }) => {
       return (
         <DDFormPassword
           element={element}
-          value={value ?? emptyString}
+          value={value ?? EMPTY_STRING}
           handelChange={handelChange}
           required={required}
         />
@@ -22,7 +23,16 @@ const FormDynamic = ({ element, value, handelChange }) => {
       return (
         <EDSelectOption
           element={element}
-          value={value ?? emptyString}
+          value={value ?? EMPTY_STRING}
+          handelChange={handelChange}
+          required={required}
+        />
+      );
+    case "radio":
+      return (
+        <EDRadioButton
+          element={element}
+          value={value ?? EMPTY_STRING}
           handelChange={handelChange}
           required={required}
         />
@@ -32,7 +42,7 @@ const FormDynamic = ({ element, value, handelChange }) => {
       return (
         <DDFormInput
           element={element}
-          value={value ?? emptyString}
+          value={value ?? EMPTY_STRING}
           handelChange={handelChange}
           required={required}
         />

@@ -8,6 +8,7 @@ import { SIGNIN_URL } from "../../description/api.description";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/slice/userInfoSlice";
 import { toast } from "react-toastify";
+import SetItem from "../../hook/SetItem";
 
 const SignInContainer = () => {
   const dispatch = useDispatch();
@@ -32,7 +33,8 @@ const SignInContainer = () => {
       });
       if (response.statusCode === 200) {
         dispatch(loginSuccess({ userInfo: response.data }));
-        localStorage.setItem("token", JSON.stringify(response.data.token));
+        const { token } = response.data;
+        SetItem("userInfo", response.data);
         toast.success(response.message);
       } else {
         toast.error(response.message);

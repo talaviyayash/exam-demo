@@ -2,8 +2,9 @@ import React, { memo } from "react";
 import ProfileContainer from "../../../container/user/profile.container";
 import "./profile.css";
 import EDButton from "../../../shared/EDButton";
+import { STUDENT, EMPTY_STRING } from "../../../description/globel.description";
 const Profile = () => {
-  const { userInfo, redirectToEditPage } = ProfileContainer();
+  const { userInfo, redirectToEditPage, role } = ProfileContainer();
 
   return (
     <>
@@ -11,11 +12,15 @@ const Profile = () => {
         <div className="profile-item">
           <span>Name </span>
           <span>{userInfo.name}</span>
-          <EDButton
-            className="EditButton"
-            innerText="Edit"
-            onClick={redirectToEditPage}
-          ></EDButton>
+          {role === STUDENT ? (
+            <EDButton
+              className="EditButton"
+              innerText="Edit"
+              onClick={redirectToEditPage}
+            ></EDButton>
+          ) : (
+            EMPTY_STRING
+          )}
         </div>
         <div className="profile-item">
           <span>Email </span>

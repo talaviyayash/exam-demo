@@ -28,12 +28,18 @@ export const formSlice = createSlice({
       const { error = {}, name } = payload;
       state.form[name].error = { ...state.form?.[name]?.error, ...error };
     },
+    clearError: (state, action) => {
+      const { payload = {} } = action;
+      const { name } = payload;
+      state.form[name].error = {};
+    },
     clearForm: (state, action) => {
       state.form[action.payload.name] = { value: {}, error: {} };
     },
   },
 });
 
-export const { addValue, addError, createForm, clearForm } = formSlice.actions;
+export const { addValue, addError, createForm, clearForm, clearError } =
+  formSlice.actions;
 
 export default formSlice.reducer;

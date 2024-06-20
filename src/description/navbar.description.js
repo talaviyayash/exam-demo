@@ -14,5 +14,9 @@ export const notLoginShowArray = {
       name: "Home",
       routingPath: "/",
     },
+    {
+      name: "Create Exam",
+      routingPath: "/create-exam",
+    },
   ],
 };
