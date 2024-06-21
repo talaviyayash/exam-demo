@@ -9,9 +9,12 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/slice/userInfoSlice";
 import { toast } from "react-toastify";
 import SetItem from "../../hook/SetItem";
+import { useNavigate } from "react-router-dom";
+import { PROFILE_PATH } from "../../description/routing.description";
 
 const SignInContainer = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const {
     handelChangeType,
     state,
@@ -36,6 +39,7 @@ const SignInContainer = () => {
         const { token } = response.data;
         SetItem("userInfo", response.data);
         toast.success(response.message);
+        navigate(PROFILE_PATH);
       } else {
         toast.error(response.message);
       }

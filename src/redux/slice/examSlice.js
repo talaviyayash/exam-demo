@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   subjectName: "",
   questions: [],
+  // notes: [],
   whereToAdd: 0,
 };
 
@@ -14,8 +15,16 @@ const examSlice = createSlice({
       state.subjectName = action.payload.subjectName;
     },
     addQuestion: (state, action) => {
-      state.questions[state.whereToAdd] = action.payload.question;
-      state.whereToAdd = state.whereToAdd + 1;
+      const { subject, whereToAdd, ...questions } = action.payload.question;
+      state.questions[state.whereToAdd] = questions;
+      state.whereToAdd = whereToAdd ?? state.whereToAdd + 1;
+      state.subjectName = subject;
+    },
+    addAllState: (state, action) => {
+      const { questions, subjectName, whereToAdd } = action.payload;
+      state.subjectName = subjectName;
+      state.questions = questions;
+      state.whereToAdd = whereToAdd;
     },
     whereToAddUpdate: (state, action) => {
       state.whereToAdd = action.payload.whereToAdd;
@@ -23,7 +32,7 @@ const examSlice = createSlice({
   },
 });
 
-export const { addSubjectName, addQuestion, whereToAddUpdate } =
+export const { addSubjectName, addQuestion, addAllState, whereToAddUpdate } =
   examSlice.actions;
 
 export default examSlice.reducer;

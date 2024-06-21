@@ -1,14 +1,18 @@
 import React, { memo } from "react";
-import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 import { SIGN_IN_PATH } from "../description/routing.description";
+import GetItem from "../hook/GetItem";
+import { useJwt } from "react-jwt";
 
 const ProtectedRoute = () => {
-  const { isLogin } = useSelector((state) => state.userInformation);
-
+  const { token } = GetItem("userInfo");
+  const { isExpired } = useJwt(token);
+  console.log("token,isExpired", token);
+  // if (token || !isExpired) return <Navigate to={SIGN_IN_PATH} replace={true} />;
+  console.log("isExpired", isExpired);
   return (
     <>
-      {isLogin ? (
+      {token ? (
         <>
           <Outlet />
         </>

@@ -34,7 +34,8 @@ export const formSlice = createSlice({
       state.form[name].error = {};
     },
     clearForm: (state, action) => {
-      state.form[action.payload.name] = { value: {}, error: {} };
+      const { name, value = {} } = action.payload;
+      state.form[action.payload.name] = { value, error: {} };
     },
   },
 });

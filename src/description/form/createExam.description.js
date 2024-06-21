@@ -19,7 +19,7 @@ export const ATTRIBUTE_PREV_BUTTON = {
   },
 };
 export const ATTRIBUTE_SUBMIT_BUTTON = {
-  innerText: "Prev",
+  innerText: "SUBMIT",
   sx: {
     width: "500px",
     height: "50px",
@@ -28,6 +28,19 @@ export const ATTRIBUTE_SUBMIT_BUTTON = {
 };
 
 export const createExamForm = [
+  {
+    name: "subject",
+    type: "text",
+    required: {
+      isRequired: true,
+      defaultMsg: "Please Enter the Subject.",
+    },
+    attributes: {
+      name: "subject",
+      id: "subject",
+    },
+    labelName: "Subject",
+  },
   {
     name: "question",
     type: "text",
@@ -52,7 +65,7 @@ export const createExamForm = [
     attributes: {
       name: "answer",
       id: "A",
-      value: 1,
+      value: "options1",
     },
   },
   {
@@ -79,7 +92,7 @@ export const createExamForm = [
     attributes: {
       name: "answer",
       id: "B",
-      value: 2,
+      value: "options2",
     },
   },
   {
@@ -106,7 +119,7 @@ export const createExamForm = [
     attributes: {
       name: "answer",
       id: "C",
-      value: 3,
+      value: "options3",
     },
   },
   {
@@ -133,7 +146,7 @@ export const createExamForm = [
     attributes: {
       id: "D",
       name: "answer",
-      value: 4,
+      value: "options4",
     },
   },
   {
@@ -148,5 +161,17 @@ export const createExamForm = [
       id: "options4",
     },
     labelName: "Options4",
+  },
+  {
+    name: "note",
+    type: "text",
+    required: {
+      isRequired: false,
+    },
+    attributes: {
+      name: "note",
+      id: "note",
+    },
+    labelName: "Note",
   },
 ];

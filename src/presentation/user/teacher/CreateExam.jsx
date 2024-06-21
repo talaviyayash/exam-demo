@@ -21,6 +21,7 @@ const CreateExam = () => {
     handelNext,
     handelPrev,
     whereToAdd,
+    handelSubmit,
   } = CreateExamContainer();
   return (
     <>
@@ -38,10 +39,12 @@ const CreateExam = () => {
             formName={CREATE_EXAM_FORM_NAME}
           />
 
-          {whereToAdd + 1 <= 15 && (
+          {whereToAdd + 1 < 15 && (
             <EDButton {...ATTRIBUTE_NEXT_BUTTON} onClick={handelNext} />
           )}
-          {whereToAdd + 1 === 15 && <EDButton {...ATTRIBUTE_SUBMIT_BUTTON} />}
+          {whereToAdd + 1 === 15 && (
+            <EDButton {...ATTRIBUTE_SUBMIT_BUTTON} onClick={handelSubmit} />
+          )}
           {whereToAdd !== 0 && (
             <EDButton {...ATTRIBUTE_PREV_BUTTON} onClick={handelPrev} />
           )}

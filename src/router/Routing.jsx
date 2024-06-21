@@ -9,7 +9,7 @@ import { useEffect } from "react";
 const Routing = () => {
   const router = createBrowserRouter(routingArray);
   const userInfo = GetItem("userInfo") ?? {};
-  console.log(userInfo);
+
   const dispatch = useDispatch();
   const { isExpired } = useJwt(userInfo?.token);
 

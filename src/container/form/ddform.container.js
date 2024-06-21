@@ -62,7 +62,6 @@ const DDFormContainer = ({ configArray, formName, customValidation = {} }) => {
         },
         name
       );
-      console.log(isAnyErrorMsg);
     }
 
     dispatch(

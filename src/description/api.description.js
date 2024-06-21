@@ -9,3 +9,7 @@ export const FORGET_PASSWORD_URL = "/users/ForgotPassword";
 export const CREATE_NEW_PASSWORD_URL = "/users/ForgotPassword/Verify";
 
 export const NEW_PASSWORD_VERIFY_URL = "/users/newPassword";
+
+export const CREATE_EXAM_URL = "/dashboard/Teachers/Exam";
+
+export const SHOW_EXAM_URL = "/dashboard/Teachers/viewExam";

@@ -5,6 +5,8 @@ import SignUp from "../presentation/authentication/SignUp";
 import EditProfile from "../presentation/user/profile/EditProfile";
 import Profile from "../presentation/user/profile/Profile";
 import CreateExam from "../presentation/user/teacher/CreateExam";
+import EditExam from "../presentation/user/teacher/EditExam";
+import CustomizedTables from "../presentation/user/teacher/ShowExam";
 import Authentication from "../router/Authentication";
 import ProtectedRoute from "../router/ProtectedRoute";
 import StudentRoute from "../router/StudentRoute";
@@ -18,6 +20,8 @@ export const PROFILE_PATH = "/profile";
 export const EDIT_PROFILE_PATH = "/edit-profile";
 export const NEW_PASSWORD_PATH = "/newPassword";
 export const CREATE_EXAM_PATH = "/create-exam";
+export const SHOW_EXAM_PATH = "/show-exam";
+export const EDIT_EXAM_PATH = "/edit-exam/:id";
 
 export const routingArray = [
   {
@@ -62,6 +66,14 @@ export const routingArray = [
               {
                 path: CREATE_EXAM_PATH,
                 element: <CreateExam />,
+              },
+              {
+                path: SHOW_EXAM_PATH,
+                element: <CustomizedTables />,
+              },
+              {
+                path: EDIT_EXAM_PATH,
+                element: <EditExam />,
               },
             ],
           },

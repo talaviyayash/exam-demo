@@ -4,23 +4,40 @@ import {
   createExamForm as configArray,
 } from "../../../description/form/createExam.description";
 import { useDispatch, useSelector } from "react-redux";
-import { addQuestion, whereToAddUpdate } from "../../../redux/slice/examSlice";
+import {
+  addAllState,
+  addQuestion,
+  whereToAddUpdate,
+} from "../../../redux/slice/examSlice";
 import {
   addError,
   addValue,
   clearError,
   clearForm,
 } from "../../../redux/slice/formSlice";
-import { EMPTY_STRING } from "../../../description/globel.description";
+import {
+  EMPTY_STRING,
+  EXAM_FORM_STATE,
+  EXAM_STATE,
+} from "../../../description/globel.description";
+import axios from "../../../utils/axios";
+import { CREATE_EXAM_URL } from "../../../description/api.description";
+import { toast } from "react-toastify";
+import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
+import { useNavigate } from "react-router-dom";
+import { PROFILE_PATH } from "../../../description/routing.description";
+import { useEffect } from "react";
+import SetItem from "../../../hook/SetItem";
+import GetItem from "../../../hook/GetItem";
 
 const CreateExamContainer = () => {
   const dispatch = useDispatch();
-  const { questions: allQuestion, whereToAdd } = useSelector(
-    (state) => state.exam
-  );
-  const allValue = useSelector(
-    (state) => state.form.form?.[CREATE_EXAM_FORM_NAME]?.value
-  );
+  const navigate = useNavigate();
+
+  const examState = useSelector((state) => state.exam);
+  const { questions: allQuestion, whereToAdd, subjectName } = examState;
+
+  const userInfo = useSelector((state) => state?.userInformation?.userInfo);
 
   const sameQuestionValidation = (allValue) => {
     const { question: currentQuestion } = allValue;
@@ -52,32 +69,42 @@ const CreateExamContainer = () => {
     const options2 = allValue.options2;
     const options3 = allValue.options3;
     const options4 = allValue.options4;
+
     const optionError = {
       options1: "",
       options2: "",
       options3: "",
       options4: "",
     };
+
     const forOption1 =
       options1 === options2 || options1 === options3 || options1 === options4;
+
     const forOption2 =
       options2 === options1 || options2 === options3 || options2 === options4;
+
     const forOption3 =
       options3 === options2 || options3 === options1 || options3 === options4;
+
     const forOption4 =
       options4 === options2 || options4 === options1 || options4 === options3;
+
     if (forOption1) {
       optionError.options1 = "All options must be different";
     }
+
     if (forOption2) {
       optionError.options2 = "All options must be different";
     }
+
     if (forOption3) {
       optionError.options3 = "All options must be different";
     }
+
     if (forOption4) {
       optionError.options4 = "All options must be different";
     }
+
     dispatch(
       addError({
         name: CREATE_EXAM_FORM_NAME,
@@ -113,35 +140,121 @@ const CreateExamContainer = () => {
   });
 
   const handelNext = () => {
-    if (validateAllField() && whereToAdd + 1 <= 14) {
+    const allValidate = validateAllField();
+    if (allValidate && whereToAdd + 1 <= 14) {
       dispatch(addQuestion({ question: state }));
       if (allQuestion[whereToAdd + 1]) {
         dispatch(clearError({ name: CREATE_EXAM_FORM_NAME }));
         dispatch(
           addValue({
             name: CREATE_EXAM_FORM_NAME,
-            value: allQuestion[whereToAdd + 1],
+            value: { ...allQuestion[whereToAdd + 1] },
           })
         );
       } else {
-        dispatch(clearForm({ name: CREATE_EXAM_FORM_NAME }));
+        dispatch(
+          clearForm({
+            name: CREATE_EXAM_FORM_NAME,
+            value: { subject: state.subject },
+          })
+        );
       }
     }
   };
 
   const handelPrev = () => {
     if (whereToAdd > 0) {
-      console.log(allQuestion[whereToAdd - 1]);
       dispatch(
         addValue({
           name: CREATE_EXAM_FORM_NAME,
-          value: allQuestion[whereToAdd - 1],
+          value: { ...allQuestion[whereToAdd - 1], subject: subjectName },
         })
       );
-      dispatch(clearError({ name: CREATE_EXAM_FORM_NAME }));
+      dispatch(
+        clearError({
+          name: CREATE_EXAM_FORM_NAME,
+        })
+      );
       dispatch(whereToAddUpdate({ whereToAdd: whereToAdd - 1 }));
     }
   };
+
+  const handelSubmit = async () => {
+    const allValidate = validateAllField();
+    if (allValidate) {
+      const { subject, ...newQuestion } = state;
+      const allNewQuestion = [...allQuestion, newQuestion];
+      let apiFormateData = allNewQuestion.reduce(
+        (formateQuestion, element) => {
+          const { note, answer, question, ...options } = element;
+          if (note) {
+            formateQuestion.notes.push(note);
+          }
+          const keyOfQuestion = Object.keys(options).sort();
+          const allOption = keyOfQuestion.map((value) => {
+            return options[value];
+          });
+          const questionsArray = {
+            question: question,
+            answer: options[answer],
+            options: allOption,
+          };
+          formateQuestion.questions.push(questionsArray);
+          return formateQuestion;
+        },
+        {
+          questions: [],
+          notes: [],
+        }
+      );
+      apiFormateData = { subjectName: state.subject, ...apiFormateData };
+      const response = await axios({
+        url: CREATE_EXAM_URL,
+        method: "post",
+        data: apiFormateData,
+        headers: {
+          "access-token": userInfo.token,
+        },
+      });
+      if (response.statusCode === 200) {
+        toast.success(response.message);
+        navigate(PROFILE_PATH);
+      } else if (response.statusCode === 401) {
+        toast.error(response.message);
+        dispatch(logOutSuccess());
+      }
+    }
+  };
+
+  useEffect(() => {
+    const localStorageSate = GetItem(EXAM_STATE);
+    const localStorageFormSate = GetItem(EXAM_FORM_STATE);
+    if (localStorageSate) {
+      dispatch(addAllState(localStorageSate));
+      // dispatch(
+      //   addValue({
+      //     value: {
+      //       subject: localStorageSate.subjectName,
+      //       ...localStorageSate.questions[localStorageSate.whereToAdd],
+      //     },
+      //     name: CREATE_EXAM_FORM_NAME,
+      //   })
+      // );
+      dispatch(
+        addValue({
+          value: localStorageFormSate,
+          name: CREATE_EXAM_FORM_NAME,
+        })
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    SetItem(EXAM_STATE, examState);
+  }, [allQuestion, whereToAdd, subjectName]);
+  useEffect(() => {
+    SetItem(EXAM_FORM_STATE, state);
+  }, [state]);
 
   return {
     handelChangeType,
@@ -154,6 +267,7 @@ const CreateExamContainer = () => {
     allQuestion,
     handelPrev,
     whereToAdd,
+    handelSubmit,
   };
 };
 
