@@ -10,6 +10,7 @@ import {
   CREATE_EXAM_HEADER_NAME,
 } from "../../../description/form/createExam.description";
 import EDButton from "../../../shared/EDButton";
+import { TOTAL_NUMBER_OF_QUESTION } from "../../../utils/constants";
 const CreateExam = () => {
   const {
     handelChangeType,
@@ -39,12 +40,14 @@ const CreateExam = () => {
             formName={CREATE_EXAM_FORM_NAME}
           />
 
-          {whereToAdd + 1 < 15 && (
+          {whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION && (
             <EDButton {...ATTRIBUTE_NEXT_BUTTON} onClick={handelNext} />
           )}
-          {whereToAdd + 1 === 15 && (
+
+          {whereToAdd + 1 === TOTAL_NUMBER_OF_QUESTION && (
             <EDButton {...ATTRIBUTE_SUBMIT_BUTTON} onClick={handelSubmit} />
           )}
+
           {whereToAdd !== 0 && (
             <EDButton {...ATTRIBUTE_PREV_BUTTON} onClick={handelPrev} />
           )}

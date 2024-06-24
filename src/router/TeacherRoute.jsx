@@ -1,27 +1,18 @@
-import React, { memo, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import React, { memo } from "react";
+import { Navigate, Outlet } from "react-router-dom";
 import { TEACHER } from "../description/globel.description";
-import { PROFILE_PATH } from "../description/routing.description";
-import GetItem from "../hook/GetItem";
+import { PROFILE_PATH } from "../utils/constants";
+import lSGetItem from "../hook/lSGetItem";
 
 const TeacherRoute = () => {
-  const { role } = GetItem("userInfo") ?? {};
-  const navigate = useNavigate();
+  const { role } = lSGetItem("userInfo") ?? {};
 
-  // if (role !== TEACHER) {
-  //   navigate(PROFILE_PATH);
-  // }
   return (
     <>
       {role === TEACHER ? (
-        <>
-          <Outlet />
-        </>
+        <Outlet />
       ) : (
-        <>
-          <Navigate to={PROFILE_PATH} replace={true} />
-        </>
+        <Navigate to={PROFILE_PATH} replace={true} />
       )}
     </>
   );

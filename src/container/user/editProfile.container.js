@@ -7,10 +7,11 @@ import DDFormContainer from "../form/ddform.container";
 import { toast } from "react-toastify";
 import axios from "../../utils/axios";
 import { UPDATE_PROFILE_URL } from "../../description/api.description";
-import { addUserInfo } from "../../redux/slice/userInfoSlice";
+import { addUserInfo, logOutSuccess } from "../../redux/slice/userInfoSlice";
 import { useNavigate } from "react-router-dom";
-import { PROFILE_PATH } from "../../description/routing.description";
+import { PROFILE_PATH } from "../../utils/constants";
 import { useEffect } from "react";
+import lSClear from "../../hook/lSClear";
 
 const EditProfileContainer = () => {
   const dispatch = useDispatch();
@@ -47,6 +48,9 @@ const EditProfileContainer = () => {
         toast.success(response.message);
         dispatch(addUserInfo(response.data));
         navigate(PROFILE_PATH);
+      } else {
+        lSClear();
+        dispatch(logOutSuccess());
       }
     }
   };

@@ -1,31 +1,14 @@
-import React, { memo, useEffect } from "react";
-import { useSelector } from "react-redux";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
-import { PROFILE_PATH } from "../description/routing.description";
-import GetItem from "../hook/GetItem";
-import { useJwt } from "react-jwt";
+import React, { memo } from "react";
+
+import { Navigate, Outlet } from "react-router-dom";
+import { PROFILE_PATH } from "../utils/constants";
+import lSGetItem from "../hook/lSGetItem";
 
 const Authentication = () => {
-  const { token } = GetItem("userInfo") ?? {};
-  const { isExpired } = useJwt(token);
-  const navigate = useNavigate();
-
-  // if (token && !isExpired) {
-  //   navigate(PROFILE_PATH);
-  // }
+  const { token } = lSGetItem("userInfo") ?? {};
 
   return (
-    <>
-      {token && !isExpired ? (
-        <>
-          <Navigate to={PROFILE_PATH} replace={true} />
-        </>
-      ) : (
-        <>
-          <Outlet />
-        </>
-      )}
-    </>
+    <>{token ? <Navigate to={PROFILE_PATH} replace={true} /> : <Outlet />}</>
   );
 };
 

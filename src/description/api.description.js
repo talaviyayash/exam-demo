@@ -13,3 +13,11 @@ export const NEW_PASSWORD_VERIFY_URL = "/users/newPassword";
 export const CREATE_EXAM_URL = "/dashboard/Teachers/Exam";
 
 export const SHOW_EXAM_URL = "/dashboard/Teachers/viewExam";
+
+export const DELETE_EXAM_URL = "/dashboard/Teachers/deleteExam";
+
+export const EDIT_GET_EXAM_URL = "/dashboard/Teachers/examDetail";
+
+export const EDIT_EXAM_URL = "/dashboard/Teachers/editExam";
+
+export const STUDENT_DETAIL_URL = "/dashboard/Teachers";

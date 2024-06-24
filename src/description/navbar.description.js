@@ -1,28 +1,39 @@
-import { SHOW_EXAM_PATH } from "./routing.description";
+import {
+  CREATE_EXAM_PATH,
+  HOME_PATH,
+  SIGN_IN_PATH,
+  SIGN_UP_PATH,
+  STUDENT_DETAIL_PATH,
+  VIEW_EXAM_PATH,
+} from "../utils/constants";
 
 export const notLoginShowArray = {
   leftSide: [
     {
       name: "Sign In",
-      routingPath: "/signin",
+      routingPath: SIGN_IN_PATH,
     },
     {
       name: "Sign Up",
-      routingPath: "/signup",
-    },
-    {
-      name: "Show Exam",
-      routingPath: "/show-exam",
+      routingPath: SIGN_UP_PATH,
     },
   ],
   rightSide: [
     {
       name: "Home",
-      routingPath: "/",
+      routingPath: HOME_PATH,
     },
     {
       name: "Create Exam",
-      routingPath: "/create-exam",
+      routingPath: CREATE_EXAM_PATH,
+    },
+    {
+      name: "Show Exam",
+      routingPath: VIEW_EXAM_PATH,
+    },
+    {
+      name: "Show All Student",
+      routingPath: STUDENT_DETAIL_PATH,
     },
   ],
 };

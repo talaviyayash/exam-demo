@@ -8,9 +8,9 @@ import { SIGNIN_URL } from "../../description/api.description";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/slice/userInfoSlice";
 import { toast } from "react-toastify";
-import SetItem from "../../hook/SetItem";
+import lSSetItem from "../../hook/lSSetItem";
 import { useNavigate } from "react-router-dom";
-import { PROFILE_PATH } from "../../description/routing.description";
+import { PROFILE_PATH } from "../../utils/constants";
 
 const SignInContainer = () => {
   const dispatch = useDispatch();
@@ -36,8 +36,7 @@ const SignInContainer = () => {
       });
       if (response.statusCode === 200) {
         dispatch(loginSuccess({ userInfo: response.data }));
-        const { token } = response.data;
-        SetItem("userInfo", response.data);
+        lSSetItem("userInfo", response.data);
         toast.success(response.message);
         navigate(PROFILE_PATH);
       } else {

@@ -7,21 +7,27 @@ import Profile from "../presentation/user/profile/Profile";
 import CreateExam from "../presentation/user/teacher/CreateExam";
 import EditExam from "../presentation/user/teacher/EditExam";
 import CustomizedTables from "../presentation/user/teacher/ShowExam";
+import ShowStudentDetail from "../presentation/user/teacher/ShowStudentDetail";
+import ViewExamInDetail from "../presentation/user/teacher/ViewExamInDetail";
 import Authentication from "../router/Authentication";
 import ProtectedRoute from "../router/ProtectedRoute";
 import StudentRoute from "../router/StudentRoute";
 import TeacherRoute from "../router/TeacherRoute";
 import Navbar from "../shared/Navbar";
-
-export const SIGN_IN_PATH = "/signin";
-export const SIGN_UP_PATH = "/signup";
-export const FORGET_PASSWORD_PATH = "/forget-password";
-export const PROFILE_PATH = "/profile";
-export const EDIT_PROFILE_PATH = "/edit-profile";
-export const NEW_PASSWORD_PATH = "/newPassword";
-export const CREATE_EXAM_PATH = "/create-exam";
-export const SHOW_EXAM_PATH = "/show-exam";
-export const EDIT_EXAM_PATH = "/edit-exam/:id";
+import {
+  CREATE_EXAM_PATH,
+  EDIT_EXAM_PATH,
+  EDIT_PROFILE_PATH,
+  FORGET_PASSWORD_PATH,
+  NEW_PASSWORD_PATH,
+  PROFILE_PATH,
+  SIGN_IN_PATH,
+  SIGN_UP_PATH,
+  STUDENT_DETAIL_PATH,
+  TOTAL_NUMBER_OF_QUESTION,
+  VIEW_EXAM_PATH,
+  VIEW_IN_DETAIL_PATH,
+} from "../utils/constants";
 
 export const routingArray = [
   {
@@ -68,12 +74,20 @@ export const routingArray = [
                 element: <CreateExam />,
               },
               {
-                path: SHOW_EXAM_PATH,
+                path: VIEW_EXAM_PATH,
                 element: <CustomizedTables />,
               },
               {
                 path: EDIT_EXAM_PATH,
                 element: <EditExam />,
+              },
+              {
+                path: VIEW_IN_DETAIL_PATH,
+                element: <ViewExamInDetail />,
+              },
+              {
+                path: STUDENT_DETAIL_PATH,
+                element: <ShowStudentDetail />,
               },
             ],
           },

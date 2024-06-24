@@ -62,3 +62,15 @@ a {
 .inline {
   display: inline-block;
 }
+
+.view-exam-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.view-exam-container div {
+  font-size: 25px;
+}

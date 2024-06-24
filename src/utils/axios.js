@@ -10,7 +10,7 @@ const axiosInstance = axios.create({
   },
 });
 
-const callApi = async (props) => {
+const CallApi = async (props) => {
   try {
     const response = await axiosInstance({ ...props });
     return response.data;
@@ -19,4 +19,4 @@ const callApi = async (props) => {
   }
 };
 
-export default callApi;
+export default CallApi;

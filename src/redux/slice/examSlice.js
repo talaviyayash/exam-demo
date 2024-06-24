@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   subjectName: "",
   questions: [],
-  // notes: [],
+  notes: [],
   whereToAdd: 0,
 };
 

@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { EDIT_PROFILE_PATH } from "../../description/routing.description";
+import { EDIT_PROFILE_PATH } from "../../utils/constants";
 
 const ProfileContainer = () => {
   const { token, ...userInfo } = useSelector(
