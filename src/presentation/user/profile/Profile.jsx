@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import ProfileContainer from "../../../container/user/profile.container";
 import "./profile.css";
-import EDButton from "../../../shared/EDButton";
+import EDButton from "../../../shared/button/EDButton";
 import { STUDENT, EMPTY_STRING } from "../../../description/globel.description";
 const Profile = () => {
   const { userInfo, redirectToEditPage, role } = ProfileContainer();
@@ -17,7 +17,7 @@ const Profile = () => {
               className="EditButton"
               innerText="Edit"
               onClick={redirectToEditPage}
-            ></EDButton>
+            />
           ) : (
             EMPTY_STRING
           )}

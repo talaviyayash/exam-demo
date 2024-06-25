@@ -6,7 +6,7 @@ import {
   editExamForm as configArray,
 } from "../../../description/form/editExam.description";
 import { useEffect, useState } from "react";
-import axios from "../../../utils/axios";
+import callApi from "../../../utils/callApi";
 import { EMPTY_STRING } from "../../../description/globel.description";
 import {
   addError,
@@ -31,6 +31,8 @@ import { PROFILE_PATH, VIEW_EXAM_PATH } from "../../../utils/constants";
 const EditExamContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { id, subject } = useParams();
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
@@ -117,7 +119,8 @@ const EditExamContainer = () => {
 
   useEffect(() => {
     const getExamDetail = async () => {
-      const response = await axios({
+      setIsLoading(true);
+      const response = await callApi({
         url: EDIT_GET_EXAM_URL,
         method: "get",
         headers: {
@@ -168,6 +171,7 @@ const EditExamContainer = () => {
         toast.info(response.message);
         navigate(VIEW_EXAM_PATH);
       }
+      setIsLoading(false);
     };
     getExamDetail();
   }, []);
@@ -246,8 +250,8 @@ const EditExamContainer = () => {
         return toast.error("Please at least add only one note");
       }
       apiFormateData = { subjectName: state.subject, ...apiFormateData };
-      console.log(apiFormateData);
-      const response = await axios({
+      setIsSubmitting(true);
+      const response = await callApi({
         url: EDIT_EXAM_URL,
         method: "put",
         data: apiFormateData,
@@ -258,6 +262,7 @@ const EditExamContainer = () => {
           id,
         },
       });
+      setIsSubmitting(false);
       if (response.statusCode === 200) {
         toast.success(response.message);
         navigate(PROFILE_PATH);
@@ -296,6 +301,8 @@ const EditExamContainer = () => {
     handelNext,
     handelPrev,
     handelSubmit,
+    isLoading,
+    isSubmitting,
   };
 };
 

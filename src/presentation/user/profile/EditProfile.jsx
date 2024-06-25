@@ -7,7 +7,8 @@ import {
 } from "../../../description/form/editProfile.description";
 import EditProfileContainer from "../../../container/user/editProfile.container";
 import EDForm from "../../../shared/DDForm/EDForm";
-import EDButton from "../../../shared/EDButton";
+import EDButton from "../../../shared/button/EDButton";
+import EDLoading from "../../../shared/button/EDLoading";
 
 const EditProfile = () => {
   const {
@@ -18,6 +19,7 @@ const EditProfile = () => {
     handelChangeCheckBox,
     configArray,
     handelSubmit,
+    isLoading,
   } = EditProfileContainer();
   return (
     <>
@@ -34,10 +36,10 @@ const EditProfile = () => {
             formName={EDIT_PROFILE_FORM_NAME}
           />
 
-          <EDButton
+          <EDLoading
             innerText={EDIT_PROFILE_SUBMIT_NAME}
             onClick={handelSubmit}
-            // {...ATTRIBUTE_SUBMIT_BUTTON}
+            loading={isLoading}
           />
         </div>
       </div>

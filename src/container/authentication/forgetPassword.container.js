@@ -1,5 +1,5 @@
 import DDFormContainer from "../form/ddform.container";
-import axios from "../../utils/axios";
+import callApi from "../../utils/callApi";
 import { FORGET_PASSWORD_URL } from "../../description/api.description";
 import { toast } from "react-toastify";
 import {
@@ -8,9 +8,11 @@ import {
 } from "../../description/form/forgetPassword.description";
 import { useDispatch } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
+import { useState } from "react";
 
 const ForgetPasswordContainer = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(false);
   const {
     handelChangeType,
     state,
@@ -25,11 +27,13 @@ const ForgetPasswordContainer = () => {
   const handelSubmit = async (e) => {
     const allFieldValid = validateAllField();
     if (allFieldValid) {
-      const response = await axios({
+      setIsLoading(true);
+      const response = await callApi({
         url: FORGET_PASSWORD_URL,
         method: "post",
         data: state,
       });
+      setIsLoading(false);
       if (response.statusCode === 200) {
         toast.success(response.message);
         dispatch(clearForm({ name: formName }));
@@ -47,6 +51,7 @@ const ForgetPasswordContainer = () => {
     handelChangeCheckBox,
     handelSubmit,
     configArray,
+    isLoading,
   };
 };
 

@@ -1,5 +1,5 @@
 import DDFormContainer from "../form/ddform.container";
-import axios from "../../utils/axios";
+import callApi from "../../utils/callApi";
 import {
   SIGNUP_FORM_NAME,
   VERIFICATION_MSG,
@@ -10,9 +10,11 @@ import { toast } from "react-toastify";
 
 import { useDispatch } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
+import { useState } from "react";
 
 const SignUpContainer = () => {
   const dispatch = useDispatch();
+  const [isSigningUp, setIsSigningUp] = useState(false);
   const {
     handelChangeType,
     state,
@@ -27,16 +29,19 @@ const SignUpContainer = () => {
   const handelSubmit = async (e) => {
     const allFieldValid = validateAllField();
     if (allFieldValid) {
-      const response = await axios({
+      setIsSigningUp(true);
+      const response = await callApi({
         url: SIGNUP_URL,
         method: "post",
         data: state,
       });
+      console.log(response.data);
       if (response.statusCode === 200) {
         toast.success(response.message);
         toast.info(VERIFICATION_MSG);
         dispatch(clearForm({ name: SIGNUP_FORM_NAME }));
       }
+      setIsSigningUp(false);
     }
   };
 
@@ -48,6 +53,7 @@ const SignUpContainer = () => {
     handelChangeCheckBox,
     handelSubmit,
     configArray,
+    isSigningUp,
   };
 };
 

@@ -4,8 +4,10 @@ import SignIn from "../presentation/authentication/SignIn";
 import SignUp from "../presentation/authentication/SignUp";
 import EditProfile from "../presentation/user/profile/EditProfile";
 import Profile from "../presentation/user/profile/Profile";
+import ShowAllExam from "../presentation/user/student/ShowAllExam";
 import CreateExam from "../presentation/user/teacher/CreateExam";
 import EditExam from "../presentation/user/teacher/EditExam";
+import OneStudentInDetail from "../presentation/user/teacher/OneStudentInDetail";
 import CustomizedTables from "../presentation/user/teacher/ShowExam";
 import ShowStudentDetail from "../presentation/user/teacher/ShowStudentDetail";
 import ViewExamInDetail from "../presentation/user/teacher/ViewExamInDetail";
@@ -27,6 +29,8 @@ import {
   TOTAL_NUMBER_OF_QUESTION,
   VIEW_EXAM_PATH,
   VIEW_IN_DETAIL_PATH,
+  ONE_STUDENT_DETAIL_PATH,
+  SHOW_EXAM_FOR_STUDENT,
 } from "../utils/constants";
 
 export const routingArray = [
@@ -60,15 +64,20 @@ export const routingArray = [
         children: [
           {
             element: <StudentRoute />,
-            children: [],
-          },
-          {
-            element: <TeacherRoute />,
             children: [
               {
                 path: EDIT_PROFILE_PATH,
                 element: <EditProfile />,
               },
+              {
+                path: SHOW_EXAM_FOR_STUDENT,
+                element: <ShowAllExam />,
+              },
+            ],
+          },
+          {
+            element: <TeacherRoute />,
+            children: [
               {
                 path: CREATE_EXAM_PATH,
                 element: <CreateExam />,
@@ -88,6 +97,10 @@ export const routingArray = [
               {
                 path: STUDENT_DETAIL_PATH,
                 element: <ShowStudentDetail />,
+              },
+              {
+                path: ONE_STUDENT_DETAIL_PATH,
+                element: <OneStudentInDetail />,
               },
             ],
           },

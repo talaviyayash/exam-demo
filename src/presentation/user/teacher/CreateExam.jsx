@@ -9,8 +9,9 @@ import {
   CREATE_EXAM_FORM_NAME,
   CREATE_EXAM_HEADER_NAME,
 } from "../../../description/form/createExam.description";
-import EDButton from "../../../shared/EDButton";
+import EDButton from "../../../shared/button/EDButton";
 import { TOTAL_NUMBER_OF_QUESTION } from "../../../utils/constants";
+import EDLoading from "../../../shared/button/EDLoading";
 const CreateExam = () => {
   const {
     handelChangeType,
@@ -23,6 +24,7 @@ const CreateExam = () => {
     handelPrev,
     whereToAdd,
     handelSubmit,
+    isSubmitting,
   } = CreateExamContainer();
   return (
     <>
@@ -41,15 +43,27 @@ const CreateExam = () => {
           />
 
           {whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION && (
-            <EDButton {...ATTRIBUTE_NEXT_BUTTON} onClick={handelNext} />
+            <EDButton
+              {...ATTRIBUTE_NEXT_BUTTON}
+              onClick={handelNext}
+              disabled={isSubmitting}
+            />
           )}
 
           {whereToAdd + 1 === TOTAL_NUMBER_OF_QUESTION && (
-            <EDButton {...ATTRIBUTE_SUBMIT_BUTTON} onClick={handelSubmit} />
+            <EDLoading
+              {...ATTRIBUTE_SUBMIT_BUTTON}
+              onClick={handelSubmit}
+              loading={isSubmitting}
+            />
           )}
 
           {whereToAdd !== 0 && (
-            <EDButton {...ATTRIBUTE_PREV_BUTTON} onClick={handelPrev} />
+            <EDButton
+              {...ATTRIBUTE_PREV_BUTTON}
+              onClick={handelPrev}
+              disabled={isSubmitting}
+            />
           )}
         </div>
       </div>

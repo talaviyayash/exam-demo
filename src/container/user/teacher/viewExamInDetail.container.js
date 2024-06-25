@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
-import axios from "../../../utils/axios";
+import callApi from "../../../utils/callApi";
 import lSGetItem from "../../../hook/lSGetItem";
 import { EDIT_GET_EXAM_URL } from "../../../description/api.description";
 import lSClear from "../../../hook/lSClear";
@@ -12,11 +12,13 @@ const ViewExamInDetailContainer = () => {
   const dispatch = useDispatch();
   const userInfo = lSGetItem("userInfo");
   const [examDetail, setExamDetail] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
     const getExamDetail = async () => {
-      const response = await axios({
+      setIsLoading(true);
+      const response = await callApi({
         url: EDIT_GET_EXAM_URL,
         method: "get",
         headers: {
@@ -33,6 +35,7 @@ const ViewExamInDetailContainer = () => {
         lSClear();
         dispatch(logOutSuccess());
       }
+      setIsLoading(false);
     };
     getExamDetail();
   }, []);
@@ -51,6 +54,7 @@ const ViewExamInDetailContainer = () => {
     currentIndex,
     nextButtonClickHandel,
     prevButtonClickHandel,
+    isLoading,
   };
 };
 

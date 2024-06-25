@@ -7,7 +7,9 @@ import {
   NEW_PASSWORD_FORM_NAME,
   NEW_PASSWORD_SUBMIT_NAME,
 } from "../../description/form/newPassword.description";
-import EDButton from "../../shared/EDButton";
+import EDButton from "../../shared/button/EDButton";
+import EDLoading from "../../shared/button/EDLoading";
+import Loading from "../../shared/Loading";
 
 const NewPassword = () => {
   const {
@@ -18,7 +20,10 @@ const NewPassword = () => {
     handelChangeCheckBox,
     handelSubmit,
     configArray,
+    isTokenVerifying,
+    isCreatingNewPassword,
   } = NewPasswordContainer();
+  if (isTokenVerifying) return <Loading />;
   return (
     <>
       <div className="container">
@@ -34,10 +39,11 @@ const NewPassword = () => {
             formName={NEW_PASSWORD_FORM_NAME}
           />
 
-          <EDButton
+          <EDLoading
             onClick={handelSubmit}
             innerText={NEW_PASSWORD_SUBMIT_NAME}
             {...ATTRIBUTE_SUBMIT_BUTTON}
+            loading={isCreatingNewPassword}
           />
         </div>
       </div>

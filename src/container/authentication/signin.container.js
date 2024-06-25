@@ -3,7 +3,7 @@ import {
   signInForm as configArray,
 } from "../../description/form/signin.description";
 import DDFormContainer from "../form/ddform.container";
-import axios from "../../utils/axios";
+import callApi from "../../utils/callApi";
 import { SIGNIN_URL } from "../../description/api.description";
 import { useDispatch } from "react-redux";
 import { loginSuccess } from "../../redux/slice/userInfoSlice";
@@ -11,10 +11,12 @@ import { toast } from "react-toastify";
 import lSSetItem from "../../hook/lSSetItem";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../utils/constants";
+import { useState } from "react";
 
 const SignInContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const {
     handelChangeType,
     state,
@@ -27,9 +29,10 @@ const SignInContainer = () => {
   });
 
   const handelSubmit = async (e) => {
+    setIsSigningIn(true);
     const allFieldValid = validateAllField();
     if (allFieldValid) {
-      const response = await axios({
+      const response = await callApi({
         url: SIGNIN_URL,
         method: "post",
         data: state,
@@ -42,6 +45,7 @@ const SignInContainer = () => {
       } else {
         toast.error(response.message);
       }
+      setIsSigningIn(false);
     }
   };
 
@@ -53,6 +57,7 @@ const SignInContainer = () => {
     handelChangeCheckBox,
     handelSubmit,
     configArray,
+    isSigningIn,
   };
 };
 

@@ -21,7 +21,7 @@ export const ATTRIBUTE_PREV_BUTTON = {
 export const ATTRIBUTE_SUBMIT_BUTTON = {
   innerText: "SUBMIT",
   sx: {
-    width: "500px",
+    width: "100px",
     height: "50px",
     fontSize: "18px",
   },

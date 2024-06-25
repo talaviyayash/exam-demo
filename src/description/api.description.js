@@ -21,3 +21,7 @@ export const EDIT_GET_EXAM_URL = "/dashboard/Teachers/examDetail";
 export const EDIT_EXAM_URL = "/dashboard/Teachers/editExam";
 
 export const STUDENT_DETAIL_URL = "/dashboard/Teachers";
+
+export const ONE_STUDENT_DETAIL_URL = "/dashboard/Teachers/viewStudentDetail";
+
+export const GET_ALL_EXAM_FOR_STUDENT = "/student/studentExam";

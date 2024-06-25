@@ -7,9 +7,9 @@ import {
   SIGNUP_SUBMIT_NAME,
 } from "../../description/form/signup.description";
 import DDForm from "../../shared/DDForm/EDForm";
-import EDButton from "../../shared/EDButton";
 import { NavLink } from "react-router-dom";
 import SignUpContainer from "../../container/authentication/signup.container";
+import EDLoading from "../../shared/button/EDLoading";
 
 const SignUp = () => {
   const {
@@ -20,6 +20,7 @@ const SignUp = () => {
     handelChangeCheckBox,
     handelSubmit,
     configArray,
+    isSigningUp,
   } = SignUpContainer();
   return (
     <>
@@ -40,10 +41,11 @@ const SignUp = () => {
               Already have account ?
             </NavLink>
           </div>
-          <EDButton
+          <EDLoading
             innerText={SIGNUP_SUBMIT_NAME}
             onClick={handelSubmit}
             {...ATTRIBUTE_SUBMIT_BUTTON}
+            loading={isSigningUp}
           />
         </div>
       </div>

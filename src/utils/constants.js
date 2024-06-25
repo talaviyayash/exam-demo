@@ -22,4 +22,8 @@ export const VIEW_IN_DETAIL_PATH = "/view-in-detail/:subject/:id";
 
 export const STUDENT_DETAIL_PATH = "/student-detail";
 
+export const ONE_STUDENT_DETAIL_PATH = "/student-detail/:id";
+
+export const SHOW_EXAM_FOR_STUDENT = "/show-exam";
+
 export const TOTAL_NUMBER_OF_QUESTION = 15;

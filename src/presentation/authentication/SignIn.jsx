@@ -6,10 +6,11 @@ import {
   SGININ_SUBMIT_NAME,
 } from "../../description/form/signin.description";
 import DDForm from "../../shared/DDForm/EDForm";
-import EDButton from "../../shared/EDButton";
+import EDButton from "../../shared/button/EDButton";
 import { NavLink } from "react-router-dom";
 
 import SignInContainer from "../../container/authentication/signin.container";
+import EDLoading from "../../shared/button/EDLoading";
 
 const SignIn = () => {
   const {
@@ -20,6 +21,7 @@ const SignIn = () => {
     handelSubmit,
     handelChangeCheckBox,
     configArray,
+    isSigningIn,
   } = SignInContainer();
 
   return (
@@ -41,10 +43,11 @@ const SignIn = () => {
               Forgot your password?
             </NavLink>
           </div>
-          <EDButton
+          <EDLoading
             onClick={handelSubmit}
             innerText={SGININ_SUBMIT_NAME}
             {...ATTRIBUTE_SUBMIT_BUTTON}
+            loading={isSigningIn}
           />
         </div>
       </div>

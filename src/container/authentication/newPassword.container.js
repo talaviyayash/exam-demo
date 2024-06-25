@@ -1,5 +1,5 @@
 import DDFormContainer from "../form/ddform.container";
-import axios from "../../utils/axios";
+import callApi from "../../utils/callApi";
 import {
   CREATE_NEW_PASSWORD_URL,
   NEW_PASSWORD_VERIFY_URL,
@@ -20,6 +20,9 @@ const NewPasswordContainer = () => {
   const navigate = useNavigate();
   const [token] = useState(searchParams.get("token"));
   const dispatch = useDispatch();
+  const [isTokenVerifying, setIsTokenVerifying] = useState(true);
+  const [isCreatingNewPassword, setIsCreatingNewPassword] = useState(false);
+
   const ConfirmPassword = (allValue) => {
     const PasswordValue = allValue?.Password;
     const confirmPasswordValue = allValue?.ConfirmPassword;
@@ -27,6 +30,7 @@ const NewPasswordContainer = () => {
       ? ""
       : "Confirm Password doesn't match Password ";
   };
+
   const {
     handelChangeType,
     state,
@@ -42,9 +46,10 @@ const NewPasswordContainer = () => {
   });
 
   const handelSubmit = async (e) => {
+    setIsCreatingNewPassword(true);
     const allFieldValid = validateAllField();
     if (allFieldValid) {
-      const response = await axios({
+      const response = await callApi({
         url: CREATE_NEW_PASSWORD_URL,
         method: "post",
         data: state,
@@ -52,6 +57,7 @@ const NewPasswordContainer = () => {
           token,
         },
       });
+      setIsCreatingNewPassword(false);
       if (response.statusCode === 200) {
         toast.success(response.message);
         dispatch(clearForm({ name: formName }));
@@ -65,14 +71,16 @@ const NewPasswordContainer = () => {
   useEffect(() => {
     if (token) {
       const verifyToken = async () => {
-        const response = await axios({
+        const response = await callApi({
           url: NEW_PASSWORD_VERIFY_URL,
           method: "get",
           headers: {
             "access-token": token,
           },
         });
+        setIsTokenVerifying(false);
         if (response.statusCode !== 200) {
+          toast.error(response.message);
           navigate("/forget-password");
         }
       };
@@ -89,6 +97,8 @@ const NewPasswordContainer = () => {
     handelChangeCheckBox,
     handelSubmit,
     configArray,
+    isTokenVerifying,
+    isCreatingNewPassword,
   };
 };
 

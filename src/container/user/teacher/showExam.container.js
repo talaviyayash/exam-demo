@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import axios from "../../../utils/axios";
+import callApi from "../../../utils/callApi";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -10,15 +10,18 @@ import {
 import lSGetItem from "../../../hook/lSGetItem";
 import lSClear from "../../../hook/lSClear";
 import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
+import { toast } from "react-toastify";
 
 const ShowExamContainer = () => {
   const [allExam, setAllExam] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const userInfo = lSGetItem("userInfo");
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const allExamApi = async () => {
-    const response = await axios({
+    setIsLoading(true);
+    const response = await callApi({
       url: SHOW_EXAM_URL,
       method: "get",
       headers: {
@@ -31,6 +34,7 @@ const ShowExamContainer = () => {
       lSClear();
       dispatch(logOutSuccess());
     }
+    setIsLoading(false);
   };
 
   const editExamNavigate = (subject, id) => {
@@ -42,7 +46,14 @@ const ShowExamContainer = () => {
   };
 
   const deleteExam = async (id) => {
-    const response = await axios({
+    const isApproved = window.confirm(
+      "Are you sure you want to delete this exam?"
+    );
+    if (!isApproved) {
+      return null;
+    }
+    setIsLoading(true);
+    const response = await callApi({
       url: DELETE_EXAM_URL,
       method: "delete",
       headers: {
@@ -53,11 +64,13 @@ const ShowExamContainer = () => {
       },
     });
     if (response.statusCode === 200) {
-      allExamApi();
+      await allExamApi();
+      toast.success(response.message);
     } else if (response.statusCode === 401) {
       lSClear();
       dispatch(logOutSuccess());
     }
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -66,6 +79,7 @@ const ShowExamContainer = () => {
   return {
     allExam,
     editExamNavigate,
+    isLoading,
     deleteExam,
     viewExamNavigate,
   };

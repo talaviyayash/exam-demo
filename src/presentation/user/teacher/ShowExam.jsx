@@ -1,4 +1,3 @@
-import * as React from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -10,10 +9,13 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import ShowExamContainer from "../../../container/user/teacher/showExam.container";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
+import Loading from "../../../shared/Loading";
 
 const ShowExam = () => {
-  const { viewExamNavigate, allExam, editExamNavigate, deleteExam } =
+  const { viewExamNavigate, isLoading, allExam, editExamNavigate, deleteExam } =
     ShowExamContainer();
+  if (isLoading) return <Loading />;
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -1,6 +1,7 @@
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 body {
@@ -18,7 +19,7 @@ a {
   min-height: calc(100vh - 70px);
   justify-content: center;
   align-items: center;
-  margin: 50px 0;
+  padding: 50px 0;
 }
 
 .error {
@@ -69,8 +70,19 @@ a {
   align-items: center;
   flex-direction: column;
   gap: 30px;
+  margin-top: 150px;
 }
 
 .view-exam-container div {
   font-size: 25px;
+}
+
+.stud-info-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 30px;
+  margin-top: 50px;
+  margin-bottom: 150px;
 }

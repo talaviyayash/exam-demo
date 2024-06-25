@@ -20,19 +20,21 @@ import {
   EXAM_FORM_STATE,
   EXAM_STATE,
 } from "../../../description/globel.description";
-import axios from "../../../utils/axios";
+import callApi from "../../../utils/callApi";
 import { CREATE_EXAM_URL } from "../../../description/api.description";
 import { toast } from "react-toastify";
 import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../../utils/constants";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import lSSetItem from "../../../hook/lSSetItem";
 import lSGetItem from "../../../hook/lSGetItem";
+import lSRemoveItem from "../../../hook/lSRemoveItem";
 
 const CreateExamContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
@@ -208,7 +210,8 @@ const CreateExamContainer = () => {
         }
       );
       apiFormateData = { subjectName: state.subject, ...apiFormateData };
-      const response = await axios({
+      setIsSubmitting(true);
+      const response = await callApi({
         url: CREATE_EXAM_URL,
         method: "post",
         data: apiFormateData,
@@ -216,12 +219,17 @@ const CreateExamContainer = () => {
           "access-token": userInfo.token,
         },
       });
+      setIsSubmitting(false);
       if (response.statusCode === 200) {
         toast.success(response.message);
         navigate(PROFILE_PATH);
+        lSRemoveItem("examFormState");
+        lSRemoveItem("examState");
       } else if (response.statusCode === 401) {
         toast.error(response.message);
         dispatch(logOutSuccess());
+      } else if (response.statusCode === 500) {
+        toast.error(response.message);
       }
     }
   };
@@ -268,6 +276,7 @@ const CreateExamContainer = () => {
     handelPrev,
     whereToAdd,
     handelSubmit,
+    isSubmitting,
   };
 };
 

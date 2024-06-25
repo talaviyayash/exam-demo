@@ -8,8 +8,10 @@ import {
 } from "../../../description/form/editExam.description";
 import EDForm from "../../../shared/DDForm/EDForm";
 import { ATTRIBUTE_SUBMIT_BUTTON } from "../../../description/form/createExam.description";
-import EDButton from "../../../shared/EDButton";
+import EDButton from "../../../shared/button/EDButton";
 import { TOTAL_NUMBER_OF_QUESTION } from "../../../utils/constants";
+import Loading from "../../../shared/Loading";
+import EDLoading from "../../../shared/button/EDLoading";
 
 const EditExam = () => {
   const {
@@ -23,7 +25,10 @@ const EditExam = () => {
     handelNext,
     handelPrev,
     handelSubmit,
+    isLoading,
+    isSubmitting,
   } = EditExamContainer();
+  if (isLoading) return <Loading />;
   return (
     <>
       <>
@@ -40,14 +45,25 @@ const EditExam = () => {
               configArray={configArray}
               formName={EDIT_EXAM_FORM_NAME}
             />
+            <EDLoading
+              {...ATTRIBUTE_SUBMIT_BUTTON}
+              onClick={handelSubmit}
+              loading={isSubmitting}
+            />
             {whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION && (
-              <EDButton {...ATTRIBUTE_NEXT_BUTTON} onClick={handelNext} />
+              <EDButton
+                {...ATTRIBUTE_NEXT_BUTTON}
+                onClick={handelNext}
+                disabled={isSubmitting}
+              />
             )}
 
-            <EDButton {...ATTRIBUTE_SUBMIT_BUTTON} onClick={handelSubmit} />
-
             {whereToAdd !== 0 && (
-              <EDButton {...ATTRIBUTE_PREV_BUTTON} onClick={handelPrev} />
+              <EDButton
+                {...ATTRIBUTE_PREV_BUTTON}
+                onClick={handelPrev}
+                disabled={isSubmitting}
+              />
             )}
           </div>
         </div>

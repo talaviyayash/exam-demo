@@ -6,8 +6,9 @@ import {
   FORGET_PASSWORD_SUBMIT_NAME,
 } from "../../description/form/forgetPassword.description";
 import DDForm from "../../shared/DDForm/EDForm";
-import EDButton from "../../shared/EDButton";
+import EDButton from "../../shared/button/EDButton";
 import ForgetPasswordContainer from "../../container/authentication/forgetPassword.container";
+import EDLoading from "../../shared/button/EDLoading";
 const ForgetPassWord = () => {
   const {
     handelChangeType,
@@ -17,6 +18,7 @@ const ForgetPassWord = () => {
     handelChangeCheckBox,
     handelSubmit,
     configArray,
+    isLoading,
   } = ForgetPasswordContainer();
   return (
     <div className="container">
@@ -32,10 +34,11 @@ const ForgetPassWord = () => {
           formName={FORGET_PASSWORD_FORM_NAME}
         />
 
-        <EDButton
+        <EDLoading
           innerText={FORGET_PASSWORD_SUBMIT_NAME}
           onClick={handelSubmit}
           {...ATTRIBUTE_SUBMIT_BUTTON}
+          loading={isLoading}
         />
       </div>
     </div>
