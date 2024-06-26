@@ -1,7 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { EMPTY_STRING } from "../../description/globel.description";
 
 const initialState = {
-  subjectName: "",
+  subjectName: EMPTY_STRING,
   questions: [],
   notes: [],
   whereToAdd: 0,

@@ -14,6 +14,7 @@ import {
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { EMPTY_STRING } from "../../description/globel.description";
 
 const NewPasswordContainer = () => {
   const [searchParams] = useSearchParams();
@@ -27,7 +28,7 @@ const NewPasswordContainer = () => {
     const PasswordValue = allValue?.Password;
     const confirmPasswordValue = allValue?.ConfirmPassword;
     return confirmPasswordValue === PasswordValue
-      ? ""
+      ? EMPTY_STRING
       : "Confirm Password doesn't match Password ";
   };
 

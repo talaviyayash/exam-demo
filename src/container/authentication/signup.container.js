@@ -35,7 +35,6 @@ const SignUpContainer = () => {
         method: "post",
         data: state,
       });
-      console.log(response.data);
       if (response.statusCode === 200) {
         toast.success(response.message);
         toast.info(VERIFICATION_MSG);

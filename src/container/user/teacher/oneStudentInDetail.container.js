@@ -1,5 +1,4 @@
-import { logDOM } from "@testing-library/react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import callApi from "../../../utils/callApi";
 import { ONE_STUDENT_DETAIL_URL } from "../../../description/api.description";
@@ -29,7 +28,6 @@ const OneStudentInDetailContainer = () => {
       });
       if (response.statusCode === 200) {
         setStudentInfo(response?.data[0]);
-        console.log(response?.data[0]);
       } else if (response.statusCode === 401) {
         lSClear();
         dispatch(logOutSuccess());

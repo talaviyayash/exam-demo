@@ -15,7 +15,7 @@ const DDFormContainer = ({ configArray, formName, customValidation = {} }) => {
     const AllValue = configArray.reduce((all, element) => {
       return {
         ...all,
-        [element.name]: element.value ?? "",
+        [element.name]: element.value ?? EMPTY_STRING,
       };
     }, {});
     dispatch(
@@ -37,7 +37,7 @@ const DDFormContainer = ({ configArray, formName, customValidation = {} }) => {
     const { isRequired, defaultMsg } = required;
 
     let { error: errorMsg } =
-      patterns?.find(({ regex = "" }) => {
+      patterns?.find(({ regex = EMPTY_STRING }) => {
         const isValid = value?.match(regex);
         return !isValid;
       }) ?? {};

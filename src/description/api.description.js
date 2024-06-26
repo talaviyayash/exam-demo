@@ -25,3 +25,9 @@ export const STUDENT_DETAIL_URL = "/dashboard/Teachers";
 export const ONE_STUDENT_DETAIL_URL = "/dashboard/Teachers/viewStudentDetail";
 
 export const GET_ALL_EXAM_FOR_STUDENT = "/student/studentExam";
+
+export const RESET_PASSWORD_URL = "/users/ResetPassword";
+
+export const GET_EXAM_PAPER_URL = "/student/examPaper";
+
+export const GIVE_EXAM_PAPER_URL = "/student/giveExam";

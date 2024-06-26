@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import lSSetItem from "../../hook/lSSetItem";
+import lSClear from "../../hook/lSClear";
 
 const initialState = {
   isLogin: false,
@@ -16,7 +16,7 @@ const userInfoSlice = createSlice({
     logOutSuccess: (state) => {
       state.isLogin = false;
       state.userInfo = {};
-      lSSetItem("userInfo");
+      lSClear();
     },
     addUserInfo: (state, action) => {
       state.userInfo = { ...state.userInfo, ...action.payload };

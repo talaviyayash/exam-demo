@@ -4,7 +4,13 @@ import "./profile.css";
 import EDButton from "../../../shared/button/EDButton";
 import { STUDENT, EMPTY_STRING } from "../../../description/globel.description";
 const Profile = () => {
-  const { userInfo, redirectToEditPage, role } = ProfileContainer();
+  const {
+    userInfo,
+    redirectToEditPage,
+    redirectToChangePassword,
+    role,
+    logOut,
+  } = ProfileContainer();
 
   return (
     <>
@@ -26,6 +32,12 @@ const Profile = () => {
           <span>Email </span>
           <span>{userInfo.email}</span>
         </div>
+        <EDButton
+          className="EditButton"
+          innerText="Reset Password"
+          onClick={redirectToChangePassword}
+        />
+        <EDButton className="EditButton" innerText="Log Out" onClick={logOut} />
       </div>
     </>
   );

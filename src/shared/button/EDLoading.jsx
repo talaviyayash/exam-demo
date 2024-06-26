@@ -3,7 +3,11 @@ import LoadingButton from "@mui/lab/LoadingButton";
 
 const EDLoading = ({ innerText, ...attribute }) => {
   return (
-    <LoadingButton loading variant="contained" {...attribute}>
+    <LoadingButton
+      // loading
+      variant="contained"
+      {...attribute}
+    >
       {innerText}
     </LoadingButton>
   );

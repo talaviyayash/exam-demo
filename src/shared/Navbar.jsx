@@ -11,16 +11,28 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import { useSelector } from "react-redux";
-import { notLoginShowArray } from "../description/navbar.description";
+import {
+  forStudentShowArray,
+  forTeacherShowArray,
+  notLoginShowArray,
+} from "../description/navbar.description";
 import { NavLink, Outlet } from "react-router-dom";
+import {
+  EMPTY_STRING,
+  STUDENT,
+  TEACHER,
+} from "../description/globel.description";
+import lSGetItem from "../hook/lSGetItem";
 
 const Navbar = () => {
-  const isLogin = useSelector((state) => state.userInformation);
+  const { isLogin } = useSelector((state) => state.userInformation);
   let pages = notLoginShowArray;
+  const userInfo = lSGetItem("userInfo");
+  if (!isLogin) pages = notLoginShowArray;
   if (isLogin) {
-    pages = notLoginShowArray;
+    if (userInfo.role === TEACHER) pages = forTeacherShowArray;
+    if (userInfo.role === STUDENT) pages = forStudentShowArray;
   }
-
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -84,12 +96,12 @@ const Navbar = () => {
                   display: { xs: "block", md: "none" },
                 }}
               >
-                {pages.rightSide.map(({ name, routingPath }) => (
+                {pages.leftSide.map(({ name, routingPath }) => (
                   <NavLink
                     key={routingPath}
                     to={routingPath}
                     className={({ isActive, isPending }) =>
-                      isPending ? "pending" : isActive ? "active" : ""
+                      isPending ? "pending" : isActive ? "active" : EMPTY_STRING
                     }
                   >
                     <MenuItem key={routingPath} onClick={handleCloseNavMenu}>
@@ -119,12 +131,12 @@ const Navbar = () => {
               LOGO
             </Typography>
             <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-              {pages.rightSide.map(({ name, routingPath }) => (
+              {pages.leftSide.map(({ name, routingPath }) => (
                 <NavLink
                   to={routingPath}
                   key={routingPath}
                   className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "active" : ""
+                    isPending ? "pending" : isActive ? "active" : EMPTY_STRING
                   }
                 >
                   <Button
@@ -138,12 +150,12 @@ const Navbar = () => {
             </Box>
 
             <Box sx={{ flexGrow: 0, display: "flex", gap: "20px" }}>
-              {pages.leftSide.map(({ name, routingPath }) => (
+              {pages.rightSide.map(({ name, routingPath }) => (
                 <NavLink
                   key={routingPath}
                   to={routingPath}
                   className={({ isActive, isPending }) =>
-                    isPending ? "pending" : isActive ? "active" : ""
+                    isPending ? "pending" : isActive ? "active" : EMPTY_STRING
                   }
                 >
                   <Typography

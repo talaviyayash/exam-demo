@@ -2,17 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   EDIT_PROFILE_FORM_NAME,
   nameElement,
-} from "../../description/form/editProfile.description";
-import DDFormContainer from "../form/ddform.container";
+} from "../../../description/form/editProfile.description";
+import DDFormContainer from "../../form/ddform.container";
 import { toast } from "react-toastify";
-import callApi from "../../utils/callApi";
-import { UPDATE_PROFILE_URL } from "../../description/api.description";
-import { addUserInfo, logOutSuccess } from "../../redux/slice/userInfoSlice";
+import callApi from "../../../utils/callApi";
+import { UPDATE_PROFILE_URL } from "../../../description/api.description";
+import { addUserInfo, logOutSuccess } from "../../../redux/slice/userInfoSlice";
 import { useNavigate } from "react-router-dom";
-import { PROFILE_PATH } from "../../utils/constants";
+import { PROFILE_PATH } from "../../../utils/constants";
 import { useEffect, useState } from "react";
-import lSClear from "../../hook/lSClear";
-import lSSetItem from "../../hook/lSSetItem";
+import lSClear from "../../../hook/lSClear";
+import lSSetItem from "../../../hook/lSSetItem";
 
 const EditProfileContainer = () => {
   const dispatch = useDispatch();
@@ -50,7 +50,6 @@ const EditProfileContainer = () => {
       });
       setIsLoading(false);
       if (response.statusCode === 200) {
-        console.log(response);
         toast.success(response.message);
         dispatch(addUserInfo(response.data));
         lSSetItem("userInfo", { ...userInfo, ...response.data });

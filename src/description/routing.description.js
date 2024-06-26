@@ -4,6 +4,8 @@ import SignIn from "../presentation/authentication/SignIn";
 import SignUp from "../presentation/authentication/SignUp";
 import EditProfile from "../presentation/user/profile/EditProfile";
 import Profile from "../presentation/user/profile/Profile";
+import ResetPassword from "../presentation/user/profile/ResetPassword";
+import GiveExam from "../presentation/user/student/GiveExam";
 import ShowAllExam from "../presentation/user/student/ShowAllExam";
 import CreateExam from "../presentation/user/teacher/CreateExam";
 import EditExam from "../presentation/user/teacher/EditExam";
@@ -16,6 +18,7 @@ import ProtectedRoute from "../router/ProtectedRoute";
 import StudentRoute from "../router/StudentRoute";
 import TeacherRoute from "../router/TeacherRoute";
 import Navbar from "../shared/Navbar";
+
 import {
   CREATE_EXAM_PATH,
   EDIT_EXAM_PATH,
@@ -26,11 +29,12 @@ import {
   SIGN_IN_PATH,
   SIGN_UP_PATH,
   STUDENT_DETAIL_PATH,
-  TOTAL_NUMBER_OF_QUESTION,
   VIEW_EXAM_PATH,
   VIEW_IN_DETAIL_PATH,
   ONE_STUDENT_DETAIL_PATH,
   SHOW_EXAM_FOR_STUDENT,
+  RESET_PASSWORD_PATH,
+  GIVE_EXAM_PATH,
 } from "../utils/constants";
 
 export const routingArray = [
@@ -73,6 +77,10 @@ export const routingArray = [
                 path: SHOW_EXAM_FOR_STUDENT,
                 element: <ShowAllExam />,
               },
+              {
+                path: GIVE_EXAM_PATH,
+                element: <GiveExam />,
+              },
             ],
           },
           {
@@ -107,6 +115,10 @@ export const routingArray = [
           {
             path: PROFILE_PATH,
             element: <Profile />,
+          },
+          {
+            path: RESET_PASSWORD_PATH,
+            element: <ResetPassword />,
           },
         ],
       },

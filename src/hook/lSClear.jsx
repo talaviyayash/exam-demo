@@ -1,5 +1,3 @@
-const lSClear = () => {
-  localStorage.clear();
-};
+const lSClear = () => localStorage.clear();
 
 export default lSClear;

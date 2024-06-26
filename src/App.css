@@ -86,3 +86,47 @@ a {
   margin-top: 50px;
   margin-bottom: 150px;
 }
+
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: 50px;
+}
+
+.give-exam-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 50px;
+  margin-top: 100px;
+}
+
+.question-container {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  flex-direction: column;
+}
+
+.give-exam-button-container {
+  display: flex;
+  gap: 20px;
+}
+
+.result-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+  min-height: calc(100vh - 70px);
+}
+
+th,
+td {
+  text-align: center !important;
+}

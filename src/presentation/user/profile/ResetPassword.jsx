@@ -1,30 +1,32 @@
 import React from "react";
-import "./profile.css";
-import {
-  EDIT_PROFILE_FORM_HEADER,
-  EDIT_PROFILE_FORM_NAME,
-  EDIT_PROFILE_SUBMIT_NAME,
-} from "../../../description/form/editProfile.description";
-import EditProfileContainer from "../../../container/user/profile/editProfile.container";
+import ResetPasswordContainer from "../../../container/user/profile/resetPassword.container";
 import EDForm from "../../../shared/DDForm/EDForm";
-import EDLoading from "../../../shared/button/EDLoading";
 
-const EditProfile = () => {
+import EDLoading from "../../../shared/button/EDLoading";
+import {
+  ATTRIBUTE_SUBMIT_BUTTON,
+  RESET_PASSWORD_FORM_HEADER,
+  RESET_PASSWORD_FORM_NAME,
+  RESET_PASSWORD_SUBMIT_NAME,
+} from "../../../description/form/resetPassword.description";
+
+const ChangePassword = () => {
   const {
     handelChangeType,
     state,
     validateAllField,
     error,
     handelChangeCheckBox,
-    configArray,
     handelSubmit,
+    configArray,
+
     isLoading,
-  } = EditProfileContainer();
+  } = ResetPasswordContainer();
   return (
     <>
       <div className="container">
         <div className="style-form">
-          <h1 className="form-header">{EDIT_PROFILE_FORM_HEADER}</h1>
+          <h1 className="form-header">{RESET_PASSWORD_FORM_HEADER}</h1>
           <EDForm
             handelChangeType={handelChangeType}
             state={state}
@@ -32,12 +34,13 @@ const EditProfile = () => {
             error={error}
             handelChangeCheckBox={handelChangeCheckBox}
             configArray={configArray}
-            formName={EDIT_PROFILE_FORM_NAME}
+            formName={RESET_PASSWORD_FORM_NAME}
           />
 
           <EDLoading
-            innerText={EDIT_PROFILE_SUBMIT_NAME}
             onClick={handelSubmit}
+            innerText={RESET_PASSWORD_SUBMIT_NAME}
+            {...ATTRIBUTE_SUBMIT_BUTTON}
             loading={isLoading}
           />
         </div>
@@ -46,4 +49,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default ChangePassword;

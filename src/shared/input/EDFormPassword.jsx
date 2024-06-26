@@ -8,13 +8,14 @@ import {
 } from "@mui/material";
 import React from "react";
 import { memo } from "react";
+import { EMPTY_STRING } from "../../description/globel.description";
 
 const DDFormPassword = ({ value, element, handelChange }) => {
   const { patterns, name, required, labelName, attributes } = element;
   const [showPassword, setShowPassword] = React.useState(false);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
   const { isRequired } = required;
-  const labelNameWithRequired = labelName + (isRequired ? "*" : "");
+  const labelNameWithRequired = labelName + (isRequired ? "*" : EMPTY_STRING);
   return (
     <FormControl
       {...attributes}

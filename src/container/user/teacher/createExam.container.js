@@ -35,92 +35,44 @@ const CreateExamContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
-
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
-
   const userInfo = useSelector((state) => state?.userInformation?.userInfo);
-
   const sameQuestionValidation = (allValue) => {
     const { question: currentQuestion } = allValue;
-
     let indexOfArray = [];
-
     const filterQuestion = allQuestion.filter((value, index) => {
       const questionIsSame = value.question === currentQuestion;
-      if (questionIsSame) {
-        indexOfArray.push(index);
-      }
+      if (questionIsSame) indexOfArray.push(index);
       return questionIsSame;
     });
-
     const questionIsSame =
       (whereToAdd === allQuestion.length && filterQuestion.length > 0) ||
       (indexOfArray.includes(whereToAdd) && filterQuestion.length > 1) ||
       (!indexOfArray.includes(whereToAdd) && filterQuestion.length > 0);
-
-    if (questionIsSame) {
-      return "Question cannot be same.";
-    }
-
-    return EMPTY_STRING;
+    return questionIsSame ? "Question cannot be same." : EMPTY_STRING;
   };
 
   const validateAllOption = (allValue, name) => {
-    const options1 = allValue.options1;
-    const options2 = allValue.options2;
-    const options3 = allValue.options3;
-    const options4 = allValue.options4;
+    const { options1, options2, options3, options4 } = allValue;
+    const allOptionValue = [options1, options2, options3, options4];
+    const optionErrorMsg = "All options must be different";
+    const isAnySame = (compareOptionsValue) =>
+      allOptionValue.filter((val) => val === compareOptionsValue).length > 1
+        ? optionErrorMsg
+        : EMPTY_STRING;
 
-    const optionError = {
-      options1: "",
-      options2: "",
-      options3: "",
-      options4: "",
-    };
-
-    const forOption1 =
-      options1 === options2 || options1 === options3 || options1 === options4;
-
-    const forOption2 =
-      options2 === options1 || options2 === options3 || options2 === options4;
-
-    const forOption3 =
-      options3 === options2 || options3 === options1 || options3 === options4;
-
-    const forOption4 =
-      options4 === options2 || options4 === options1 || options4 === options3;
-
-    if (forOption1) {
-      optionError.options1 = "All options must be different";
-    }
-
-    if (forOption2) {
-      optionError.options2 = "All options must be different";
-    }
-
-    if (forOption3) {
-      optionError.options3 = "All options must be different";
-    }
-
-    if (forOption4) {
-      optionError.options4 = "All options must be different";
-    }
-
+    const optionError = allOptionValue.reduce((total, val, index) => {
+      const optionName = `options${index + 1}`;
+      return { ...total, [optionName]: isAnySame(val) };
+    }, {});
     dispatch(
       addError({
         name: CREATE_EXAM_FORM_NAME,
         error: optionError,
       })
     );
-    if (
-      (name === "options1" && forOption1) ||
-      (name === "options2" && forOption2) ||
-      (name === "options3" && forOption3) ||
-      (name === "options4" && forOption4)
-    ) {
-      return "All options must be different";
-    }
+    return optionError[name];
   };
 
   const {

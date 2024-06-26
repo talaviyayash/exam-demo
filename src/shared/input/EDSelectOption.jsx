@@ -4,11 +4,12 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { memo } from "react";
+import { EMPTY_STRING } from "../../description/globel.description";
 
 const EDSelectOption = ({ value, element, handelChange }) => {
   const { patterns, name, required, labelName, children } = element;
   const { isRequired } = required;
-  const labelNameWithRequired = labelName + (isRequired ? "*" : "");
+  const labelNameWithRequired = labelName + (isRequired ? "*" : EMPTY_STRING);
 
   return (
     <Box sx={{ minWidth: 120 }}>

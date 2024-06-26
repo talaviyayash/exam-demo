@@ -26,4 +26,8 @@ export const ONE_STUDENT_DETAIL_PATH = "/student-detail/:id";
 
 export const SHOW_EXAM_FOR_STUDENT = "/show-exam";
 
+export const GIVE_EXAM_PATH = "/give-exam/:subject/:id";
+
+export const RESET_PASSWORD_PATH = "/reset-password";
+
 export const TOTAL_NUMBER_OF_QUESTION = 15;
