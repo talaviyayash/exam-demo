@@ -2,6 +2,7 @@ import DDFormContainer from "../../form/ddform.container";
 import {
   CREATE_EXAM_FORM_NAME,
   createExamForm as configArray,
+  totalOption,
 } from "../../../description/form/createExam.description";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -23,13 +24,14 @@ import {
 import callApi from "../../../utils/callApi";
 import { CREATE_EXAM_URL } from "../../../description/api.description";
 import { toast } from "react-toastify";
-import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../../utils/constants";
 import { useEffect, useState } from "react";
 import lSSetItem from "../../../hook/lSSetItem";
 import lSGetItem from "../../../hook/lSGetItem";
 import lSRemoveItem from "../../../hook/lSRemoveItem";
+import lSClear from "../../../hook/lSClear";
+import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 
 const CreateExamContainer = () => {
   const dispatch = useDispatch();
@@ -37,28 +39,39 @@ const CreateExamContainer = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
-  const userInfo = useSelector((state) => state?.userInformation?.userInfo);
+
+  const userInfo = useSelector((state) => state.userInformation.userInfo);
+
   const sameQuestionValidation = (allValue) => {
     const { question: currentQuestion } = allValue;
     let indexOfArray = [];
+
     const filterQuestion = allQuestion.filter((value, index) => {
       const questionIsSame = value.question === currentQuestion;
       if (questionIsSame) indexOfArray.push(index);
       return questionIsSame;
     });
+
     const questionIsSame =
       (whereToAdd === allQuestion.length && filterQuestion.length > 0) ||
       (indexOfArray.includes(whereToAdd) && filterQuestion.length > 1) ||
       (!indexOfArray.includes(whereToAdd) && filterQuestion.length > 0);
+
     return questionIsSame ? "Question cannot be same." : EMPTY_STRING;
   };
 
   const validateAllOption = (allValue, name) => {
-    const { options1, options2, options3, options4 } = allValue;
-    const allOptionValue = [options1, options2, options3, options4];
+    const allOptionValue = [];
+    for (var i = 1; i <= totalOption; i++) {
+      allOptionValue.push(allValue?.[`options${i}`]);
+    }
+
     const optionErrorMsg = "All options must be different";
+
     const isAnySame = (compareOptionsValue) =>
-      allOptionValue.filter((val) => val === compareOptionsValue).length > 1
+      allOptionValue.filter((val) => {
+        return val === compareOptionsValue;
+      }).length > 1
         ? optionErrorMsg
         : EMPTY_STRING;
 
@@ -66,13 +79,23 @@ const CreateExamContainer = () => {
       const optionName = `options${index + 1}`;
       return { ...total, [optionName]: isAnySame(val) };
     }, {});
+
     dispatch(
       addError({
         name: CREATE_EXAM_FORM_NAME,
         error: optionError,
       })
     );
+
     return optionError[name];
+  };
+
+  const allOptionValidationInObj = () => {
+    const validationObj = {};
+    for (var i = 1; i <= totalOption; i++) {
+      validationObj[`options${i}`] = validateAllOption;
+    }
+    return validationObj;
   };
 
   const {
@@ -86,10 +109,7 @@ const CreateExamContainer = () => {
     formName: CREATE_EXAM_FORM_NAME,
     customValidation: {
       question: sameQuestionValidation,
-      options1: validateAllOption,
-      options2: validateAllOption,
-      options3: validateAllOption,
-      options4: validateAllOption,
+      ...allOptionValidationInObj(),
     },
   });
 
@@ -141,7 +161,7 @@ const CreateExamContainer = () => {
       let apiFormateData = allNewQuestion.reduce(
         (formateQuestion, element) => {
           const { note, answer, question, ...options } = element;
-          if (note) {
+          if (note?.trim()) {
             formateQuestion.notes.push(note);
           }
           const keyOfQuestion = Object.keys(options).sort();
@@ -177,10 +197,11 @@ const CreateExamContainer = () => {
         navigate(PROFILE_PATH);
         lSRemoveItem("examFormState");
         lSRemoveItem("examState");
-      } else if (response.statusCode === 401) {
-        toast.error(response.message);
-        dispatch(logOutSuccess());
-      } else if (response.statusCode === 500) {
+      } else {
+        if (response.statusCode === 401) {
+          lSClear();
+          dispatch(logOutSuccess());
+        }
         toast.error(response.message);
       }
     }
@@ -212,6 +233,7 @@ const CreateExamContainer = () => {
   useEffect(() => {
     lSSetItem(EXAM_STATE, examState);
   }, [allQuestion, whereToAdd, subjectName]);
+
   useEffect(() => {
     lSSetItem(EXAM_FORM_STATE, state);
   }, [state]);

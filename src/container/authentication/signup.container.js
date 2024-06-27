@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
 import { useState } from "react";
+import lSClear from "../../hook/lSClear";
 
 const SignUpContainer = () => {
   const dispatch = useDispatch();
@@ -39,6 +40,11 @@ const SignUpContainer = () => {
         toast.success(response.message);
         toast.info(VERIFICATION_MSG);
         dispatch(clearForm({ name: SIGNUP_FORM_NAME }));
+      } else {
+        if (response.statusCode === 401) {
+          lSClear();
+        }
+        toast.error(response.message);
       }
       setIsSigningUp(false);
     }

@@ -6,7 +6,6 @@ import {
   FORGET_PASSWORD_SUBMIT_NAME,
 } from "../../description/form/forgetPassword.description";
 import DDForm from "../../shared/DDForm/EDForm";
-import EDButton from "../../shared/button/EDButton";
 import ForgetPasswordContainer from "../../container/authentication/forgetPassword.container";
 import EDLoading from "../../shared/button/EDLoading";
 const ForgetPassWord = () => {
@@ -22,7 +21,7 @@ const ForgetPassWord = () => {
   } = ForgetPasswordContainer();
   return (
     <div className="container">
-      <div className="style-form">
+      <div className="style-form simple-style-form">
         <h1 className="form-header">{FORGET_PASSWORD_FORM_HEADER}</h1>
         <DDForm
           handelChangeType={handelChangeType}

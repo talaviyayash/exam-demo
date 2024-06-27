@@ -1,5 +1,5 @@
 import React from "react";
-import EDForm from "../../../shared/DDForm/EDForm";
+import CreateExamForm from "../../../shared/DDForm/CreateExamForm";
 
 import CreateExamContainer from "../../../container/user/teacher/createExam.container";
 import {
@@ -29,10 +29,10 @@ const CreateExam = () => {
   return (
     <>
       <div className="container">
-        <div className="style-form">
+        <div className="style-form simple-style-form">
           <h1 className="form-header">{CREATE_EXAM_HEADER_NAME}</h1>
           <h2 className="form-header">Question No :-{whereToAdd + 1}</h2>
-          <EDForm
+          <CreateExamForm
             handelChangeType={handelChangeType}
             state={state}
             validateAllField={validateAllField}

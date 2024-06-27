@@ -6,11 +6,11 @@ import {
   SGININ_SUBMIT_NAME,
 } from "../../description/form/signin.description";
 import DDForm from "../../shared/DDForm/EDForm";
-import EDButton from "../../shared/button/EDButton";
 import { NavLink } from "react-router-dom";
 
 import SignInContainer from "../../container/authentication/signin.container";
 import EDLoading from "../../shared/button/EDLoading";
+import { FORGET_PASSWORD_PATH } from "../../utils/constants";
 
 const SignIn = () => {
   const {
@@ -27,7 +27,7 @@ const SignIn = () => {
   return (
     <>
       <div className="container">
-        <div className="style-form">
+        <div className="style-form simple-style-form">
           <h1 className="form-header">{SGININ_FORM_HEADER}</h1>
           <DDForm
             handelChangeType={handelChangeType}
@@ -39,7 +39,7 @@ const SignIn = () => {
             formName={SGININ_FORM_NAME}
           />
           <div className="text-end">
-            <NavLink to={"/forget-password"} className="font-color">
+            <NavLink to={FORGET_PASSWORD_PATH} className="font-color">
               Forgot your password?
             </NavLink>
           </div>

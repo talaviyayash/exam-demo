@@ -1,8 +1,4 @@
-import {
-  oneDigitCaseLetter,
-  oneLowerCaseLetter,
-  oneUpperCaseLetter,
-} from "../../utils/regex";
+import { allRegexForPassword } from "../../utils/regex";
 
 export const RESET_PASSWORD_FORM_NAME = "changePasswordForm";
 
@@ -31,20 +27,7 @@ export const resetPasswordForm = [
       placeholder: "Old Password",
     },
     labelName: "Old Password",
-    patterns: [
-      {
-        regex: oneLowerCaseLetter,
-        error: "Old Password must include lower case alphabet.",
-      },
-      {
-        regex: oneUpperCaseLetter,
-        error: "Old Password must include upper case alphabet.",
-      },
-      {
-        regex: oneDigitCaseLetter,
-        error: "Old Password must include digit.",
-      },
-    ],
+    patterns: allRegexForPassword("Old Password"),
   },
   {
     name: "Password",
@@ -59,20 +42,7 @@ export const resetPasswordForm = [
       placeholder: "Password",
     },
     labelName: "Password",
-    patterns: [
-      {
-        regex: oneLowerCaseLetter,
-        error: "Password must include lower case alphabet.",
-      },
-      {
-        regex: oneUpperCaseLetter,
-        error: "Password must include upper case alphabet.",
-      },
-      {
-        regex: oneDigitCaseLetter,
-        error: "Password must include digit.",
-      },
-    ],
+    patterns: allRegexForPassword("Password"),
   },
   {
     name: "ConfirmPassword",
@@ -87,19 +57,6 @@ export const resetPasswordForm = [
       placeholder: "Confirm Password",
     },
     labelName: "Confirm Password",
-    patterns: [
-      {
-        regex: oneLowerCaseLetter,
-        error: "Confirm Password must include lower case alphabet.",
-      },
-      {
-        regex: oneUpperCaseLetter,
-        error: "Confirm Password must include upper case alphabet.",
-      },
-      {
-        regex: oneDigitCaseLetter,
-        error: "Confirm Password must include digit.",
-      },
-    ],
+    patterns: allRegexForPassword("Confirm Password"),
   },
 ];

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import lSGetItem from "../../../hook/lSGetItem";
 import callApi from "../../../utils/callApi";
 import { STUDENT_DETAIL_URL } from "../../../description/api.description";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const ShowStudentDetailContainer = () => {
   const [allStudent, setAllStudent] = useState([]);
-  const userInfo = lSGetItem("userInfo");
+  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
 

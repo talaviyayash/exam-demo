@@ -4,7 +4,7 @@ export const EDIT_PROFILE_FORM_NAME = "EditProfile";
 
 export const EDIT_PROFILE_FORM_HEADER = "Edit Profile";
 
-export const EDIT_PROFILE_SUBMIT_NAME = "Edit Profile";
+export const EDIT_PROFILE_SUBMIT_NAME = "Update Profile";
 
 export const nameElement = {
   name: "name",
@@ -18,7 +18,6 @@ export const nameElement = {
     id: "Name",
   },
   labelName: "Name",
-  wrapElement: {},
   patterns: [
     {
       regex: nameRegex,

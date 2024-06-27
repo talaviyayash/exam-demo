@@ -10,6 +10,7 @@ export const ATTRIBUTE_NEXT_BUTTON = {
     fontSize: "18px",
   },
 };
+
 export const ATTRIBUTE_PREV_BUTTON = {
   innerText: "Prev",
   sx: {
@@ -18,6 +19,9 @@ export const ATTRIBUTE_PREV_BUTTON = {
     fontSize: "18px",
   },
 };
+
+export const totalOption = 4;
+
 export const ATTRIBUTE_SUBMIT_BUTTON = {
   innerText: "SUBMIT",
   sx: {

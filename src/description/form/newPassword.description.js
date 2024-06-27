@@ -1,8 +1,4 @@
-import {
-  oneDigitCaseLetter,
-  oneLowerCaseLetter,
-  oneUpperCaseLetter,
-} from "../../utils/regex";
+import { allRegexForPassword } from "../../utils/regex";
 
 export const NEW_PASSWORD_FORM_NAME = "newPasswordForm";
 
@@ -31,20 +27,7 @@ export const newPasswordForm = [
       placeholder: "Password",
     },
     labelName: "Password",
-    patterns: [
-      {
-        regex: oneLowerCaseLetter,
-        error: "Password must include lower case alphabet.",
-      },
-      {
-        regex: oneUpperCaseLetter,
-        error: "Password must include upper case alphabet.",
-      },
-      {
-        regex: oneDigitCaseLetter,
-        error: "Password must include digit.",
-      },
-    ],
+    patterns: allRegexForPassword("Password"),
   },
   {
     name: "ConfirmPassword",
@@ -59,19 +42,6 @@ export const newPasswordForm = [
       placeholder: "Confirm Password",
     },
     labelName: "Confirm Password",
-    patterns: [
-      {
-        regex: oneLowerCaseLetter,
-        error: "Confirm Password must include lower case alphabet.",
-      },
-      {
-        regex: oneUpperCaseLetter,
-        error: "Confirm Password must include upper case alphabet.",
-      },
-      {
-        regex: oneDigitCaseLetter,
-        error: "Confirm Password must include digit.",
-      },
-    ],
+    patterns: allRegexForPassword("Confirm Password"),
   },
 ];

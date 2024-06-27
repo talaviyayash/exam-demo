@@ -2,13 +2,13 @@ import React, { memo } from "react";
 
 import { Navigate, Outlet } from "react-router-dom";
 import { PROFILE_PATH } from "../utils/constants";
-import lSGetItem from "../hook/lSGetItem";
+import { useSelector } from "react-redux";
 
 const Authentication = () => {
-  const { token } = lSGetItem("userInfo") ?? {};
+  const isLogin = useSelector((state) => state.userInformation.isLogin);
 
   return (
-    <>{token ? <Navigate to={PROFILE_PATH} replace={true} /> : <Outlet />}</>
+    <>{isLogin ? <Navigate to={PROFILE_PATH} replace={true} /> : <Outlet />}</>
   );
 };
 

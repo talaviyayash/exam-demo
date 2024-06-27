@@ -31,9 +31,11 @@ const GiveExam = () => {
         <h1 style={{ textAlign: "center" }}>
           Subject Name :- {decodedSubject}
         </h1>
-        <div>Question No :- {whereToAdd + 1}</div>
+        <div className="giveExam-question-name">
+          Question : {currentQuestion?.question}
+        </div>
         <div className="question-container">
-          <div>Question : {currentQuestion?.question}</div>
+          <div> No :- {whereToAdd + 1}</div>
           {currentQuestion?.options.map((value, index) => {
             return (
               <GiveExamRadioButton
@@ -46,11 +48,11 @@ const GiveExam = () => {
           })}
         </div>
         <div className="give-exam-button-container">
-          {whereToAdd < totalQuestion - 1 && (
+          {whereToAdd !== 0 && (
             <EDLoading
-              {...ATTRIBUTE_NEXT_BUTTON}
-              loading={isGivingExam}
-              onClick={handelNext}
+              {...ATTRIBUTE_PREV_BUTTON}
+              disabled={isGivingExam}
+              onClick={handelPrev}
             />
           )}
           {whereToAdd === totalQuestion - 1 && (
@@ -60,11 +62,11 @@ const GiveExam = () => {
               onClick={handelSubmit}
             />
           )}
-          {whereToAdd !== 0 && (
+          {whereToAdd < totalQuestion - 1 && (
             <EDLoading
-              {...ATTRIBUTE_PREV_BUTTON}
+              {...ATTRIBUTE_NEXT_BUTTON}
               loading={isGivingExam}
-              onClick={handelPrev}
+              onClick={handelNext}
             />
           )}
         </div>

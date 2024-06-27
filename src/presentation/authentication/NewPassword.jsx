@@ -7,7 +7,6 @@ import {
   NEW_PASSWORD_FORM_NAME,
   NEW_PASSWORD_SUBMIT_NAME,
 } from "../../description/form/newPassword.description";
-import EDButton from "../../shared/button/EDButton";
 import EDLoading from "../../shared/button/EDLoading";
 import Loading from "../../shared/Loading";
 
@@ -27,7 +26,7 @@ const NewPassword = () => {
   return (
     <>
       <div className="container">
-        <div className="style-form">
+        <div className="style-form simple-style-form">
           <h1 className="form-header">{NEW_PASSWORD_FORM_HEADER}</h1>
           <EDForm
             handelChangeType={handelChangeType}

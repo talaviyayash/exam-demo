@@ -5,6 +5,7 @@ const EDLoading = ({ innerText, ...attribute }) => {
   return (
     <LoadingButton
       // loading
+
       variant="contained"
       {...attribute}
     >

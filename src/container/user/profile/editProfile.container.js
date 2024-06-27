@@ -17,7 +17,8 @@ import lSSetItem from "../../../hook/lSSetItem";
 const EditProfileContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const userInfo = useSelector((state) => state?.userInformation?.userInfo);
+  const userInfo = useSelector((state) => state.userInformation.userInfo);
+
   const [isLoading, setIsLoading] = useState(false);
 
   let configArray = nameElement;
@@ -55,8 +56,11 @@ const EditProfileContainer = () => {
         lSSetItem("userInfo", { ...userInfo, ...response.data });
         navigate(PROFILE_PATH);
       } else {
-        lSClear();
-        dispatch(logOutSuccess());
+        if (response.statusCode === 401) {
+          lSClear();
+          dispatch(logOutSuccess());
+        }
+        toast.error(response.message);
       }
     }
   };

@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 
-const DDFormError = ({ error, formName }) => {
+const EDFormError = ({ error }) => {
   return <div className={`error`}>{error}</div>;
 };
 
-export default memo(DDFormError);
+export default memo(EDFormError);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import callApi from "../../../utils/callApi";
 import { useNavigate } from "react-router-dom";
 
@@ -7,15 +7,14 @@ import {
   DELETE_EXAM_URL,
   SHOW_EXAM_URL,
 } from "../../../description/api.description";
-import lSGetItem from "../../../hook/lSGetItem";
 import lSClear from "../../../hook/lSClear";
-import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 import { toast } from "react-toastify";
+import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 
 const ShowExamContainer = () => {
   const [allExam, setAllExam] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const userInfo = lSGetItem("userInfo");
+  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -30,9 +29,12 @@ const ShowExamContainer = () => {
     });
     if (response.statusCode === 200) {
       setAllExam(response.data);
-    } else if (response.statusCode === 401) {
-      lSClear();
-      dispatch(logOutSuccess());
+    } else {
+      if (response.statusCode === 401) {
+        dispatch(logOutSuccess());
+        lSClear();
+      }
+      toast.error(response.message);
     }
     setIsLoading(false);
   };
@@ -66,9 +68,12 @@ const ShowExamContainer = () => {
     if (response.statusCode === 200) {
       await allExamApi();
       toast.success(response.message);
-    } else if (response.statusCode === 401) {
-      lSClear();
-      dispatch(logOutSuccess());
+    } else {
+      if (response.statusCode === 401) {
+        lSClear();
+        dispatch(logOutSuccess());
+      }
+      toast.error(response.message);
     }
     setIsLoading(false);
   };

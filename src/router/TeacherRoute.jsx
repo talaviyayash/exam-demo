@@ -2,14 +2,15 @@ import React, { memo } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { TEACHER } from "../description/globel.description";
 import { PROFILE_PATH } from "../utils/constants";
-import lSGetItem from "../hook/lSGetItem";
+import { useSelector } from "react-redux";
 
 const TeacherRoute = () => {
-  const { role } = lSGetItem("userInfo") ?? {};
+  const { isLogin, userInfo } = useSelector((state) => state.userInformation);
+  const { role } = userInfo;
 
   return (
     <>
-      {role === TEACHER ? (
+      {isLogin && role === TEACHER ? (
         <Outlet />
       ) : (
         <Navigate to={PROFILE_PATH} replace={true} />

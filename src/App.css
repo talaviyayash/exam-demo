@@ -110,6 +110,7 @@ a {
   gap: 20px;
   align-items: center;
   flex-direction: column;
+  font-size: 25px;
 }
 
 .give-exam-button-container {
@@ -129,4 +130,19 @@ a {
 th,
 td {
   text-align: center !important;
+}
+
+.giveExam-question-name {
+  font-size: 30px;
+}
+
+@media screen and (max-width: 500px) {
+  .simple-style-form {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 370px) {
+  .simple-style-form {
+    width: 250px;
+  }
 }

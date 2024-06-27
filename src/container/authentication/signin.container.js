@@ -12,6 +12,7 @@ import lSSetItem from "../../hook/lSSetItem";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../utils/constants";
 import { useState } from "react";
+import lSClear from "../../hook/lSClear";
 
 const SignInContainer = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,9 @@ const SignInContainer = () => {
         toast.success(response.message);
         navigate(PROFILE_PATH);
       } else {
+        if (response.statusCode === 401) {
+          lSClear();
+        }
         toast.error(response.message);
       }
       setIsSigningIn(false);

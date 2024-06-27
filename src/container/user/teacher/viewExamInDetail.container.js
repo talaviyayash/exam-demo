@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import callApi from "../../../utils/callApi";
-import lSGetItem from "../../../hook/lSGetItem";
 import { EDIT_GET_EXAM_URL } from "../../../description/api.description";
 import lSClear from "../../../hook/lSClear";
+import { toast } from "react-toastify";
 import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 
 const ViewExamInDetailContainer = () => {
   const { id, subject } = useParams();
-  const dispatch = useDispatch();
-  const userInfo = lSGetItem("userInfo");
+  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const [examDetail, setExamDetail] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const getExamDetail = async () => {
@@ -31,9 +31,12 @@ const ViewExamInDetailContainer = () => {
       if (response.statusCode === 200) {
         setExamDetail(response.data.questions);
         setCurrentIndex(0);
-      } else if (response.statusCode === 401) {
-        lSClear();
-        dispatch(logOutSuccess());
+      } else {
+        if (response.statusCode === 401) {
+          lSClear();
+          dispatch(logOutSuccess());
+        }
+        toast.error(response.message);
       }
       setIsLoading(false);
     };

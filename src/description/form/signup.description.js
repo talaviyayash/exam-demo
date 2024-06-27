@@ -1,4 +1,5 @@
 import {
+  allRegexForPassword,
   emailRegex,
   nameRegex,
   noConsecutiveSpaces,
@@ -84,24 +85,7 @@ export const signUpForm = [
       placeholder: "Password",
     },
     labelName: "Password",
-    patterns: [
-      {
-        regex: oneLowerCaseLetter,
-        error: "Password must include lower case alphabet.",
-      },
-      {
-        regex: oneUpperCaseLetter,
-        error: "Password must include upper case alphabet.",
-      },
-      {
-        regex: oneDigitCaseLetter,
-        error: "Password must include digit.",
-      },
-      {
-        regex: passwordWithLength,
-        error: "Password length must be between 6 to 10 .",
-      },
-    ],
+    patterns: allRegexForPassword("Password"),
   },
   {
     name: "role",

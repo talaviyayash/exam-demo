@@ -10,7 +10,7 @@ import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
-import { useSelector } from "react-redux";
+
 import {
   forStudentShowArray,
   forTeacherShowArray,
@@ -22,14 +22,14 @@ import {
   STUDENT,
   TEACHER,
 } from "../description/globel.description";
-import lSGetItem from "../hook/lSGetItem";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
-  const { isLogin } = useSelector((state) => state.userInformation);
   let pages = notLoginShowArray;
-  const userInfo = lSGetItem("userInfo");
-  if (!isLogin) pages = notLoginShowArray;
-  if (isLogin) {
+  const { isLogin, userInfo } = useSelector((state) => state.userInformation);
+  if (!userInfo.token) pages = notLoginShowArray;
+  if (userInfo.token) {
+    console.log(userInfo);
     if (userInfo.role === TEACHER) pages = forTeacherShowArray;
     if (userInfo.role === STUDENT) pages = forStudentShowArray;
   }

@@ -9,6 +9,8 @@ import {
 import { useDispatch } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
 import { useState } from "react";
+import lSClear from "../../hook/lSClear";
+import { logOutSuccess } from "../../redux/slice/userInfoSlice";
 
 const ForgetPasswordContainer = () => {
   const dispatch = useDispatch();
@@ -38,6 +40,10 @@ const ForgetPasswordContainer = () => {
         toast.success(response.message);
         dispatch(clearForm({ name: formName }));
       } else {
+        if (response.statusCode === 401) {
+          lSClear();
+          dispatch(logOutSuccess());
+        }
         toast.error(response.message);
       }
     }

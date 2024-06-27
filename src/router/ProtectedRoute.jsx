@@ -1,12 +1,12 @@
 import React, { memo } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { SIGN_IN_PATH } from "../utils/constants";
-import lSGetItem from "../hook/lSGetItem";
+import { useSelector } from "react-redux";
 
 const ProtectedRoute = () => {
-  const { token } = lSGetItem("userInfo") ?? {};
+  const isLogin = useSelector((state) => state.userInformation.isLogin);
   return (
-    <>{token ? <Outlet /> : <Navigate to={SIGN_IN_PATH} replace={true} />}</>
+    <>{isLogin ? <Outlet /> : <Navigate to={SIGN_IN_PATH} replace={true} />}</>
   );
 };
 

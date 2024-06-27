@@ -10,6 +10,7 @@ import DDForm from "../../shared/DDForm/EDForm";
 import { NavLink } from "react-router-dom";
 import SignUpContainer from "../../container/authentication/signup.container";
 import EDLoading from "../../shared/button/EDLoading";
+import { SIGN_IN_PATH } from "../../utils/constants";
 
 const SignUp = () => {
   const {
@@ -25,7 +26,7 @@ const SignUp = () => {
   return (
     <>
       <div className="container">
-        <div className="style-form">
+        <div className="style-form simple-style-form">
           <h1 className="form-header">{SIGNUP_FORM_HEADER}</h1>
           <DDForm
             handelChangeType={handelChangeType}
@@ -37,7 +38,7 @@ const SignUp = () => {
             formName={SIGNUP_FORM_NAME}
           />
           <div className="text-end">
-            <NavLink to={"/signin"} className="font-color">
+            <NavLink to={SIGN_IN_PATH} className="font-color">
               Already have account ?
             </NavLink>
           </div>

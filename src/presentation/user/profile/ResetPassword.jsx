@@ -10,7 +10,7 @@ import {
   RESET_PASSWORD_SUBMIT_NAME,
 } from "../../../description/form/resetPassword.description";
 
-const ChangePassword = () => {
+const ResetPassword = () => {
   const {
     handelChangeType,
     state,
@@ -19,13 +19,12 @@ const ChangePassword = () => {
     handelChangeCheckBox,
     handelSubmit,
     configArray,
-
     isLoading,
   } = ResetPasswordContainer();
   return (
     <>
       <div className="container">
-        <div className="style-form">
+        <div className="style-form simple-style-form">
           <h1 className="form-header">{RESET_PASSWORD_FORM_HEADER}</h1>
           <EDForm
             handelChangeType={handelChangeType}
@@ -49,4 +48,4 @@ const ChangePassword = () => {
   );
 };
 
-export default ChangePassword;
+export default ResetPassword;

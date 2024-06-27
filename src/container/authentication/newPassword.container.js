@@ -15,6 +15,8 @@ import {
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { EMPTY_STRING } from "../../description/globel.description";
+import { FORGET_PASSWORD_PATH, SIGN_IN_PATH } from "../../utils/constants";
+import lSClear from "../../hook/lSClear";
 
 const NewPasswordContainer = () => {
   const [searchParams] = useSearchParams();
@@ -62,8 +64,11 @@ const NewPasswordContainer = () => {
       if (response.statusCode === 200) {
         toast.success(response.message);
         dispatch(clearForm({ name: formName }));
-        navigate("/signin");
+        navigate(SIGN_IN_PATH);
       } else {
+        if (response.statusCode === 401) {
+          lSClear();
+        }
         toast.error(response.message);
       }
     }
@@ -82,12 +87,12 @@ const NewPasswordContainer = () => {
         setIsTokenVerifying(false);
         if (response.statusCode !== 200) {
           toast.error(response.message);
-          navigate("/forget-password");
+          navigate(FORGET_PASSWORD_PATH);
         }
       };
       verifyToken();
     } else {
-      navigate("/forget-password");
+      navigate(FORGET_PASSWORD_PATH);
     }
   }, [navigate, token]);
   return {

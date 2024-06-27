@@ -18,7 +18,6 @@ import {
   EDIT_EXAM_URL,
   EDIT_GET_EXAM_URL,
 } from "../../../description/api.description";
-import lSGetItem from "../../../hook/lSGetItem";
 import { toast } from "react-toastify";
 import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 import {
@@ -27,6 +26,8 @@ import {
   whereToAddUpdate,
 } from "../../../redux/slice/examSlice";
 import { PROFILE_PATH, VIEW_EXAM_PATH } from "../../../utils/constants";
+import { totalOption } from "../../../description/form/createExam.description";
+import lSClear from "../../../hook/lSClear";
 
 const EditExamContainer = () => {
   const dispatch = useDispatch();
@@ -37,35 +38,38 @@ const EditExamContainer = () => {
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
 
-  const userInfo = lSGetItem("userInfo");
+  const userInfo = useSelector((state) => state.userInformation.userInfo);
 
   const sameQuestionValidation = (allValue) => {
     const { question: currentQuestion } = allValue;
     let indexOfArray = [];
+
     const filterQuestion = allQuestion.filter((value, index) => {
       const questionIsSame = value.question === currentQuestion;
-      if (questionIsSame) {
-        indexOfArray.push(index);
-      }
+      if (questionIsSame) indexOfArray.push(index);
       return questionIsSame;
     });
+
     const questionIsSame =
       (whereToAdd === allQuestion.length && filterQuestion.length > 0) ||
       (indexOfArray.includes(whereToAdd) && filterQuestion.length > 1) ||
       (!indexOfArray.includes(whereToAdd) && filterQuestion.length > 0);
 
-    if (questionIsSame) {
-      return "Question cannot be same.";
-    }
-    return EMPTY_STRING;
+    return questionIsSame ? "Question cannot be same." : EMPTY_STRING;
   };
 
   const validateAllOption = (allValue, name) => {
-    const { options1, options2, options3, options4 } = allValue;
-    const allOptionValue = [options1, options2, options3, options4];
+    const allOptionValue = [];
+    for (var i = 1; i <= totalOption; i++) {
+      allOptionValue.push(allValue?.[`options${i}`]);
+    }
+
     const optionErrorMsg = "All options must be different";
+
     const isAnySame = (compareOptionsValue) =>
-      allOptionValue.filter((val) => val === compareOptionsValue).length > 1
+      allOptionValue.filter((val) => {
+        return val === compareOptionsValue;
+      }).length > 1
         ? optionErrorMsg
         : EMPTY_STRING;
 
@@ -73,14 +77,39 @@ const EditExamContainer = () => {
       const optionName = `options${index + 1}`;
       return { ...total, [optionName]: isAnySame(val) };
     }, {});
+
     dispatch(
       addError({
         name: EDIT_EXAM_FORM_NAME,
         error: optionError,
       })
     );
+
     return optionError[name];
   };
+
+  const allOptionValidationInObj = () => {
+    const validationObj = {};
+    for (var i = 1; i <= totalOption; i++) {
+      validationObj[`options${i}`] = validateAllOption;
+    }
+    return validationObj;
+  };
+
+  const {
+    handelChangeType,
+    state,
+    validateAllField,
+    error,
+    handelChangeCheckBox,
+  } = DDFormContainer({
+    configArray,
+    formName: EDIT_EXAM_FORM_NAME,
+    customValidation: {
+      question: sameQuestionValidation,
+      ...allOptionValidationInObj(),
+    },
+  });
 
   useEffect(() => {
     const getExamDetail = async () => {
@@ -128,13 +157,17 @@ const EditExamContainer = () => {
           ...formatArray[0],
         };
         dispatch(addValue({ value: formValue, name: EDIT_EXAM_FORM_NAME }));
-      } else if (response.statusCode === 404) {
-        toast.error(response.message);
-        dispatch(logOutSuccess());
       } else {
-        toast.info(response.message);
-        navigate(VIEW_EXAM_PATH);
+        if (response.statusCode === 401) {
+          lSClear();
+          toast.error(response.message);
+          dispatch(logOutSuccess());
+        } else {
+          toast.info(response.message);
+          navigate(VIEW_EXAM_PATH);
+        }
       }
+
       setIsLoading(false);
     };
     getExamDetail();
@@ -230,30 +263,15 @@ const EditExamContainer = () => {
       if (response.statusCode === 200) {
         toast.success(response.message);
         navigate(PROFILE_PATH);
-      } else if (response.statusCode === 401) {
+      } else {
+        if (response.statusCode === 401) {
+          lSClear();
+          dispatch(logOutSuccess());
+        }
         toast.error(response.message);
-        dispatch(logOutSuccess());
       }
     }
   };
-
-  const {
-    handelChangeType,
-    state,
-    validateAllField,
-    error,
-    handelChangeCheckBox,
-  } = DDFormContainer({
-    configArray,
-    formName: EDIT_EXAM_FORM_NAME,
-    customValidation: {
-      question: sameQuestionValidation,
-      options1: validateAllOption,
-      options2: validateAllOption,
-      options3: validateAllOption,
-      options4: validateAllOption,
-    },
-  });
 
   return {
     configArray,

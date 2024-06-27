@@ -1,9 +1,4 @@
-import {
-  emailRegex,
-  oneDigitCaseLetter,
-  oneLowerCaseLetter,
-  oneUpperCaseLetter,
-} from "../../utils/regex";
+import { allRegexForPassword, emailRegex } from "../../utils/regex";
 
 export const SGININ_FORM_HEADER = "Sign In";
 
@@ -29,6 +24,7 @@ export const signInForm = [
     attributes: {
       name: "email",
       id: "email",
+      className: "signInInput",
     },
     labelName: "Email",
     wrapElement: {},
@@ -50,23 +46,10 @@ export const signInForm = [
     attributes: {
       name: "password",
       id: "password",
-
+      className: "signInInput",
       placeholder: "Password",
     },
     labelName: "Password",
-    patterns: [
-      {
-        regex: oneLowerCaseLetter,
-        error: "Password must include lower case alphabet.",
-      },
-      {
-        regex: oneUpperCaseLetter,
-        error: "Password must include upper case alphabet.",
-      },
-      {
-        regex: oneDigitCaseLetter,
-        error: "Password must include digit.",
-      },
-    ],
+    patterns: allRegexForPassword("Password"),
   },
 ];

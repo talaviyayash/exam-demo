@@ -23,7 +23,7 @@ const EditProfile = () => {
   return (
     <>
       <div className="container">
-        <div className="style-form">
+        <div className="style-form simple-style-form">
           <h1 className="form-header">{EDIT_PROFILE_FORM_HEADER}</h1>
           <EDForm
             handelChangeType={handelChangeType}

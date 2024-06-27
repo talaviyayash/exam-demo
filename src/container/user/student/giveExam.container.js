@@ -22,7 +22,7 @@ import { SHOW_EXAM_FOR_STUDENT } from "../../../utils/constants";
 import lSSetItem from "../../../hook/lSSetItem";
 
 const GiveExamContainer = () => {
-  const userInfo = lSGetItem("userInfo");
+  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const { id, subject } = useParams();
   const [decodedSubject] = useState(atob(subject));
   const [isLoading, setIsLoading] = useState(true);
@@ -44,6 +44,8 @@ const GiveExamContainer = () => {
       );
       setCurrentAnswer(EMPTY_STRING);
       dispatch(whereToAddUpdate({ whereToAdd: whereToAdd + 1 }));
+    } else {
+      toast.error("Please select answer.");
     }
   };
 
@@ -55,7 +57,8 @@ const GiveExamContainer = () => {
   };
 
   const handelSubmit = async () => {
-    if (currentAnswer === EMPTY_STRING) return null;
+    if (currentAnswer === EMPTY_STRING)
+      return toast.error("Please select answer.");
     setIsGivingExam(true);
     const answerObj = {
       question: currentQuestion._id,
@@ -78,10 +81,11 @@ const GiveExamContainer = () => {
     if (response.statusCode === 200) {
       toast.success(response.message);
       navigate(SHOW_EXAM_FOR_STUDENT);
-    } else if (response.statusCode === 401) {
-      lSClear();
-      dispatch(logOutSuccess());
     } else {
+      if (response.statusCode === 401) {
+        lSClear();
+        dispatch(logOutSuccess());
+      }
       toast.error(response.message);
     }
   };
@@ -113,12 +117,14 @@ const GiveExamContainer = () => {
         } else {
           lSSetItem("giveExam", { id: id, answer: [] });
         }
-      } else if (response.statusCode === 401) {
-        dispatch(logOutSuccess());
-        lSClear();
-      } else if (response.statusCode === 500) {
+      } else {
+        if (response.statusCode === 401) {
+          lSClear();
+          dispatch(logOutSuccess());
+        } else {
+          navigate(SHOW_EXAM_FOR_STUDENT);
+        }
         toast.error(response.message);
-        navigate(SHOW_EXAM_FOR_STUDENT);
       }
     };
     getExamDetail();
