@@ -45,23 +45,24 @@ const EditExam = () => {
               configArray={configArray}
               formName={EDIT_EXAM_FORM_NAME}
             />
+            {whereToAdd !== 0 && (
+              <EDButton
+                {...ATTRIBUTE_PREV_BUTTON}
+                onClick={handelPrev}
+                disabled={isSubmitting}
+              />
+            )}
+
             <EDLoading
               {...ATTRIBUTE_SUBMIT_BUTTON}
               onClick={handelSubmit}
               loading={isSubmitting}
             />
+
             {whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION && (
               <EDButton
                 {...ATTRIBUTE_NEXT_BUTTON}
                 onClick={handelNext}
-                disabled={isSubmitting}
-              />
-            )}
-
-            {whereToAdd !== 0 && (
-              <EDButton
-                {...ATTRIBUTE_PREV_BUTTON}
-                onClick={handelPrev}
                 disabled={isSubmitting}
               />
             )}

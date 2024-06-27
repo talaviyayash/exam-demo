@@ -1,3 +1,4 @@
+import ErrorBoundary from "../presentation/ErrorBoundary";
 import ForgetPassWord from "../presentation/authentication/ForgetPassWord";
 import NewPassword from "../presentation/authentication/NewPassword";
 import SignIn from "../presentation/authentication/SignIn";
@@ -43,82 +44,87 @@ export const routingArray = [
     element: <Navbar />,
     children: [
       {
-        element: <Authentication />,
+        element: <ErrorBoundary />,
         children: [
           {
-            path: SIGN_IN_PATH,
-            element: <SignIn />,
-          },
-          {
-            path: SIGN_UP_PATH,
-            element: <SignUp />,
-          },
-          {
-            path: FORGET_PASSWORD_PATH,
-            element: <ForgetPassWord />,
-          },
-          {
-            path: NEW_PASSWORD_PATH,
-            element: <NewPassword />,
-          },
-        ],
-      },
-      {
-        element: <ProtectedRoute />,
-        children: [
-          {
-            element: <StudentRoute />,
+            element: <Authentication />,
             children: [
               {
-                path: EDIT_PROFILE_PATH,
-                element: <EditProfile />,
+                path: SIGN_IN_PATH,
+                element: <SignIn />,
               },
               {
-                path: SHOW_EXAM_FOR_STUDENT,
-                element: <ShowAllExam />,
+                path: SIGN_UP_PATH,
+                element: <SignUp />,
               },
               {
-                path: GIVE_EXAM_PATH,
-                element: <GiveExam />,
+                path: FORGET_PASSWORD_PATH,
+                element: <ForgetPassWord />,
+              },
+              {
+                path: NEW_PASSWORD_PATH,
+                element: <NewPassword />,
               },
             ],
           },
           {
-            element: <TeacherRoute />,
+            element: <ProtectedRoute />,
             children: [
               {
-                path: CREATE_EXAM_PATH,
-                element: <CreateExam />,
+                element: <StudentRoute />,
+                children: [
+                  {
+                    path: EDIT_PROFILE_PATH,
+                    element: <EditProfile />,
+                  },
+                  {
+                    path: SHOW_EXAM_FOR_STUDENT,
+                    element: <ShowAllExam />,
+                  },
+                  {
+                    path: GIVE_EXAM_PATH,
+                    element: <GiveExam />,
+                  },
+                ],
               },
               {
-                path: VIEW_EXAM_PATH,
-                element: <CustomizedTables />,
+                element: <TeacherRoute />,
+                children: [
+                  {
+                    path: CREATE_EXAM_PATH,
+                    element: <CreateExam />,
+                  },
+                  {
+                    path: VIEW_EXAM_PATH,
+                    element: <CustomizedTables />,
+                  },
+                  {
+                    path: EDIT_EXAM_PATH,
+                    element: <EditExam />,
+                  },
+                  {
+                    path: VIEW_IN_DETAIL_PATH,
+                    element: <ViewExamInDetail />,
+                  },
+                  {
+                    path: STUDENT_DETAIL_PATH,
+                    element: <ShowStudentDetail />,
+                  },
+                  {
+                    path: ONE_STUDENT_DETAIL_PATH,
+                    element: <OneStudentInDetail />,
+                  },
+                ],
               },
               {
-                path: EDIT_EXAM_PATH,
-                element: <EditExam />,
+                path: PROFILE_PATH,
+                element: <Profile />,
               },
               {
-                path: VIEW_IN_DETAIL_PATH,
-                element: <ViewExamInDetail />,
-              },
-              {
-                path: STUDENT_DETAIL_PATH,
-                element: <ShowStudentDetail />,
-              },
-              {
-                path: ONE_STUDENT_DETAIL_PATH,
-                element: <OneStudentInDetail />,
+                path: RESET_PASSWORD_PATH,
+                element: <ResetPassword />,
               },
             ],
-          },
-          {
-            path: PROFILE_PATH,
-            element: <Profile />,
-          },
-          {
-            path: RESET_PASSWORD_PATH,
-            element: <ResetPassword />,
           },
         ],
       },
