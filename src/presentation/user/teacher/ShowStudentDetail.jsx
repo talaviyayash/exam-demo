@@ -16,10 +16,11 @@ const ShowStudentDetail = () => {
     allStudent,
     navigateToStudentInDetail,
     getAllStudentData,
+    isError,
     isLoading,
   } = ShowStudentDetailContainer();
   if (isLoading) return <Loading />;
-  if (allStudent.length === 0)
+  if (isError)
     return (
       <>
         <div className="container" style={{ margin: "0" }}>

@@ -14,3 +14,5 @@ export const ATTRIBUTE_PREV_BUTTON = {
     fontSize: "18px",
   },
 };
+
+export const EXAM_DETAIL_LOADING_STATE = "examDetail";

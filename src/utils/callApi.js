@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const axiosInstance = axios.create({
   baseURL: "https://examination.onrender.com",
@@ -15,7 +16,7 @@ const callApi = async (props) => {
     const response = await axiosInstance({ ...props });
     return response.data;
   } catch (error) {
-    return error;
+    toast.error(error);
   }
 };
 
