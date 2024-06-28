@@ -15,7 +15,6 @@ const useApi = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [controller, setController] = useState([]);
-
   useEffect(() => {
     return () => {
       let controllerInArray = controller;
@@ -23,7 +22,6 @@ const useApi = () => {
         controllerInArray = prev;
         return prev;
       });
-      console.log(controllerInArray);
       controllerInArray.forEach(({ controller, apiHasToCancel }) => {
         if (apiHasToCancel) controller.abort();
       });
@@ -46,6 +44,7 @@ const useApi = () => {
       return prev;
     });
     dispatch(addLoadingState({ name: loadingStatuesName }));
+
     const response = await callApi({
       ...axiosConfig,
       signal: newController.signal,
@@ -53,17 +52,17 @@ const useApi = () => {
 
     if (response) {
       if (response.statusCode === 200) {
+        if (successFunction) successFunction(response);
         dispatch(
           addSuccessState({ name: loadingStatuesName, data: response.data })
         );
-        if (successFunction) successFunction(response);
-        if (showToast) toast.success(toastMsg ?? response.message);
+        if (showToast) toast.success(toastMsg || response.message);
         return { ...response, isError: false, isApiCancelled: false };
       } else {
         dispatch(addErrorState({ name: loadingStatuesName }));
         if (response.statusCode === 401) {
           dispatch(logOutSuccess());
-          toast.error(errorToastMsg ?? response.message);
+          toast.error(errorToastMsg || response.message);
           navigate(SIGN_IN_PATH);
         } else {
           if (showToast) toast.success(response.message);

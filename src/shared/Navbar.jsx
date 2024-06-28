@@ -27,9 +27,8 @@ import { useSelector } from "react-redux";
 const Navbar = () => {
   let pages = notLoginShowArray;
   const { isLogin, userInfo } = useSelector((state) => state.userInformation);
-  if (!userInfo.token) pages = notLoginShowArray;
-  if (userInfo.token) {
-    console.log(userInfo);
+  if (!isLogin) pages = notLoginShowArray;
+  if (isLogin) {
     if (userInfo.role === TEACHER) pages = forTeacherShowArray;
     if (userInfo.role === STUDENT) pages = forStudentShowArray;
   }

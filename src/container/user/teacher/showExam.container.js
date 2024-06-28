@@ -1,42 +1,49 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import callApi from "../../../utils/callApi";
 import { useNavigate } from "react-router-dom";
 
 import {
   DELETE_EXAM_URL,
   SHOW_EXAM_URL,
 } from "../../../description/api.description";
-import lSClear from "../../../hook/lSClear";
+
+import useApi from "../../../hook/useApi";
+import {
+  DELETE_EXAM_STATE,
+  SHOW_EXAM_STATE,
+} from "../../../description/teacher/showExam.description";
+import { API_STATE } from "../../../utils/constants";
 import { toast } from "react-toastify";
-import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 
 const ShowExamContainer = () => {
-  const [allExam, setAllExam] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const userInfo = useSelector((state) => state.userInformation.userInfo);
+  const { isLoading, data } =
+    useSelector((state) => state?.[API_STATE]?.[SHOW_EXAM_STATE]) ?? {};
+  const { isLoading: deleteIsLoading } =
+    useSelector((state) => state?.[API_STATE]?.[DELETE_EXAM_STATE]) ?? {};
   const navigate = useNavigate();
+  const apiCaller = useApi();
   const dispatch = useDispatch();
+  const [allExam, setData] = useState();
+
+  console.log(isLoading, allExam);
 
   const allExamApi = async () => {
-    setIsLoading(true);
-    const response = await callApi({
+    const axiosConfig = {
       url: SHOW_EXAM_URL,
       method: "get",
       headers: {
         "access-token": userInfo.token,
       },
+    };
+    const successFunction = (response) => setData(response.data);
+    await apiCaller({
+      axiosConfig,
+      loadingStatuesName: SHOW_EXAM_STATE,
+      showToast: false,
+      apiHasToCancel: true,
+      successFunction,
     });
-    if (response.statusCode === 200) {
-      setAllExam(response.data);
-    } else {
-      if (response.statusCode === 401) {
-        dispatch(logOutSuccess());
-        lSClear();
-      }
-      toast.error(response.message);
-    }
-    setIsLoading(false);
   };
 
   const editExamNavigate = (subject, id) => {
@@ -54,8 +61,7 @@ const ShowExamContainer = () => {
     if (!isApproved) {
       return null;
     }
-    setIsLoading(true);
-    const response = await callApi({
+    const axiosConfig = {
       url: DELETE_EXAM_URL,
       method: "delete",
       headers: {
@@ -64,27 +70,24 @@ const ShowExamContainer = () => {
       params: {
         id,
       },
+    };
+    await apiCaller({
+      axiosConfig,
+      loadingStatuesName: DELETE_EXAM_STATE,
+      apiHasToCancel: true,
     });
-    if (response.statusCode === 200) {
-      await allExamApi();
-      toast.success(response.message);
-    } else {
-      if (response.statusCode === 401) {
-        lSClear();
-        dispatch(logOutSuccess());
-      }
-      toast.error(response.message);
-    }
-    setIsLoading(false);
+    await allExamApi();
+    toast.success(`Delete exam  successfully`);
   };
 
   useEffect(() => {
     allExamApi();
   }, []);
+
   return {
     allExam,
     editExamNavigate,
-    isLoading,
+    isLoading: isLoading || deleteIsLoading,
     deleteExam,
     viewExamNavigate,
   };

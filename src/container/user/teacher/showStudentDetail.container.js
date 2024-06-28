@@ -8,17 +8,13 @@ import { GET_STUDENT_LOADING_NAME } from "../../../description/teacher/showStude
 
 const ShowStudentDetailContainer = () => {
   const userInfo = useSelector((state) => state.userInformation.userInfo);
-  const {
-    isLoading,
-    isError,
-    data: allStudent = [],
-  } = useSelector((state) => state?.apiState?.[GET_STUDENT_LOADING_NAME]) ?? {};
-  const [data, setData] = useState([]);
+  const { isLoading, isError } =
+    useSelector((state) => state?.apiState?.[GET_STUDENT_LOADING_NAME]) ?? {};
+  const [allStudent, setData] = useState([]);
   const navigate = useNavigate();
   const apiCaller = useApi();
   const navigateToStudentInDetail = (id) => navigate(`/student-detail/${id}`);
-
-  console.log(isLoading, data);
+  console.log(isLoading, allStudent);
 
   useEffect(() => {
     const getAllStudentData = async () => {
@@ -30,6 +26,8 @@ const ShowStudentDetailContainer = () => {
         },
       };
 
+      const successFunction = (response) => setData(response.data);
+
       await apiCaller({
         axiosConfig,
         loadingStatuesName: GET_STUDENT_LOADING_NAME,
@@ -37,6 +35,7 @@ const ShowStudentDetailContainer = () => {
         toastMsg: "",
         errorToastMsg: "",
         apiHasToCancel: true,
+        successFunction,
       });
     };
     getAllStudentData();
@@ -47,7 +46,6 @@ const ShowStudentDetailContainer = () => {
     isLoading,
     navigateToStudentInDetail,
     isError,
-    data,
   };
 };
 

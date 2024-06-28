@@ -26,7 +26,6 @@ const ViewExamInDetail = () => {
         <h1 className="header">Subject Name :- {subject}</h1>
         <div>Question No :- {currentIndex + 1}</div>
         <div>Question :- {examDetail[currentIndex]?.question}</div>
-        {/* <div>Options :- </div> */}
         <div>
           {examDetail[currentIndex]?.options?.map((value, index) => {
             return (

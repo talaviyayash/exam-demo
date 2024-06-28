@@ -21,6 +21,10 @@ const apiLoadingSlice = createSlice({
         data: data,
       };
     },
+    addDataState: (state, action) => {
+      const { name, data } = action.payload;
+      state[name].data = data;
+    },
     addErrorState: (state, action) => {
       const { name } = action.payload;
       state[name] = {
@@ -31,7 +35,7 @@ const apiLoadingSlice = createSlice({
   },
 });
 
-export const { addErrorState, addSuccessState, addLoadingState } =
+export const { addErrorState, addSuccessState, addLoadingState, addDataState } =
   apiLoadingSlice.actions;
 
 export default apiLoadingSlice.reducer;
