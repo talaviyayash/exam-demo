@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import callApi from "../../../utils/callApi";
 import { ONE_STUDENT_DETAIL_URL } from "../../../description/api.description";
-import { useDispatch, useSelector } from "react-redux";
-import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
-import lSClear from "../../../hook/lSClear";
-import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
+import useApi from "../../../hook/useApi";
+import { LOADING_STATE_OF_STUDENT } from "../../../description/teacher/oneStudentInDetail.description";
 
 const OneStudentInDetailContainer = () => {
   const { id } = useParams();
   const userInfo = useSelector((state) => state.userInformation.userInfo);
-  const [studentInfo, setStudentInfo] = useState();
-  const [isLoading, setIsLoading] = useState(true);
-  const dispatch = useDispatch();
+  const apiCaller = useApi();
+  const { isLoading, data: studentInfo = [] } =
+    useSelector((state) => state?.apiState?.[LOADING_STATE_OF_STUDENT]) ?? {};
+
   useEffect(() => {
     const fetchStudentDetails = async () => {
-      const response = await callApi({
+      const axiosConfig = {
         url: ONE_STUDENT_DETAIL_URL,
         method: "get",
         headers: {
@@ -24,18 +23,15 @@ const OneStudentInDetailContainer = () => {
         params: {
           id,
         },
+      };
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: LOADING_STATE_OF_STUDENT,
+        showToast: false,
+        apiHasToCancel: true,
       });
-      if (response.statusCode === 200) {
-        setStudentInfo(response?.data[0]);
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-          dispatch(logOutSuccess());
-        }
-        toast.error(response.message);
-      }
-      setIsLoading(false);
     };
+
     fetchStudentDetails();
   }, []);
   return {

@@ -1,30 +1,34 @@
 import DDFormContainer from "../form/ddform.container";
-import callApi from "../../utils/callApi";
 import {
   CREATE_NEW_PASSWORD_URL,
   NEW_PASSWORD_VERIFY_URL,
 } from "../../description/api.description";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
 import {
   NEW_PASSWORD_FORM_NAME as formName,
   newPasswordForm as configArray,
+  VERIFYING_TOKEN_STATE,
+  SUBMITTING_PASSWORD_STATE,
 } from "../../description/form/newPassword.description";
 
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { EMPTY_STRING } from "../../description/globel.description";
 import { FORGET_PASSWORD_PATH, SIGN_IN_PATH } from "../../utils/constants";
-import lSClear from "../../hook/lSClear";
+import useApi from "../../hook/useApi";
 
 const NewPasswordContainer = () => {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const [token] = useState(searchParams.get("token"));
   const dispatch = useDispatch();
-  const [isTokenVerifying, setIsTokenVerifying] = useState(true);
   const [isCreatingNewPassword, setIsCreatingNewPassword] = useState(false);
+  const apiCaller = useApi();
+  const { isLoading: isTokenVerifying = true } =
+    useSelector((state) => state?.apiState?.[VERIFYING_TOKEN_STATE]) ?? {};
+  const { isLoading } =
+    useSelector((state) => state?.apiState?.[SUBMITTING_PASSWORD_STATE]) ?? {};
 
   const ConfirmPassword = (allValue) => {
     const PasswordValue = allValue?.Password;
@@ -49,46 +53,47 @@ const NewPasswordContainer = () => {
   });
 
   const handelSubmit = async (e) => {
-    setIsCreatingNewPassword(true);
     const allFieldValid = validateAllField();
     if (allFieldValid) {
-      const response = await callApi({
+      const axiosConfig = {
         url: CREATE_NEW_PASSWORD_URL,
         method: "post",
         data: state,
         params: {
           token,
         },
-      });
-      setIsCreatingNewPassword(false);
-      if (response.statusCode === 200) {
-        toast.success(response.message);
+      };
+      const successFunction = () => {
         dispatch(clearForm({ name: formName }));
-        navigate(SIGN_IN_PATH);
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-        }
-        toast.error(response.message);
-      }
+      };
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: SUBMITTING_PASSWORD_STATE,
+        apiHasToCancel: true,
+        successFunction,
+        showToast: true,
+      });
+      navigate(SIGN_IN_PATH);
     }
   };
 
   useEffect(() => {
     if (token) {
       const verifyToken = async () => {
-        const response = await callApi({
+        const axiosConfig = {
           url: NEW_PASSWORD_VERIFY_URL,
           method: "get",
           headers: {
             "access-token": token,
           },
+        };
+        const errorFunction = () => navigate(FORGET_PASSWORD_PATH);
+        await apiCaller({
+          axiosConfig,
+          loadingStatuesName: VERIFYING_TOKEN_STATE,
+          apiHasToCancel: true,
+          errorFunction,
         });
-        setIsTokenVerifying(false);
-        if (response.statusCode !== 200) {
-          toast.error(response.message);
-          navigate(FORGET_PASSWORD_PATH);
-        }
       };
       verifyToken();
     } else {

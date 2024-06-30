@@ -6,6 +6,8 @@ export const EDIT_PROFILE_FORM_HEADER = "Edit Profile";
 
 export const EDIT_PROFILE_SUBMIT_NAME = "Update Profile";
 
+export const SUBMIT_PROFILE_LOADING = "editProfile";
+
 export const nameElement = {
   name: "name",
   type: "text",

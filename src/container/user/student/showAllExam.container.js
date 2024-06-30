@@ -1,19 +1,17 @@
 import { useEffect, useState } from "react";
-import callApi from "../../../utils/callApi";
 import { GET_ALL_EXAM_FOR_STUDENT } from "../../../description/api.description";
-import { useDispatch, useSelector } from "react-redux";
-import lSClear from "../../../hook/lSClear";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
+import useApi from "../../../hook/useApi";
+import { GET_EXAM_LOADING } from "../../../description/student/showAllExam.description";
 
 const ShowAllExamContainer = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [allExam, setAllExam] = useState([]);
   const [showResult, setShowResult] = useState({ show: false });
   const userInfo = useSelector((state) => state.userInformation.userInfo);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const apiCaller = useApi();
+  const { isLoading = true, data: allExam } =
+    useSelector((state) => state?.apiState?.[GET_EXAM_LOADING]) ?? {};
 
   const redirectToGiveExam = (subject, id) => {
     const encodedSubjectName = btoa(subject);
@@ -24,24 +22,19 @@ const ShowAllExamContainer = () => {
 
   useEffect(() => {
     const getAllExamForStudent = async () => {
-      setIsLoading(true);
-      const response = await callApi({
+      const axiosConfig = {
         url: GET_ALL_EXAM_FOR_STUDENT,
         method: "get",
         headers: {
           "access-token": userInfo.token,
         },
+      };
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: GET_EXAM_LOADING,
+        apiHasToCancel: true,
+        showToast: true,
       });
-      setIsLoading(false);
-      if (response.statusCode === 200) {
-        setAllExam(response.data);
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-          dispatch(logOutSuccess());
-        }
-        toast.error(response.message);
-      }
     };
     getAllExamForStudent();
   }, []);

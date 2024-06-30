@@ -4,6 +4,8 @@ export const FORGET_PASSWORD_FORM_HEADER = "Forget Password";
 
 export const FORGET_PASSWORD_FORM_NAME = "forgetPasswordForm";
 
+export const STATE_FOR_FORGET_PASSWORD = "forgetPassword";
+
 export const FORGET_PASSWORD_SUBMIT_NAME = "Sent Email";
 
 export const ATTRIBUTE_SUBMIT_BUTTON = {

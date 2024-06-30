@@ -12,9 +12,10 @@ import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import Loading from "../../../shared/Loading";
 
 const ShowExam = () => {
-  const { viewExamNavigate, isLoading, allExam, editExamNavigate, deleteExam } =
+  const {deleteIsLoading, viewExamNavigate, isLoading, allExam = [] , editExamNavigate, deleteExam } =
     ShowExamContainer();
-  if (isLoading) return <Loading />;
+    console.log(isLoading , );
+  if (isLoading || deleteIsLoading === false) return <Loading />;
 
   return (
     <TableContainer component={Paper}>

@@ -14,19 +14,18 @@ import {
 } from "../../../description/teacher/showExam.description";
 import { API_STATE } from "../../../utils/constants";
 import { toast } from "react-toastify";
+import { toastSuccess } from "../../../utils/toastFunction";
 
 const ShowExamContainer = () => {
   const userInfo = useSelector((state) => state.userInformation.userInfo);
-  const { isLoading, data } =
+  const { isLoading, data: allExam } =
     useSelector((state) => state?.[API_STATE]?.[SHOW_EXAM_STATE]) ?? {};
+  console.log(isLoading);
   const { isLoading: deleteIsLoading } =
     useSelector((state) => state?.[API_STATE]?.[DELETE_EXAM_STATE]) ?? {};
   const navigate = useNavigate();
   const apiCaller = useApi();
   const dispatch = useDispatch();
-  const [allExam, setData] = useState();
-
-  console.log(isLoading, allExam);
 
   const allExamApi = async () => {
     const axiosConfig = {
@@ -36,13 +35,11 @@ const ShowExamContainer = () => {
         "access-token": userInfo.token,
       },
     };
-    const successFunction = (response) => setData(response.data);
     await apiCaller({
       axiosConfig,
       loadingStatuesName: SHOW_EXAM_STATE,
       showToast: false,
       apiHasToCancel: true,
-      successFunction,
     });
   };
 
@@ -77,7 +74,7 @@ const ShowExamContainer = () => {
       apiHasToCancel: true,
     });
     await allExamApi();
-    toast.success(`Delete exam  successfully`);
+    toastSuccess(`Delete exam  successfully`);
   };
 
   useEffect(() => {
@@ -87,9 +84,10 @@ const ShowExamContainer = () => {
   return {
     allExam,
     editExamNavigate,
-    isLoading: isLoading || deleteIsLoading,
+    isLoading,
     deleteExam,
     viewExamNavigate,
+    deleteIsLoading,
   };
 };
 

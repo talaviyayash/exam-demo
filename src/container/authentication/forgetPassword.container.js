@@ -1,20 +1,20 @@
 import DDFormContainer from "../form/ddform.container";
-import callApi from "../../utils/callApi";
 import { FORGET_PASSWORD_URL } from "../../description/api.description";
-import { toast } from "react-toastify";
 import {
   FORGET_PASSWORD_FORM_NAME as formName,
   forgetPasswordForm as configArray,
+  STATE_FOR_FORGET_PASSWORD,
 } from "../../description/form/forgetPassword.description";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
-import { useState } from "react";
-import lSClear from "../../hook/lSClear";
-import { logOutSuccess } from "../../redux/slice/userInfoSlice";
+import useApi from "../../hook/useApi";
 
 const ForgetPasswordContainer = () => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(false);
+  const apiCaller = useApi();
+  const { isLoading = false } =
+    useSelector((state) => state?.apiState?.[STATE_FOR_FORGET_PASSWORD]) ?? {};
+
   const {
     handelChangeType,
     state,
@@ -29,23 +29,19 @@ const ForgetPasswordContainer = () => {
   const handelSubmit = async (e) => {
     const allFieldValid = validateAllField();
     if (allFieldValid) {
-      setIsLoading(true);
-      const response = await callApi({
+      const successFunction = () => dispatch(clearForm({ name: formName }));
+      const axiosConfig = {
         url: FORGET_PASSWORD_URL,
         method: "post",
         data: state,
+      };
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: STATE_FOR_FORGET_PASSWORD,
+        apiHasToCancel: true,
+        showToast: true,
+        successFunction,
       });
-      setIsLoading(false);
-      if (response.statusCode === 200) {
-        toast.success(response.message);
-        dispatch(clearForm({ name: formName }));
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-          dispatch(logOutSuccess());
-        }
-        toast.error(response.message);
-      }
     }
   };
 

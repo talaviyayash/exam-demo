@@ -3,10 +3,6 @@ import {
   emailRegex,
   nameRegex,
   noConsecutiveSpaces,
-  oneDigitCaseLetter,
-  oneLowerCaseLetter,
-  oneUpperCaseLetter,
-  passwordWithLength,
 } from "../../utils/regex";
 
 export const SIGNUP_FORM_HEADER = "Sign Up";
@@ -14,6 +10,8 @@ export const SIGNUP_FORM_HEADER = "Sign Up";
 export const SIGNUP_FORM_NAME = "signupForm";
 
 export const SIGNUP_SUBMIT_NAME = "Sign UP";
+
+export const SIGNUP_STATE_LOADING = "signUp";
 
 export const VERIFICATION_MSG =
   "Please , Check your mail box for verification.";

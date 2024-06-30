@@ -6,6 +6,10 @@ export const NEW_PASSWORD_SUBMIT_NAME = "Create Password";
 
 export const NEW_PASSWORD_FORM_HEADER = "Create Password";
 
+export const VERIFYING_TOKEN_STATE = "verifyToken";
+
+export const SUBMITTING_PASSWORD_STATE = "newPassword";
+
 export const ATTRIBUTE_SUBMIT_BUTTON = {
   sx: {
     width: "200px",

@@ -6,6 +6,8 @@ export const SGININ_FORM_NAME = "signInForm";
 
 export const SGININ_SUBMIT_NAME = "Sign In";
 
+export const SIGNIN_STATE_LOADING = "sigIn";
+
 export const ATTRIBUTE_SUBMIT_BUTTON = {
   sx: {
     width: "200px",

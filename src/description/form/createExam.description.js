@@ -1,5 +1,7 @@
 export const CREATE_EXAM_FORM_NAME = "createExam";
 
+export const CREATE_EXAM_SUBMIT_STATE = "createExam";
+
 export const CREATE_EXAM_HEADER_NAME = "Create Exam";
 
 export const ATTRIBUTE_NEXT_BUTTON = {

@@ -21,7 +21,7 @@ const GiveExam = () => {
     handelPrev,
     handelSubmit,
     totalQuestion,
-    isGivingExam,
+    isSubmittingExma,
   } = GiveExamContainer();
   if (isLoading) return <Loading />;
 
@@ -51,21 +51,21 @@ const GiveExam = () => {
           {whereToAdd !== 0 && (
             <EDLoading
               {...ATTRIBUTE_PREV_BUTTON}
-              disabled={isGivingExam}
+              disabled={isSubmittingExma}
               onClick={handelPrev}
             />
           )}
           {whereToAdd === totalQuestion - 1 && (
             <EDLoading
               {...ATTRIBUTE_SUBMIT_BUTTON}
-              loading={isGivingExam}
+              loading={isSubmittingExma}
               onClick={handelSubmit}
             />
           )}
           {whereToAdd < totalQuestion - 1 && (
             <EDLoading
               {...ATTRIBUTE_NEXT_BUTTON}
-              loading={isGivingExam}
+              loading={isSubmittingExma}
               onClick={handelNext}
             />
           )}

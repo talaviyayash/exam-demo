@@ -1,23 +1,24 @@
 import {
   SGININ_FORM_NAME,
+  SIGNIN_STATE_LOADING,
   signInForm as configArray,
 } from "../../description/form/signin.description";
 import DDFormContainer from "../form/ddform.container";
-import callApi from "../../utils/callApi";
 import { SIGNIN_URL } from "../../description/api.description";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginSuccess } from "../../redux/slice/userInfoSlice";
-import { toast } from "react-toastify";
 import lSSetItem from "../../hook/lSSetItem";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../utils/constants";
-import { useState } from "react";
-import lSClear from "../../hook/lSClear";
+import useApi from "../../hook/useApi";
 
 const SignInContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isSigningIn, setIsSigningIn] = useState(false);
+  const apiCaller = useApi();
+  const { isLoading: isSigningIn } =
+    useSelector((state) => state?.apiState?.[SIGNIN_STATE_LOADING]) ?? {};
+
   const {
     handelChangeType,
     state,
@@ -30,26 +31,25 @@ const SignInContainer = () => {
   });
 
   const handelSubmit = async (e) => {
-    setIsSigningIn(true);
     const allFieldValid = validateAllField();
     if (allFieldValid) {
-      const response = await callApi({
+      const axiosConfig = {
         url: SIGNIN_URL,
         method: "post",
         data: state,
-      });
-      if (response.statusCode === 200) {
+      };
+      const successFunction = (response) => {
+        navigate(PROFILE_PATH);
         dispatch(loginSuccess({ userInfo: response.data }));
         lSSetItem("userInfo", response.data);
-        toast.success(response.message);
-        navigate(PROFILE_PATH);
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-        }
-        toast.error(response.message);
-      }
-      setIsSigningIn(false);
+      };
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: SIGNIN_STATE_LOADING,
+        apiHasToCancel: true,
+        successFunction,
+        showToast: true,
+      });
     }
   };
 
