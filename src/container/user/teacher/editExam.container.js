@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import DDFormContainer from "../../form/ddform.container";
 import {
   EDIT_EXAM_FORM_NAME,
@@ -28,16 +28,14 @@ import {
   createExamForm as configArray,
   totalOption,
 } from "../../../description/form/createExam.description";
-import useApi from "../../../hook/useApi";
 import { toastError } from "../../../utils/toastFunction";
+import useAllHook from "../../../hook/useAllHook";
 
 const EditExamContainer = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { apiCaller, navigate, dispatch } = useAllHook();
   const { id, subject } = useParams();
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
-  const apiCaller = useApi();
   const { isLoading } =
     useSelector((state) => state?.apiState?.[LOADING_EXAM_DATA]) ?? {};
   const { isLoading: isSubmitting } =
@@ -269,7 +267,7 @@ const EditExamContainer = () => {
       const successFunction = () => navigate(PROFILE_PATH);
       await apiCaller({
         axiosConfig,
-        loadingStatuesName: LOADING_EXAM_DATA,
+        loadingStatuesName: UPDATE_EXAM_STATE,
         apiHasToCancel: true,
         successFunction,
         showToast: true,

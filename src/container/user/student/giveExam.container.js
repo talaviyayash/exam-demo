@@ -3,9 +3,8 @@ import {
   GET_EXAM_PAPER_URL,
   GIVE_EXAM_PAPER_URL,
 } from "../../../description/api.description";
-import lSGetItem from "../../../hook/lSGetItem";
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import {
   addAllAnswer,
   addAnswer,
@@ -15,25 +14,24 @@ import {
 } from "../../../redux/slice/giveExamSlice";
 import { EMPTY_STRING } from "../../../description/globel.description";
 import { SHOW_EXAM_FOR_STUDENT } from "../../../utils/constants";
-import lSSetItem from "../../../hook/lSSetItem";
-import useApi from "../../../hook/useApi";
 import {
   GET_EXAM_LOADING,
   SUBMITTING_EXAM_LOADING,
 } from "../../../description/student/giveExam.description";
 import { toastError } from "../../../utils/toastFunction";
+import { lSGetItem, lSSetItem } from "../../../utils/lSFunction";
+import useAllHook from "../../../hook/useAllHook";
 
 const GiveExamContainer = () => {
   const { id, subject } = useParams();
   const [decodedSubject] = useState(atob(subject));
   const { isLoading = true } =
     useSelector((state) => state?.apiState?.[GET_EXAM_LOADING]) ?? {};
-  const { isLoading: isSubmittingExma = false } =
+  const { isLoading: isSubmittingExam = false } =
     useSelector((state) => state?.apiState?.[SUBMITTING_EXAM_LOADING]) ?? {};
-  const navigate = useNavigate();
   const [currentAnswer, setCurrentAnswer] = useState(EMPTY_STRING);
-  const dispatch = useDispatch();
-  const apiCaller = useApi();
+  const { apiCaller, navigate, dispatch } = useAllHook();
+
   const { questions, whereToAdd, answerOfQuestion } = useSelector(
     (state) => state.giveExam
   );
@@ -155,7 +153,7 @@ const GiveExamContainer = () => {
     handelPrev,
     totalQuestion: questions.length,
     handelSubmit,
-    isSubmittingExma,
+    isSubmittingExma: isSubmittingExam,
   };
 };
 

@@ -3,8 +3,8 @@ import { routingArray } from "../description/routing.description";
 import { loginSuccess } from "../redux/slice/userInfoSlice";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
-import decodeToken from "../hook/decodeToken";
-import lSGetItem from "../hook/lSGetItem";
+import decodeToken from "../utils/decodeToken";
+import { lSGetItem } from "../utils/lSFunction";
 
 const Routing = () => {
   const router = createBrowserRouter(routingArray);

@@ -1,13 +1,15 @@
 import React from "react";
 import EditExamContainer from "../../../container/user/teacher/editExam.container";
 import {
-  ATTRIBUTE_NEXT_BUTTON,
-  ATTRIBUTE_PREV_BUTTON,
   EDIT_EXAM_FORM_NAME,
   EDIT_EXAM_HEADER_NAME,
 } from "../../../description/form/editExam.description";
 import EDForm from "../../../shared/DDForm/EDForm";
-import { ATTRIBUTE_SUBMIT_BUTTON } from "../../../description/form/createExam.description";
+import {
+  ATTRIBUTE_NEXT_BUTTON,
+  ATTRIBUTE_PREV_BUTTON,
+  ATTRIBUTE_SUBMIT_BUTTON,
+} from "../../../description/form/createExam.description";
 import EDButton from "../../../shared/button/EDButton";
 import { TOTAL_NUMBER_OF_QUESTION } from "../../../utils/constants";
 import Loading from "../../../shared/Loading";

@@ -6,20 +6,13 @@ import {
   resetPasswordForm as configArray,
   SUBMIT_PASSWORD_LOADING,
 } from "../../../description/form/resetPassword.description";
-
-import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH, SIGN_IN_PATH } from "../../../utils/constants";
 import { EMPTY_STRING } from "../../../description/globel.description";
-import useApi from "../../../hook/useApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import useAllHook from "../../../hook/useAllHook";
 
 const ChangePasswordContainer = () => {
-  const { token } = useSelector((state) => state.userInformation.userInfo);
-
-  const navigate = useNavigate();
-
-  const dispatch = useDispatch();
-  const apiCaller = useApi();
+  const { apiCaller, navigate, dispatch } = useAllHook();
   const { isLoading = false } =
     useSelector((state) => state?.apiState?.[SUBMIT_PASSWORD_LOADING]) ?? {};
 
@@ -45,7 +38,7 @@ const ChangePasswordContainer = () => {
     },
   });
 
-  const handelSubmit = async (e) => {
+  const handelSubmit = async () => {
     const allFieldValid = validateAllField();
     if (allFieldValid) {
       const axiosConfig = {

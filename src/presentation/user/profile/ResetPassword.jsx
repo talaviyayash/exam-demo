@@ -38,7 +38,6 @@ const ResetPassword = () => {
 
           <EDLoading
             onClick={handelSubmit}
-            innerText={RESET_PASSWORD_SUBMIT_NAME}
             {...ATTRIBUTE_SUBMIT_BUTTON}
             loading={isLoading}
           >

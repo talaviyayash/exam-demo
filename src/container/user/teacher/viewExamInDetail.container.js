@@ -1,17 +1,15 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { EDIT_GET_EXAM_URL } from "../../../description/api.description";
-import useApi from "../../../hook/useApi";
 import { EXAM_DETAIL_LOADING_STATE } from "../../../description/teacher/viewExamInDetail.description";
 import { addSuccessState } from "../../../redux/slice/apiLoadingSlice";
+import useAllHook from "../../../hook/useAllHook";
 
 const ViewExamInDetailContainer = () => {
   const { id, subject } = useParams();
-
+  const { apiCaller, dispatch } = useAllHook();
   const [currentIndex, setCurrentIndex] = useState(0);
-  const dispatch = useDispatch();
-  const apiCaller = useApi();
   const { isLoading, data: examDetail = [] } =
     useSelector((state) => state?.apiState?.[EXAM_DETAIL_LOADING_STATE]) ?? {};
 
@@ -44,12 +42,9 @@ const ViewExamInDetailContainer = () => {
     getExamDetail();
   }, []);
 
-  const nextButtonClickHandel = () => {
-    setCurrentIndex((prev) => prev + 1);
-  };
-  const prevButtonClickHandel = () => {
-    setCurrentIndex((prev) => prev - 1);
-  };
+  const nextButtonClickHandel = () => setCurrentIndex((prev) => prev + 1);
+
+  const prevButtonClickHandel = () => setCurrentIndex((prev) => prev - 1);
 
   return {
     examDetail,

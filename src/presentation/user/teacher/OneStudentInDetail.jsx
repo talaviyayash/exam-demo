@@ -32,7 +32,6 @@ const OneStudentInDetail = () => {
                 <TableRow>
                   <TableCell>Subject Name</TableCell>
                   <TableCell>Result Status</TableCell>
-
                   <TableCell>Score</TableCell>
                   <TableCell>Rank</TableCell>
                 </TableRow>

@@ -6,23 +6,20 @@ import {
   DELETE_EXAM_URL,
   SHOW_EXAM_URL,
 } from "../../../description/api.description";
-
-import useApi from "../../../hook/useApi";
 import {
   DELETE_EXAM_STATE,
   SHOW_EXAM_STATE,
 } from "../../../description/teacher/showExam.description";
 import { API_STATE } from "../../../utils/constants";
 import { toastSuccess } from "../../../utils/toastFunction";
+import useAllHook from "../../../hook/useAllHook";
 
 const ShowExamContainer = () => {
   const { isLoading, data: allExam } =
     useSelector((state) => state?.[API_STATE]?.[SHOW_EXAM_STATE]) ?? {};
-  console.log(isLoading);
   const { isLoading: deleteIsLoading } =
     useSelector((state) => state?.[API_STATE]?.[DELETE_EXAM_STATE]) ?? {};
-  const navigate = useNavigate();
-  const apiCaller = useApi();
+  const { apiCaller, navigate } = useAllHook();
 
   const allExamApi = async () => {
     const axiosConfig = {
@@ -37,21 +34,17 @@ const ShowExamContainer = () => {
     });
   };
 
-  const editExamNavigate = (subject, id) => {
+  const editExamNavigate = (subject, id) =>
     navigate(`/edit-exam/${subject}/${id}`);
-  };
 
-  const viewExamNavigate = (subject, id) => {
+  const viewExamNavigate = (subject, id) =>
     navigate(`/view-in-detail/${subject}/${id}`);
-  };
 
   const deleteExam = async (id) => {
     const isApproved = window.confirm(
       "Are you sure you want to delete this exam?"
     );
-    if (!isApproved) {
-      return null;
-    }
+    if (!isApproved) return null;
     const axiosConfig = {
       url: DELETE_EXAM_URL,
       method: "delete",
@@ -59,13 +52,14 @@ const ShowExamContainer = () => {
         id,
       },
     };
+    const successFunction = () => toastSuccess(`Delete exam successfully`);
     await apiCaller({
       axiosConfig,
       loadingStatuesName: DELETE_EXAM_STATE,
       apiHasToCancel: true,
+      successFunction,
     });
     await allExamApi();
-    toastSuccess(`Delete exam  successfully`);
   };
 
   useEffect(() => {

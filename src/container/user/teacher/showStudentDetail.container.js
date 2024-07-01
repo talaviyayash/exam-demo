@@ -1,10 +1,8 @@
 import { useEffect } from "react";
-
 import { STUDENT_DETAIL_URL } from "../../../description/api.description";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useApi from "../../../hook/useApi";
 import { GET_STUDENT_LOADING_NAME } from "../../../description/teacher/showStudentDetail.description";
+import useAllHook from "../../../hook/useAllHook";
 
 const ShowStudentDetailContainer = () => {
   const {
@@ -12,8 +10,8 @@ const ShowStudentDetailContainer = () => {
     isError,
     data: allStudent = [],
   } = useSelector((state) => state?.apiState?.[GET_STUDENT_LOADING_NAME]) ?? {};
-  const navigate = useNavigate();
-  const apiCaller = useApi();
+  const { apiCaller, navigate } = useAllHook();
+
   const navigateToStudentInDetail = (id) => navigate(`/student-detail/${id}`);
 
   useEffect(() => {

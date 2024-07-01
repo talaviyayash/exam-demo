@@ -19,11 +19,9 @@ const Profile = () => {
           <span>Name </span>
           <span>{userInfo.name}</span>
           {role === STUDENT ? (
-            <EDButton
-              className="EditButton"
-              innerText="Edit"
-              onClick={redirectToEditPage}
-            />
+            <EDButton className="EditButton" onClick={redirectToEditPage}>
+              Edit
+            </EDButton>
           ) : (
             EMPTY_STRING
           )}
@@ -34,10 +32,14 @@ const Profile = () => {
         </div>
         <EDButton
           className="EditButton"
-          innerText="Reset Password"
+          innerText=""
           onClick={redirectToChangePassword}
-        />
-        <EDButton className="EditButton" innerText="Log Out" onClick={logOut} />
+        >
+          Reset Password
+        </EDButton>
+        <EDButton className="EditButton" onClick={logOut}>
+          Log Out
+        </EDButton>
       </div>
     </>
   );

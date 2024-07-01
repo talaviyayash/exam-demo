@@ -1,10 +1,10 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 
-const EDButton = ({ innerText, style, ...attribute }) => {
+const EDButton = ({ children, innerText, style, ...attribute }) => {
   return (
     <Button variant="contained" disableElevation {...attribute} style={style}>
-      {innerText}
+      {children ?? innerText}
     </Button>
   );
 };

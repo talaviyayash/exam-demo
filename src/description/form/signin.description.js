@@ -52,6 +52,5 @@ export const signInForm = [
       placeholder: "Password",
     },
     labelName: "Password",
-    patterns: allRegexForPassword("Password"),
   },
 ];

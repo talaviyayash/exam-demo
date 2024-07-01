@@ -3,7 +3,7 @@ import {
   CREATE_NEW_PASSWORD_URL,
   NEW_PASSWORD_VERIFY_URL,
 } from "../../description/api.description";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
 import {
   NEW_PASSWORD_FORM_NAME as formName,
@@ -12,18 +12,17 @@ import {
   SUBMITTING_PASSWORD_STATE,
 } from "../../description/form/newPassword.description";
 
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { EMPTY_STRING } from "../../description/globel.description";
 import { FORGET_PASSWORD_PATH, SIGN_IN_PATH } from "../../utils/constants";
-import useApi from "../../hook/useApi";
+import useAllHook from "../../hook/useAllHook";
 
 const NewPasswordContainer = () => {
   const [searchParams] = useSearchParams();
-  const navigate = useNavigate();
   const [token] = useState(searchParams.get("token"));
-  const dispatch = useDispatch();
-  const apiCaller = useApi();
+  const { apiCaller, navigate, dispatch } = useAllHook();
+
   const { isLoading: isTokenVerifying = true } =
     useSelector((state) => state?.apiState?.[VERIFYING_TOKEN_STATE]) ?? {};
   const { isLoading: isCreatingNewPassword } =
@@ -34,7 +33,7 @@ const NewPasswordContainer = () => {
     const confirmPasswordValue = allValue?.ConfirmPassword;
     return confirmPasswordValue === PasswordValue
       ? EMPTY_STRING
-      : "Confirm Password doesn't match Password ";
+      : "Confirm Password doesn't match Password.";
   };
 
   const {

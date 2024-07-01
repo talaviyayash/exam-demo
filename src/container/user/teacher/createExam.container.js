@@ -5,7 +5,7 @@ import {
   createExamForm as configArray,
   totalOption,
 } from "../../../description/form/createExam.description";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import {
   addAllState,
   addQuestion,
@@ -23,21 +23,16 @@ import {
   EXAM_STATE,
 } from "../../../description/globel.description";
 import { CREATE_EXAM_URL } from "../../../description/api.description";
-import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../../utils/constants";
 import { useEffect } from "react";
-import lSSetItem from "../../../hook/lSSetItem";
-import lSGetItem from "../../../hook/lSGetItem";
-import lSRemoveItem from "../../../hook/lSRemoveItem";
-import useApi from "../../../hook/useApi";
 import { toastError } from "../../../utils/toastFunction";
+import { lSGetItem, lSRemoveItem, lSSetItem } from "../../../utils/lSFunction";
+import useAllHook from "../../../hook/useAllHook";
 
 const CreateExamContainer = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { apiCaller, navigate, dispatch } = useAllHook();
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
-  const apiCaller = useApi();
   const { isLoading } =
     useSelector((state) => state?.apiState?.[CREATE_EXAM_SUBMIT_STATE]) ?? {};
 
@@ -75,8 +70,7 @@ const CreateExamContainer = () => {
         : EMPTY_STRING;
 
     const optionError = allOptionValue.reduce((total, val, index) => {
-      const optionName = `options${index + 1}`;
-      return { ...total, [optionName]: val ? isAnySame(val) : "" };
+      return { ...total, [`options${index + 1}`]: val ? isAnySame(val) : "" };
     }, {});
 
     dispatch(
@@ -90,9 +84,7 @@ const CreateExamContainer = () => {
   };
 
   const validateAnswer = (allValue) => {
-    const { answer } = allValue;
-    console.log(answer);
-    if (!answer) {
+    if (!allValue.answer) {
       toastError("Please Select Answer.");
       return "Please Select Answer.";
     }
@@ -179,9 +171,7 @@ const CreateExamContainer = () => {
       let apiFormateData = allNewQuestion.reduce(
         (formateQuestion, element) => {
           const { note, answer, question, ...options } = element;
-          if (note?.trim()) {
-            formateQuestion.notes.push(note);
-          }
+          if (note?.trim()) formateQuestion.notes.push(note);
           const keyOfQuestion = Object.keys(options).sort();
           const allOption = keyOfQuestion.map((value) => {
             return options[value];
@@ -205,7 +195,6 @@ const CreateExamContainer = () => {
         method: "post",
         data: apiFormateData,
       };
-
       const successFunction = () => {
         navigate(PROFILE_PATH);
         lSRemoveItem("examFormState");
