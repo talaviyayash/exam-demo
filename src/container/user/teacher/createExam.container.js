@@ -185,9 +185,6 @@ const CreateExamContainer = () => {
         url: CREATE_EXAM_URL,
         method: "post",
         data: apiFormateData,
-        headers: {
-          "access-token": userInfo.token,
-        },
       };
 
       const successFunction = (response) => {
@@ -201,6 +198,7 @@ const CreateExamContainer = () => {
         showToast: true,
         apiHasToCancel: true,
         successFunction,
+        addAccessToken: true,
       });
     }
   };

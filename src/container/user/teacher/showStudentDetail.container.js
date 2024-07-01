@@ -22,18 +22,14 @@ const ShowStudentDetailContainer = () => {
       const axiosConfig = {
         url: STUDENT_DETAIL_URL,
         method: "get",
-        headers: {
-          "access-token": userInfo.token,
-        },
       };
 
       await apiCaller({
         axiosConfig,
         loadingStatuesName: GET_STUDENT_LOADING_NAME,
         showToast: false,
-        toastMsg: "",
-        errorToastMsg: "",
         apiHasToCancel: true,
+        addAccessToken: true,
       });
     };
     getAllStudentData();

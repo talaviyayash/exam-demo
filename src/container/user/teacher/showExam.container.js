@@ -31,15 +31,13 @@ const ShowExamContainer = () => {
     const axiosConfig = {
       url: SHOW_EXAM_URL,
       method: "get",
-      headers: {
-        "access-token": userInfo.token,
-      },
     };
     await apiCaller({
       axiosConfig,
       loadingStatuesName: SHOW_EXAM_STATE,
       showToast: false,
       apiHasToCancel: true,
+      addAccessToken: true,
     });
   };
 
@@ -61,9 +59,6 @@ const ShowExamContainer = () => {
     const axiosConfig = {
       url: DELETE_EXAM_URL,
       method: "delete",
-      headers: {
-        "access-token": userInfo.token,
-      },
       params: {
         id,
       },
@@ -72,6 +67,7 @@ const ShowExamContainer = () => {
       axiosConfig,
       loadingStatuesName: DELETE_EXAM_STATE,
       apiHasToCancel: true,
+      addAccessToken: true,
     });
     await allExamApi();
     toastSuccess(`Delete exam  successfully`);

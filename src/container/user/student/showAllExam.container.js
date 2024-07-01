@@ -25,15 +25,13 @@ const ShowAllExamContainer = () => {
       const axiosConfig = {
         url: GET_ALL_EXAM_FOR_STUDENT,
         method: "get",
-        headers: {
-          "access-token": userInfo.token,
-        },
       };
       await apiCaller({
         axiosConfig,
         loadingStatuesName: GET_EXAM_LOADING,
         apiHasToCancel: true,
         showToast: true,
+        addAccessToken: true,
       });
     };
     getAllExamForStudent();

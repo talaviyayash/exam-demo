@@ -75,9 +75,6 @@ const GiveExamContainer = () => {
       url: GIVE_EXAM_PAPER_URL,
       method: "post",
       data: apiSendData,
-      headers: {
-        "access-token": userInfo.token,
-      },
       params: {
         id,
       },
@@ -89,6 +86,7 @@ const GiveExamContainer = () => {
       apiHasToCancel: true,
       showToast: true,
       successFunction,
+      addAccessToken: true,
     });
   };
 
@@ -99,9 +97,6 @@ const GiveExamContainer = () => {
       const axiosConfig = {
         url: GET_EXAM_PAPER_URL,
         method: "get",
-        headers: {
-          "access-token": userInfo.token,
-        },
         params: {
           id,
         },
@@ -128,6 +123,7 @@ const GiveExamContainer = () => {
         showToast: true,
         successFunction,
         errorFunction,
+        addAccessToken: true,
       });
     };
     getExamDetail();

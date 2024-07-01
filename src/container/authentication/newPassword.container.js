@@ -83,9 +83,6 @@ const NewPasswordContainer = () => {
         const axiosConfig = {
           url: NEW_PASSWORD_VERIFY_URL,
           method: "get",
-          headers: {
-            "access-token": token,
-          },
         };
         const errorFunction = () => navigate(FORGET_PASSWORD_PATH);
         await apiCaller({
@@ -93,6 +90,7 @@ const NewPasswordContainer = () => {
           loadingStatuesName: VERIFYING_TOKEN_STATE,
           apiHasToCancel: true,
           errorFunction,
+          addAccessToken: true,
         });
       };
       verifyToken();

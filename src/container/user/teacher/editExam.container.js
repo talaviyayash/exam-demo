@@ -153,9 +153,6 @@ const EditExamContainer = () => {
       const axiosConfig = {
         url: EDIT_GET_EXAM_URL,
         method: "get",
-        headers: {
-          "access-token": userInfo.token,
-        },
         params: {
           id,
         },
@@ -165,6 +162,7 @@ const EditExamContainer = () => {
         loadingStatuesName: LOADING_EXAM_DATA,
         apiHasToCancel: true,
         successFunction,
+        addAccessToken: true,
       });
     };
     getExamDetail();
@@ -248,9 +246,6 @@ const EditExamContainer = () => {
         url: EDIT_EXAM_URL,
         method: "put",
         data: apiFormateData,
-        headers: {
-          "access-token": userInfo.token,
-        },
         params: {
           id,
         },
@@ -262,6 +257,7 @@ const EditExamContainer = () => {
         apiHasToCancel: true,
         successFunction,
         showToast: true,
+        addAccessToken: true,
       });
     }
   };

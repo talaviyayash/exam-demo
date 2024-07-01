@@ -25,7 +25,7 @@ const OneStudentInDetail = () => {
         <div>Name :- {studentInfo?.name}</div>
         <div>Email :- {studentInfo?.email}</div>
 
-        {studentInfo?.Result.length > 0 ? (
+        {studentInfo?.Result?.length > 0 ? (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>

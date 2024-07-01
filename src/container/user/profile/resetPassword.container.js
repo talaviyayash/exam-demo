@@ -52,9 +52,6 @@ const ChangePasswordContainer = () => {
         url: RESET_PASSWORD_URL,
         method: "post",
         data: state,
-        headers: {
-          "access-token": token,
-        },
       };
       const successFunction = () => {
         dispatch(clearForm({ name: formName }));
@@ -68,6 +65,7 @@ const ChangePasswordContainer = () => {
         showToast: true,
         successFunction,
         errorFunction,
+        addAccessToken: true,
       });
     }
   };

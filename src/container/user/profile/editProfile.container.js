@@ -44,9 +44,6 @@ const EditProfileContainer = () => {
         url: UPDATE_PROFILE_URL,
         method: "put",
         data: state,
-        headers: {
-          "access-token": userInfo.token,
-        },
       };
       const successFunction = (response) => {
         dispatch(addUserInfo(response.data));
@@ -59,6 +56,7 @@ const EditProfileContainer = () => {
         apiHasToCancel: true,
         showToast: true,
         successFunction,
+        addAccessToken: true,
       });
     }
   };

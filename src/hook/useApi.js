@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import callApi from "../utils/callApi";
 import {
   addErrorState,
@@ -16,6 +16,7 @@ const useApi = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [controller, setController] = useState([]);
+  const { token } = useSelector((state) => state.userInformation.userInfo);
   useEffect(() => {
     return () => {
       let controllerInArray = controller;
@@ -39,6 +40,7 @@ const useApi = () => {
     errorToastMsg,
     successFunction,
     errorFunction,
+    addAccessToken,
   }) => {
     const newController = apiController ?? new AbortController();
     setController((prev) => {
@@ -46,7 +48,10 @@ const useApi = () => {
       return prev;
     });
     dispatch(addLoadingState({ name: loadingStatuesName }));
-
+    axiosConfig.headers = {
+      ...(axiosConfig.headers ?? {}),
+      "access-token": addAccessToken ? token : undefined,
+    };
     const response = await callApi({
       ...axiosConfig,
       signal: newController.signal,
@@ -54,10 +59,10 @@ const useApi = () => {
 
     if (response) {
       if (response.statusCode === 200) {
-        if (successFunction) successFunction(response);
         dispatch(
           addSuccessState({ name: loadingStatuesName, data: response.data })
         );
+        if (successFunction) successFunction(response);
         if (showToast) toastSuccess(toastMsg || response.message);
         return { ...response, isError: false, isApiCancelled: false };
       } else {

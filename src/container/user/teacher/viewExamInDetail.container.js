@@ -25,9 +25,6 @@ const ViewExamInDetailContainer = () => {
       const axiosConfig = {
         url: EDIT_GET_EXAM_URL,
         method: "get",
-        headers: {
-          "access-token": userInfo.token,
-        },
         params: {
           id,
         },
@@ -45,10 +42,9 @@ const ViewExamInDetailContainer = () => {
         axiosConfig,
         loadingStatuesName: EXAM_DETAIL_LOADING_STATE,
         showToast: false,
-        toastMsg: "",
-        errorToastMsg: "",
         apiHasToCancel: true,
         successFunction,
+        addAccessToken: true,
       });
     };
     getExamDetail();
