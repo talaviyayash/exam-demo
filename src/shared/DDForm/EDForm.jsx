@@ -4,7 +4,7 @@ import DDFormSwitch from "./EDFormSwitch";
 import DDFormError from "../input/EDFormError";
 import { checkbox } from "../../description/form/ddform.description";
 
-const DDForm = ({
+const EDForm = ({
   configArray,
   handelChangeType,
   state,
@@ -34,4 +34,4 @@ const DDForm = ({
   );
 };
 
-export default memo(DDForm);
+export default memo(EDForm);

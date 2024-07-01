@@ -34,7 +34,7 @@ export const lengthOfPassword = /^.{6,10}$/;
 export const allRegexForPassword = (name) => [
   {
     regex: oneLowerCaseLetter,
-    error: `${name} include lower case alphabet.`,
+    error: `${name} must include lower case alphabet.`,
   },
   {
     regex: oneUpperCaseLetter,

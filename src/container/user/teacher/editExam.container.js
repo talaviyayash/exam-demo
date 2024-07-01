@@ -5,7 +5,6 @@ import {
   EDIT_EXAM_FORM_NAME,
   LOADING_EXAM_DATA,
   UPDATE_EXAM_STATE,
-  editExamForm as configArray,
 } from "../../../description/form/editExam.description";
 import { useEffect } from "react";
 import { EMPTY_STRING } from "../../../description/globel.description";
@@ -19,14 +18,16 @@ import {
   EDIT_EXAM_URL,
   EDIT_GET_EXAM_URL,
 } from "../../../description/api.description";
-import { toast } from "react-toastify";
 import {
   addAllState,
   addQuestion,
   whereToAddUpdate,
 } from "../../../redux/slice/examSlice";
 import { PROFILE_PATH } from "../../../utils/constants";
-import { totalOption } from "../../../description/form/createExam.description";
+import {
+  createExamForm as configArray,
+  totalOption,
+} from "../../../description/form/createExam.description";
 import useApi from "../../../hook/useApi";
 import { toastError } from "../../../utils/toastFunction";
 
@@ -37,7 +38,6 @@ const EditExamContainer = () => {
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
   const apiCaller = useApi();
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const { isLoading } =
     useSelector((state) => state?.apiState?.[LOADING_EXAM_DATA]) ?? {};
   const { isLoading: isSubmitting } =
@@ -162,7 +162,6 @@ const EditExamContainer = () => {
         loadingStatuesName: LOADING_EXAM_DATA,
         apiHasToCancel: true,
         successFunction,
-        addAccessToken: true,
       });
     };
     getExamDetail();
@@ -257,7 +256,6 @@ const EditExamContainer = () => {
         apiHasToCancel: true,
         successFunction,
         showToast: true,
-        addAccessToken: true,
       });
     }
   };

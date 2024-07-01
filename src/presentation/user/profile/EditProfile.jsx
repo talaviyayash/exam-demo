@@ -35,11 +35,9 @@ const EditProfile = () => {
             formName={EDIT_PROFILE_FORM_NAME}
           />
 
-          <EDLoading
-            innerText={EDIT_PROFILE_SUBMIT_NAME}
-            onClick={handelSubmit}
-            loading={isLoading}
-          />
+          <EDLoading onClick={handelSubmit} loading={isLoading}>
+            {EDIT_PROFILE_SUBMIT_NAME}
+          </EDLoading>
         </div>
       </div>
     </>

@@ -33,9 +33,9 @@ const EditExam = () => {
     <>
       <>
         <div className="container">
-          <div className="style-form">
-            <h1 className="form-header">{EDIT_EXAM_HEADER_NAME}</h1>
-            <h2 className="form-header">Question No :-{whereToAdd + 1}</h2>
+          <h1 className="form-header">{EDIT_EXAM_HEADER_NAME}</h1>
+          <h2 className="form-header">Question No :-{whereToAdd + 1}</h2>
+          <div className="exam-form">
             <EDForm
               handelChangeType={handelChangeType}
               state={state}

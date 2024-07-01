@@ -4,7 +4,7 @@ import DDFormSwitch from "./EDFormSwitch";
 import DDFormError from "../input/EDFormError";
 import { checkbox } from "../../description/form/ddform.description";
 
-const CreateExamForm = ({
+const ExamForm = ({
   configArray,
   handelChangeType,
   state,
@@ -17,7 +17,10 @@ const CreateExamForm = ({
         const { type, name, wrapElement } = element;
         return (
           <Fragment key={index}>
-            <div className="wrapper" {...wrapElement}>
+            <div
+              className={`wrapper ${type === "radio" && "wrapper-radio"}`}
+              {...wrapElement}
+            >
               <DDFormSwitch
                 value={state?.[name]}
                 handelChange={
@@ -25,7 +28,7 @@ const CreateExamForm = ({
                 }
                 element={element}
               />
-              {type === "radio" || <DDFormError error={error?.[name]} />}
+              {type !== "radio" && <DDFormError error={error?.[name]} />}
             </div>
           </Fragment>
         );
@@ -34,4 +37,4 @@ const CreateExamForm = ({
   );
 };
 
-export default memo(CreateExamForm);
+export default memo(ExamForm);

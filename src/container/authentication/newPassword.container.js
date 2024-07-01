@@ -23,11 +23,10 @@ const NewPasswordContainer = () => {
   const navigate = useNavigate();
   const [token] = useState(searchParams.get("token"));
   const dispatch = useDispatch();
-  const [isCreatingNewPassword, setIsCreatingNewPassword] = useState(false);
   const apiCaller = useApi();
   const { isLoading: isTokenVerifying = true } =
     useSelector((state) => state?.apiState?.[VERIFYING_TOKEN_STATE]) ?? {};
-  const { isLoading } =
+  const { isLoading: isCreatingNewPassword } =
     useSelector((state) => state?.apiState?.[SUBMITTING_PASSWORD_STATE]) ?? {};
 
   const ConfirmPassword = (allValue) => {
@@ -90,7 +89,7 @@ const NewPasswordContainer = () => {
           loadingStatuesName: VERIFYING_TOKEN_STATE,
           apiHasToCancel: true,
           errorFunction,
-          addAccessToken: true,
+          addAccessToken: false,
         });
       };
       verifyToken();

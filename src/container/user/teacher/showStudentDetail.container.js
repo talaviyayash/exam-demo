@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 import { STUDENT_DETAIL_URL } from "../../../description/api.description";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +7,6 @@ import useApi from "../../../hook/useApi";
 import { GET_STUDENT_LOADING_NAME } from "../../../description/teacher/showStudentDetail.description";
 
 const ShowStudentDetailContainer = () => {
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const {
     isLoading,
     isError,
@@ -29,7 +28,6 @@ const ShowStudentDetailContainer = () => {
         loadingStatuesName: GET_STUDENT_LOADING_NAME,
         showToast: false,
         apiHasToCancel: true,
-        addAccessToken: true,
       });
     };
     getAllStudentData();

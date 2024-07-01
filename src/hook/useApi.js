@@ -6,7 +6,6 @@ import {
   addSuccessState,
 } from "../redux/slice/apiLoadingSlice";
 import { useEffect, useState } from "react";
-import { toast } from "react-toastify";
 import { logOutSuccess } from "../redux/slice/userInfoSlice";
 import { useNavigate } from "react-router-dom";
 import { SIGN_IN_PATH } from "../utils/constants";
@@ -40,7 +39,7 @@ const useApi = () => {
     errorToastMsg,
     successFunction,
     errorFunction,
-    addAccessToken,
+    addAccessToken = true,
   }) => {
     const newController = apiController ?? new AbortController();
     setController((prev) => {

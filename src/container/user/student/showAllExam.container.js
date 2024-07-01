@@ -7,7 +7,6 @@ import { GET_EXAM_LOADING } from "../../../description/student/showAllExam.descr
 
 const ShowAllExamContainer = () => {
   const [showResult, setShowResult] = useState({ show: false });
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const navigate = useNavigate();
   const apiCaller = useApi();
   const { isLoading = true, data: allExam } =
@@ -30,8 +29,6 @@ const ShowAllExamContainer = () => {
         axiosConfig,
         loadingStatuesName: GET_EXAM_LOADING,
         apiHasToCancel: true,
-        showToast: true,
-        addAccessToken: true,
       });
     };
     getAllExamForStudent();

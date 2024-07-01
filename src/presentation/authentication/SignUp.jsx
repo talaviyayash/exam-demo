@@ -43,11 +43,12 @@ const SignUp = () => {
             </NavLink>
           </div>
           <EDLoading
-            innerText={SIGNUP_SUBMIT_NAME}
             onClick={handelSubmit}
             {...ATTRIBUTE_SUBMIT_BUTTON}
             loading={isSigningUp}
-          />
+          >
+            {SIGNUP_SUBMIT_NAME}
+          </EDLoading>
         </div>
       </div>
     </>

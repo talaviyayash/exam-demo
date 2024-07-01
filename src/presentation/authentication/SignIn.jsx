@@ -45,10 +45,11 @@ const SignIn = () => {
           </div>
           <EDLoading
             onClick={handelSubmit}
-            innerText={SGININ_SUBMIT_NAME}
             {...ATTRIBUTE_SUBMIT_BUTTON}
             loading={isSigningIn}
-          />
+          >
+            {SGININ_SUBMIT_NAME}
+          </EDLoading>
         </div>
       </div>
     </>
