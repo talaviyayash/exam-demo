@@ -13,7 +13,6 @@ const ForgetPasswordContainer = () => {
   const { apiCaller, dispatch } = useAllHook();
   const { isLoading = false } =
     useSelector((state) => state?.apiState?.[STATE_FOR_FORGET_PASSWORD]) ?? {};
-
   const {
     handelChangeType,
     state,

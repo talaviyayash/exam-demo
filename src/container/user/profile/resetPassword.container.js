@@ -6,7 +6,6 @@ import {
   resetPasswordForm as configArray,
   SUBMIT_PASSWORD_LOADING,
 } from "../../../description/form/resetPassword.description";
-
 import { PROFILE_PATH, SIGN_IN_PATH } from "../../../utils/constants";
 import { EMPTY_STRING } from "../../../description/globel.description";
 import { useSelector } from "react-redux";
@@ -39,7 +38,7 @@ const ChangePasswordContainer = () => {
     },
   });
 
-  const handelSubmit = async (e) => {
+  const handelSubmit = async () => {
     const allFieldValid = validateAllField();
     if (allFieldValid) {
       const axiosConfig = {

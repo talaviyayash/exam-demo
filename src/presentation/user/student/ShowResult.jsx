@@ -10,7 +10,7 @@ const ShowResult = ({ data, setShowResult }) => {
         <div>Score : {data.score}</div>
         <div>Result Status : {data.resultStatus}</div>
         <div>Rank : {data.rank}</div>
-        <EDButton onClick={goToMainPage} innerText={"Go back"} />
+        <EDButton onClick={goToMainPage}>Go back</EDButton>
       </div>
     </>
   );

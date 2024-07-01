@@ -42,12 +42,9 @@ const ViewExamInDetailContainer = () => {
     getExamDetail();
   }, []);
 
-  const nextButtonClickHandel = () => {
-    setCurrentIndex((prev) => prev + 1);
-  };
-  const prevButtonClickHandel = () => {
-    setCurrentIndex((prev) => prev - 1);
-  };
+  const nextButtonClickHandel = () => setCurrentIndex((prev) => prev + 1);
+
+  const prevButtonClickHandel = () => setCurrentIndex((prev) => prev - 1);
 
   return {
     examDetail,

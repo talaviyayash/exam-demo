@@ -7,14 +7,13 @@ import {
 } from "../../utils/constants";
 import { logOutSuccess } from "../../redux/slice/userInfoSlice";
 import { toastSuccess } from "../../utils/toastFunction";
+import useAllHook from "../../hook/useAllHook";
 
 const ProfileContainer = () => {
   const { token, role, ...userInfo } = useSelector(
     (state) => state.userInformation.userInfo
   );
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const { dispatch, navigate } = useAllHook();
   const redirectToEditPage = () => navigate(EDIT_PROFILE_PATH);
   const redirectToChangePassword = () => navigate(RESET_PASSWORD_PATH);
 

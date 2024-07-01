@@ -33,7 +33,7 @@ const NewPasswordContainer = () => {
     const confirmPasswordValue = allValue?.ConfirmPassword;
     return confirmPasswordValue === PasswordValue
       ? EMPTY_STRING
-      : "Confirm Password doesn't match Password ";
+      : "Confirm Password doesn't match Password.";
   };
 
   const {

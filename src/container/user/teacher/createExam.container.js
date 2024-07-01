@@ -70,8 +70,7 @@ const CreateExamContainer = () => {
         : EMPTY_STRING;
 
     const optionError = allOptionValue.reduce((total, val, index) => {
-      const optionName = `options${index + 1}`;
-      return { ...total, [optionName]: val ? isAnySame(val) : "" };
+      return { ...total, [`options${index + 1}`]: val ? isAnySame(val) : "" };
     }, {});
 
     dispatch(
@@ -85,9 +84,7 @@ const CreateExamContainer = () => {
   };
 
   const validateAnswer = (allValue) => {
-    const { answer } = allValue;
-    console.log(answer);
-    if (!answer) {
+    if (!allValue.answer) {
       toastError("Please Select Answer.");
       return "Please Select Answer.";
     }
@@ -174,9 +171,7 @@ const CreateExamContainer = () => {
       let apiFormateData = allNewQuestion.reduce(
         (formateQuestion, element) => {
           const { note, answer, question, ...options } = element;
-          if (note?.trim()) {
-            formateQuestion.notes.push(note);
-          }
+          if (note?.trim()) formateQuestion.notes.push(note);
           const keyOfQuestion = Object.keys(options).sort();
           const allOption = keyOfQuestion.map((value) => {
             return options[value];
@@ -200,7 +195,6 @@ const CreateExamContainer = () => {
         method: "post",
         data: apiFormateData,
       };
-
       const successFunction = () => {
         navigate(PROFILE_PATH);
         lSRemoveItem("examFormState");

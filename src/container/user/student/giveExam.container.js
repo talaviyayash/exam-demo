@@ -27,7 +27,7 @@ const GiveExamContainer = () => {
   const [decodedSubject] = useState(atob(subject));
   const { isLoading = true } =
     useSelector((state) => state?.apiState?.[GET_EXAM_LOADING]) ?? {};
-  const { isLoading: isSubmittingExma = false } =
+  const { isLoading: isSubmittingExam = false } =
     useSelector((state) => state?.apiState?.[SUBMITTING_EXAM_LOADING]) ?? {};
   const [currentAnswer, setCurrentAnswer] = useState(EMPTY_STRING);
   const { apiCaller, navigate, dispatch } = useAllHook();
@@ -153,7 +153,7 @@ const GiveExamContainer = () => {
     handelPrev,
     totalQuestion: questions.length,
     handelSubmit,
-    isSubmittingExma,
+    isSubmittingExma: isSubmittingExam,
   };
 };
 

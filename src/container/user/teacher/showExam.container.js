@@ -6,8 +6,6 @@ import {
   DELETE_EXAM_URL,
   SHOW_EXAM_URL,
 } from "../../../description/api.description";
-
-import useApi from "../../../hook/useApi";
 import {
   DELETE_EXAM_STATE,
   SHOW_EXAM_STATE,
@@ -36,21 +34,17 @@ const ShowExamContainer = () => {
     });
   };
 
-  const editExamNavigate = (subject, id) => {
+  const editExamNavigate = (subject, id) =>
     navigate(`/edit-exam/${subject}/${id}`);
-  };
 
-  const viewExamNavigate = (subject, id) => {
+  const viewExamNavigate = (subject, id) =>
     navigate(`/view-in-detail/${subject}/${id}`);
-  };
 
   const deleteExam = async (id) => {
     const isApproved = window.confirm(
       "Are you sure you want to delete this exam?"
     );
-    if (!isApproved) {
-      return null;
-    }
+    if (!isApproved) return null;
     const axiosConfig = {
       url: DELETE_EXAM_URL,
       method: "delete",
@@ -58,13 +52,14 @@ const ShowExamContainer = () => {
         id,
       },
     };
+    const successFunction = () => toastSuccess(`Delete exam successfully`);
     await apiCaller({
       axiosConfig,
       loadingStatuesName: DELETE_EXAM_STATE,
       apiHasToCancel: true,
+      successFunction,
     });
     await allExamApi();
-    toastSuccess(`Delete exam  successfully`);
   };
 
   useEffect(() => {

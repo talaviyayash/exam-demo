@@ -7,7 +7,6 @@ import {
 } from "../../description/form/signup.description";
 import { SIGNUP_URL } from "../../description/api.description";
 import { toast } from "react-toastify";
-
 import { useSelector } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
 import useAllHook from "../../hook/useAllHook";

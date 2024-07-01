@@ -1,9 +1,6 @@
 import { useEffect } from "react";
-
 import { STUDENT_DETAIL_URL } from "../../../description/api.description";
-import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import useApi from "../../../hook/useApi";
 import { GET_STUDENT_LOADING_NAME } from "../../../description/teacher/showStudentDetail.description";
 import useAllHook from "../../../hook/useAllHook";
 

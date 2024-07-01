@@ -1,11 +1,11 @@
 import { Button } from "@mui/material";
 import React from "react";
 
-const ErrorButton = ({ innerText, ...attributes }) => {
+const ErrorButton = ({ children, innerText, ...attributes }) => {
   return (
     <>
       <Button variant="contained" color="error" {...attributes}>
-        {innerText}
+        {children ?? innerText}
       </Button>
     </>
   );

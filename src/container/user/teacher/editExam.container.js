@@ -267,7 +267,7 @@ const EditExamContainer = () => {
       const successFunction = () => navigate(PROFILE_PATH);
       await apiCaller({
         axiosConfig,
-        loadingStatuesName: LOADING_EXAM_DATA,
+        loadingStatuesName: UPDATE_EXAM_STATE,
         apiHasToCancel: true,
         successFunction,
         showToast: true,

@@ -21,7 +21,7 @@ const GiveExam = () => {
     handelPrev,
     handelSubmit,
     totalQuestion,
-    isSubmittingExma: isSubmittingExam,
+    isSubmittingExam,
   } = GiveExamContainer();
   if (isLoading) return <Loading />;
 

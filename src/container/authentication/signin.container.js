@@ -27,7 +27,7 @@ const SignInContainer = () => {
     formName: SGININ_FORM_NAME,
   });
 
-  const handelSubmit = async (e) => {
+  const handelSubmit = async () => {
     const allFieldValid = validateAllField();
     if (allFieldValid) {
       const axiosConfig = {

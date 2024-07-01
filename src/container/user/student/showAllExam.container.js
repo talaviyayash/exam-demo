@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { GET_ALL_EXAM_FOR_STUDENT } from "../../../description/api.description";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import useApi from "../../../hook/useApi";
 import { GET_EXAM_LOADING } from "../../../description/student/showAllExam.description";
 import useAllHook from "../../../hook/useAllHook";
 
