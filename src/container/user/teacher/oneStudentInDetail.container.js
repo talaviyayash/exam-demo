@@ -1,15 +1,14 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ONE_STUDENT_DETAIL_URL } from "../../../description/api.description";
-import { useDispatch, useSelector } from "react-redux";
-import useApi from "../../../hook/useApi";
+import { useSelector } from "react-redux";
 import { LOADING_STATE_OF_STUDENT } from "../../../description/teacher/oneStudentInDetail.description";
 import { addDataState } from "../../../redux/slice/apiLoadingSlice";
+import useAllHook from "../../../hook/useAllHook";
 
 const OneStudentInDetailContainer = () => {
   const { id } = useParams();
-  const apiCaller = useApi();
-  const dispatch = useDispatch();
+  const { apiCaller, dispatch } = useAllHook();
   const { isLoading, data: studentInfo = [] } =
     useSelector((state) => state?.apiState?.[LOADING_STATE_OF_STUDENT]) ?? {};
 

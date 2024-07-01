@@ -5,17 +5,14 @@ import {
 } from "../../description/form/signin.description";
 import DDFormContainer from "../form/ddform.container";
 import { SIGNIN_URL } from "../../description/api.description";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { loginSuccess } from "../../redux/slice/userInfoSlice";
-import lSSetItem from "../../hook/lSSetItem";
-import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../utils/constants";
-import useApi from "../../hook/useApi";
+import { lSSetItem } from "../../utils/lSFunction";
+import useAllHook from "../../hook/useAllHook";
 
 const SignInContainer = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const apiCaller = useApi();
+  const { apiCaller, navigate, dispatch } = useAllHook();
   const { isLoading: isSigningIn } =
     useSelector((state) => state?.apiState?.[SIGNIN_STATE_LOADING]) ?? {};
 

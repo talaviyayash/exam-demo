@@ -14,15 +14,14 @@ import {
 } from "../../../description/teacher/showExam.description";
 import { API_STATE } from "../../../utils/constants";
 import { toastSuccess } from "../../../utils/toastFunction";
+import useAllHook from "../../../hook/useAllHook";
 
 const ShowExamContainer = () => {
   const { isLoading, data: allExam } =
     useSelector((state) => state?.[API_STATE]?.[SHOW_EXAM_STATE]) ?? {};
-  console.log(isLoading);
   const { isLoading: deleteIsLoading } =
     useSelector((state) => state?.[API_STATE]?.[DELETE_EXAM_STATE]) ?? {};
-  const navigate = useNavigate();
-  const apiCaller = useApi();
+  const { apiCaller, navigate } = useAllHook();
 
   const allExamApi = async () => {
     const axiosConfig = {

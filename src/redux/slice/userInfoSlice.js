@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import lSClear from "../../hook/lSClear";
+import { lSClear } from "../../utils/lSFunction";
 
 const initialState = {
   isLogin: false,

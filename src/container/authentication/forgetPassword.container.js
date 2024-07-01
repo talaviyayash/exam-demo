@@ -5,13 +5,12 @@ import {
   forgetPasswordForm as configArray,
   STATE_FOR_FORGET_PASSWORD,
 } from "../../description/form/forgetPassword.description";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
-import useApi from "../../hook/useApi";
+import useAllHook from "../../hook/useAllHook";
 
 const ForgetPasswordContainer = () => {
-  const dispatch = useDispatch();
-  const apiCaller = useApi();
+  const { apiCaller, dispatch } = useAllHook();
   const { isLoading = false } =
     useSelector((state) => state?.apiState?.[STATE_FOR_FORGET_PASSWORD]) ?? {};
 
