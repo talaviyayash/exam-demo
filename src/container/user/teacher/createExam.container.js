@@ -76,7 +76,7 @@ const CreateExamContainer = () => {
 
     const optionError = allOptionValue.reduce((total, val, index) => {
       const optionName = `options${index + 1}`;
-      return { ...total, [optionName]: isAnySame(val) };
+      return { ...total, [optionName]: val ? isAnySame(val) : "" };
     }, {});
 
     dispatch(
@@ -90,9 +90,9 @@ const CreateExamContainer = () => {
   };
 
   const validateAnswer = (allValue) => {
-    console.log("keshgkbv");
     const { answer } = allValue;
-    if (answer === EMPTY_STRING) {
+    console.log(answer);
+    if (!answer) {
       toastError("Please Select Answer.");
       return "Please Select Answer.";
     }

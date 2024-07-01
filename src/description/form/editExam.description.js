@@ -8,27 +8,15 @@ export const UPDATE_EXAM_STATE = "updateExam";
 
 export const ATTRIBUTE_NEXT_BUTTON = {
   innerText: "Next",
-  sx: {
-    width: "100px",
-    height: "50px",
-    fontSize: "18px",
-  },
+  className: "btn-all",
 };
 export const ATTRIBUTE_PREV_BUTTON = {
   innerText: "Prev",
-  sx: {
-    width: "100px",
-    height: "50px",
-    fontSize: "18px",
-  },
+  className: "btn-all",
 };
 export const ATTRIBUTE_UPDATE_BUTTON = {
   innerText: "UPDATE",
-  sx: {
-    width: "500px",
-    height: "50px",
-    fontSize: "18px",
-  },
+  className: "btn-all",
 };
 
 export const editExamForm = [

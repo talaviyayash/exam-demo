@@ -42,27 +42,24 @@ const CreateExam = () => {
             formName={CREATE_EXAM_FORM_NAME}
           />
         </div>
-        {whereToAdd !== 0 && (
+        <div className="btn-container">
           <EDButton
             {...ATTRIBUTE_PREV_BUTTON}
             onClick={handelPrev}
-            disabled={isLoading}
+            disabled={isLoading || whereToAdd === 0}
           />
-        )}
-        {whereToAdd + 1 === TOTAL_NUMBER_OF_QUESTION && (
           <EDLoading
             {...ATTRIBUTE_SUBMIT_BUTTON}
             onClick={handelSubmit}
             loading={isLoading}
+            disabled={whereToAdd + 1 !== TOTAL_NUMBER_OF_QUESTION}
           />
-        )}
-        {whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION && (
           <EDButton
             {...ATTRIBUTE_NEXT_BUTTON}
             onClick={handelNext}
-            disabled={isLoading}
+            disabled={isLoading || !(whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION)}
           />
-        )}
+        </div>
       </div>
     </>
   );
