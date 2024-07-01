@@ -1,6 +1,7 @@
 import DDFormContainer from "../../form/ddform.container";
 import {
   CREATE_EXAM_FORM_NAME,
+  CREATE_EXAM_SUBMIT_STATE,
   createExamForm as configArray,
   totalOption,
 } from "../../../description/form/createExam.description";
@@ -21,26 +22,24 @@ import {
   EXAM_FORM_STATE,
   EXAM_STATE,
 } from "../../../description/globel.description";
-import callApi from "../../../utils/callApi";
 import { CREATE_EXAM_URL } from "../../../description/api.description";
-import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../../utils/constants";
 import { useEffect, useState } from "react";
 import lSSetItem from "../../../hook/lSSetItem";
 import lSGetItem from "../../../hook/lSGetItem";
 import lSRemoveItem from "../../../hook/lSRemoveItem";
-import lSClear from "../../../hook/lSClear";
-import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
+import useApi from "../../../hook/useApi";
 
 const CreateExamContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
-
+  const apiCaller = useApi();
   const userInfo = useSelector((state) => state.userInformation.userInfo);
+  const { isLoading, isError } =
+    useSelector((state) => state?.apiState?.[CREATE_EXAM_SUBMIT_STATE]) ?? {};
 
   const sameQuestionValidation = (allValue) => {
     const { question: currentQuestion } = allValue;
@@ -182,28 +181,25 @@ const CreateExamContainer = () => {
         }
       );
       apiFormateData = { subjectName: state.subject, ...apiFormateData };
-      setIsSubmitting(true);
-      const response = await callApi({
+      const axiosConfig = {
         url: CREATE_EXAM_URL,
         method: "post",
         data: apiFormateData,
-        headers: {
-          "access-token": userInfo.token,
-        },
-      });
-      setIsSubmitting(false);
-      if (response.statusCode === 200) {
-        toast.success(response.message);
+      };
+
+      const successFunction = (response) => {
         navigate(PROFILE_PATH);
         lSRemoveItem("examFormState");
         lSRemoveItem("examState");
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-          dispatch(logOutSuccess());
-        }
-        toast.error(response.message);
-      }
+      };
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: CREATE_EXAM_SUBMIT_STATE,
+        showToast: true,
+        apiHasToCancel: true,
+        successFunction,
+        addAccessToken: true,
+      });
     }
   };
 
@@ -250,7 +246,7 @@ const CreateExamContainer = () => {
     handelPrev,
     whereToAdd,
     handelSubmit,
-    isSubmitting,
+    isLoading,
   };
 };
 

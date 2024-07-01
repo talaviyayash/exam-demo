@@ -6,6 +6,8 @@ export const RESET_PASSWORD_SUBMIT_NAME = "Reset Password";
 
 export const RESET_PASSWORD_FORM_HEADER = "Reset Password";
 
+export const SUBMIT_PASSWORD_LOADING = "resetPassword";
+
 export const ATTRIBUTE_SUBMIT_BUTTON = {
   sx: {
     width: "200px",

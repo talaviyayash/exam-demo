@@ -13,30 +13,23 @@ const ShowStudentDetailContainer = () => {
     isError,
     data: allStudent = [],
   } = useSelector((state) => state?.apiState?.[GET_STUDENT_LOADING_NAME]) ?? {};
-  const [data, setData] = useState([]);
   const navigate = useNavigate();
   const apiCaller = useApi();
   const navigateToStudentInDetail = (id) => navigate(`/student-detail/${id}`);
-
-  console.log(isLoading, data);
 
   useEffect(() => {
     const getAllStudentData = async () => {
       const axiosConfig = {
         url: STUDENT_DETAIL_URL,
         method: "get",
-        headers: {
-          "access-token": userInfo.token,
-        },
       };
 
       await apiCaller({
         axiosConfig,
         loadingStatuesName: GET_STUDENT_LOADING_NAME,
         showToast: false,
-        toastMsg: "",
-        errorToastMsg: "",
         apiHasToCancel: true,
+        addAccessToken: true,
       });
     };
     getAllStudentData();
@@ -47,7 +40,6 @@ const ShowStudentDetailContainer = () => {
     isLoading,
     navigateToStudentInDetail,
     isError,
-    data,
   };
 };
 

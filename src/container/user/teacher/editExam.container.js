@@ -3,10 +3,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import DDFormContainer from "../../form/ddform.container";
 import {
   EDIT_EXAM_FORM_NAME,
+  LOADING_EXAM_DATA,
+  UPDATE_EXAM_STATE,
   editExamForm as configArray,
 } from "../../../description/form/editExam.description";
-import { useEffect, useState } from "react";
-import callApi from "../../../utils/callApi";
+import { useEffect } from "react";
 import { EMPTY_STRING } from "../../../description/globel.description";
 import {
   addError,
@@ -19,26 +20,28 @@ import {
   EDIT_GET_EXAM_URL,
 } from "../../../description/api.description";
 import { toast } from "react-toastify";
-import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
 import {
   addAllState,
   addQuestion,
   whereToAddUpdate,
 } from "../../../redux/slice/examSlice";
-import { PROFILE_PATH, VIEW_EXAM_PATH } from "../../../utils/constants";
+import { PROFILE_PATH } from "../../../utils/constants";
 import { totalOption } from "../../../description/form/createExam.description";
-import lSClear from "../../../hook/lSClear";
+import useApi from "../../../hook/useApi";
+import { toastError } from "../../../utils/toastFunction";
 
 const EditExamContainer = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const { id, subject } = useParams();
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
-
+  const apiCaller = useApi();
   const userInfo = useSelector((state) => state.userInformation.userInfo);
+  const { isLoading } =
+    useSelector((state) => state?.apiState?.[LOADING_EXAM_DATA]) ?? {};
+  const { isLoading: isSubmitting } =
+    useSelector((state) => state?.apiState?.[UPDATE_EXAM_STATE]) ?? {};
 
   const sameQuestionValidation = (allValue) => {
     const { question: currentQuestion } = allValue;
@@ -113,18 +116,7 @@ const EditExamContainer = () => {
 
   useEffect(() => {
     const getExamDetail = async () => {
-      setIsLoading(true);
-      const response = await callApi({
-        url: EDIT_GET_EXAM_URL,
-        method: "get",
-        headers: {
-          "access-token": userInfo.token,
-        },
-        params: {
-          id,
-        },
-      });
-      if (response.statusCode === 200) {
+      const successFunction = (response) => {
         const { questions } = response.data;
         const formatArray = questions.map((value, index) => {
           const { options, answer } = value;
@@ -157,18 +149,21 @@ const EditExamContainer = () => {
           ...formatArray[0],
         };
         dispatch(addValue({ value: formValue, name: EDIT_EXAM_FORM_NAME }));
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-          toast.error(response.message);
-          dispatch(logOutSuccess());
-        } else {
-          toast.info(response.message);
-          navigate(VIEW_EXAM_PATH);
-        }
-      }
-
-      setIsLoading(false);
+      };
+      const axiosConfig = {
+        url: EDIT_GET_EXAM_URL,
+        method: "get",
+        params: {
+          id,
+        },
+      };
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: LOADING_EXAM_DATA,
+        apiHasToCancel: true,
+        successFunction,
+        addAccessToken: true,
+      });
     };
     getExamDetail();
   }, []);
@@ -244,32 +239,26 @@ const EditExamContainer = () => {
         }
       );
       if (apiFormateData.notes.length === 0) {
-        return toast.error("Please at least add only one note");
+        return toastError("Please at least add only one note");
       }
       apiFormateData = { subjectName: state.subject, ...apiFormateData };
-      setIsSubmitting(true);
-      const response = await callApi({
+      const axiosConfig = {
         url: EDIT_EXAM_URL,
         method: "put",
         data: apiFormateData,
-        headers: {
-          "access-token": userInfo.token,
-        },
         params: {
           id,
         },
+      };
+      const successFunction = () => navigate(PROFILE_PATH);
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: LOADING_EXAM_DATA,
+        apiHasToCancel: true,
+        successFunction,
+        showToast: true,
+        addAccessToken: true,
       });
-      setIsSubmitting(false);
-      if (response.statusCode === 200) {
-        toast.success(response.message);
-        navigate(PROFILE_PATH);
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-          dispatch(logOutSuccess());
-        }
-        toast.error(response.message);
-      }
     }
   };
 

@@ -24,7 +24,7 @@ const CreateExam = () => {
     handelPrev,
     whereToAdd,
     handelSubmit,
-    isSubmitting,
+    isLoading,
   } = CreateExamContainer();
   return (
     <>
@@ -46,7 +46,7 @@ const CreateExam = () => {
             <EDButton
               {...ATTRIBUTE_NEXT_BUTTON}
               onClick={handelNext}
-              disabled={isSubmitting}
+              disabled={isLoading}
             />
           )}
 
@@ -54,7 +54,7 @@ const CreateExam = () => {
             <EDLoading
               {...ATTRIBUTE_SUBMIT_BUTTON}
               onClick={handelSubmit}
-              loading={isSubmitting}
+              loading={isLoading}
             />
           )}
 
@@ -62,7 +62,7 @@ const CreateExam = () => {
             <EDButton
               {...ATTRIBUTE_PREV_BUTTON}
               onClick={handelPrev}
-              disabled={isSubmitting}
+              disabled={isLoading}
             />
           )}
         </div>

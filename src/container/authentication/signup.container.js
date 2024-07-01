@@ -1,21 +1,23 @@
 import DDFormContainer from "../form/ddform.container";
-import callApi from "../../utils/callApi";
 import {
   SIGNUP_FORM_NAME,
+  SIGNUP_STATE_LOADING,
   VERIFICATION_MSG,
   signUpForm as configArray,
 } from "../../description/form/signup.description";
 import { SIGNUP_URL } from "../../description/api.description";
 import { toast } from "react-toastify";
 
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
-import { useState } from "react";
-import lSClear from "../../hook/lSClear";
+import useApi from "../../hook/useApi";
 
 const SignUpContainer = () => {
   const dispatch = useDispatch();
-  const [isSigningUp, setIsSigningUp] = useState(false);
+
+  const { isLoading: isSigningUp } =
+    useSelector((state) => state?.apiState?.[SIGNUP_STATE_LOADING]) ?? {};
+  const apiCaller = useApi();
   const {
     handelChangeType,
     state,
@@ -30,23 +32,22 @@ const SignUpContainer = () => {
   const handelSubmit = async (e) => {
     const allFieldValid = validateAllField();
     if (allFieldValid) {
-      setIsSigningUp(true);
-      const response = await callApi({
+      const axiosConfig = {
         url: SIGNUP_URL,
         method: "post",
         data: state,
-      });
-      if (response.statusCode === 200) {
-        toast.success(response.message);
+      };
+      const successFunction = () => {
         toast.info(VERIFICATION_MSG);
         dispatch(clearForm({ name: SIGNUP_FORM_NAME }));
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-        }
-        toast.error(response.message);
-      }
-      setIsSigningUp(false);
+      };
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: SIGNUP_STATE_LOADING,
+        apiHasToCancel: true,
+        successFunction,
+        showToast: true,
+      });
     }
   };
 

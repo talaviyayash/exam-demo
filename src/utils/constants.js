@@ -31,3 +31,5 @@ export const GIVE_EXAM_PATH = "/give-exam/:subject/:id";
 export const RESET_PASSWORD_PATH = "/reset-password";
 
 export const TOTAL_NUMBER_OF_QUESTION = 15;
+
+export const API_STATE = "apiState";

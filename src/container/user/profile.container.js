@@ -6,6 +6,7 @@ import {
   SIGN_IN_PATH,
 } from "../../utils/constants";
 import { logOutSuccess } from "../../redux/slice/userInfoSlice";
+import { toastSuccess } from "../../utils/toastFunction";
 
 const ProfileContainer = () => {
   const { token, role, ...userInfo } = useSelector(
@@ -20,6 +21,7 @@ const ProfileContainer = () => {
   const logOut = () => {
     dispatch(logOutSuccess());
     navigate(SIGN_IN_PATH);
+    toastSuccess("You Logout Successfully");
   };
 
   return {

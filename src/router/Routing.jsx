@@ -15,7 +15,6 @@ const Routing = () => {
   useEffect(() => {
     if (userInfo?.token) {
       const isExpire = decodeToken(userInfo?.token);
-      console.log(isExpire);
       if (!isExpire) dispatch(loginSuccess({ userInfo }));
     }
     setIsRenderRoute(true);

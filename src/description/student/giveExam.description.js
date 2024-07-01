@@ -22,3 +22,7 @@ export const ATTRIBUTE_SUBMIT_BUTTON = {
     fontSize: "17px",
   },
 };
+
+export const GET_EXAM_LOADING = "getExam";
+
+export const SUBMITTING_EXAM_LOADING = "submittingExam";

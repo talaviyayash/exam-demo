@@ -1,44 +1,51 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import callApi from "../../../utils/callApi";
 import { EDIT_GET_EXAM_URL } from "../../../description/api.description";
-import lSClear from "../../../hook/lSClear";
-import { toast } from "react-toastify";
-import { logOutSuccess } from "../../../redux/slice/userInfoSlice";
+import useApi from "../../../hook/useApi";
+import { EXAM_DETAIL_LOADING_STATE } from "../../../description/teacher/viewExamInDetail.description";
+import { addSuccessState } from "../../../redux/slice/apiLoadingSlice";
 
 const ViewExamInDetailContainer = () => {
   const { id, subject } = useParams();
   const userInfo = useSelector((state) => state.userInformation.userInfo);
-  const [examDetail, setExamDetail] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
+  const apiCaller = useApi();
+  const {
+    isLoading,
+    isError,
+    data: examDetail = [],
+  } = useSelector((state) => state?.apiState?.[EXAM_DETAIL_LOADING_STATE]) ??
+  {};
 
   useEffect(() => {
     const getExamDetail = async () => {
-      setIsLoading(true);
-      const response = await callApi({
+      const axiosConfig = {
         url: EDIT_GET_EXAM_URL,
         method: "get",
-        headers: {
-          "access-token": userInfo.token,
-        },
         params: {
           id,
         },
+      };
+
+      const successFunction = (response) =>
+        dispatch(
+          addSuccessState({
+            name: EXAM_DETAIL_LOADING_STATE,
+            data: response.data.questions,
+          })
+        );
+
+      await apiCaller({
+        axiosConfig,
+        loadingStatuesName: EXAM_DETAIL_LOADING_STATE,
+        showToast: false,
+        apiHasToCancel: true,
+        successFunction,
+        addAccessToken: true,
       });
-      if (response.statusCode === 200) {
-        setExamDetail(response.data.questions);
-        setCurrentIndex(0);
-      } else {
-        if (response.statusCode === 401) {
-          lSClear();
-          dispatch(logOutSuccess());
-        }
-        toast.error(response.message);
-      }
-      setIsLoading(false);
     };
     getExamDetail();
   }, []);
