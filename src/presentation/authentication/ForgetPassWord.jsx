@@ -34,11 +34,12 @@ const ForgetPassWord = () => {
         />
 
         <EDLoading
-          innerText={FORGET_PASSWORD_SUBMIT_NAME}
           onClick={handelSubmit}
           {...ATTRIBUTE_SUBMIT_BUTTON}
           loading={isLoading}
-        />
+        >
+          {FORGET_PASSWORD_SUBMIT_NAME}
+        </EDLoading>
       </div>
     </div>
   );

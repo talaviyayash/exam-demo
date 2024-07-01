@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -13,11 +13,9 @@ import {
   SHOW_EXAM_STATE,
 } from "../../../description/teacher/showExam.description";
 import { API_STATE } from "../../../utils/constants";
-import { toast } from "react-toastify";
 import { toastSuccess } from "../../../utils/toastFunction";
 
 const ShowExamContainer = () => {
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const { isLoading, data: allExam } =
     useSelector((state) => state?.[API_STATE]?.[SHOW_EXAM_STATE]) ?? {};
   console.log(isLoading);
@@ -25,7 +23,6 @@ const ShowExamContainer = () => {
     useSelector((state) => state?.[API_STATE]?.[DELETE_EXAM_STATE]) ?? {};
   const navigate = useNavigate();
   const apiCaller = useApi();
-  const dispatch = useDispatch();
 
   const allExamApi = async () => {
     const axiosConfig = {
@@ -37,7 +34,6 @@ const ShowExamContainer = () => {
       loadingStatuesName: SHOW_EXAM_STATE,
       showToast: false,
       apiHasToCancel: true,
-      addAccessToken: true,
     });
   };
 
@@ -67,7 +63,6 @@ const ShowExamContainer = () => {
       axiosConfig,
       loadingStatuesName: DELETE_EXAM_STATE,
       apiHasToCancel: true,
-      addAccessToken: true,
     });
     await allExamApi();
     toastSuccess(`Delete exam  successfully`);

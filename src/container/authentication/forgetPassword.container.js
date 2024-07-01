@@ -41,6 +41,7 @@ const ForgetPasswordContainer = () => {
         apiHasToCancel: true,
         showToast: true,
         successFunction,
+        addAccessToken: false,
       });
     }
   };

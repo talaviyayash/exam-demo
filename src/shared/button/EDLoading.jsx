@@ -1,7 +1,7 @@
 import React from "react";
 import LoadingButton from "@mui/lab/LoadingButton";
 
-const EDLoading = ({ innerText, ...attribute }) => {
+const EDLoading = ({ children, innerText, ...attribute }) => {
   return (
     <LoadingButton
       // loading
@@ -9,7 +9,7 @@ const EDLoading = ({ innerText, ...attribute }) => {
       variant="contained"
       {...attribute}
     >
-      {innerText}
+      {children ?? innerText}
     </LoadingButton>
   );
 };

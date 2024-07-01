@@ -5,7 +5,6 @@ import {
   EDIT_EXAM_FORM_NAME,
   LOADING_EXAM_DATA,
   UPDATE_EXAM_STATE,
-  editExamForm as configArray,
 } from "../../../description/form/editExam.description";
 import { useEffect } from "react";
 import { EMPTY_STRING } from "../../../description/globel.description";
@@ -19,14 +18,16 @@ import {
   EDIT_EXAM_URL,
   EDIT_GET_EXAM_URL,
 } from "../../../description/api.description";
-import { toast } from "react-toastify";
 import {
   addAllState,
   addQuestion,
   whereToAddUpdate,
 } from "../../../redux/slice/examSlice";
 import { PROFILE_PATH } from "../../../utils/constants";
-import { totalOption } from "../../../description/form/createExam.description";
+import {
+  createExamForm as configArray,
+  totalOption,
+} from "../../../description/form/createExam.description";
 import useApi from "../../../hook/useApi";
 import { toastError } from "../../../utils/toastFunction";
 
@@ -37,7 +38,6 @@ const EditExamContainer = () => {
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
   const apiCaller = useApi();
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const { isLoading } =
     useSelector((state) => state?.apiState?.[LOADING_EXAM_DATA]) ?? {};
   const { isLoading: isSubmitting } =
@@ -78,7 +78,7 @@ const EditExamContainer = () => {
 
     const optionError = allOptionValue.reduce((total, val, index) => {
       const optionName = `options${index + 1}`;
-      return { ...total, [optionName]: isAnySame(val) };
+      return { ...total, [optionName]: val ? isAnySame(val) : "" };
     }, {});
 
     dispatch(
@@ -97,6 +97,15 @@ const EditExamContainer = () => {
       validationObj[`options${i}`] = validateAllOption;
     }
     return validationObj;
+  };
+  const validateAnswer = (allValue) => {
+    const { answer } = allValue;
+    console.log(answer);
+    if (!answer) {
+      toastError("Please Select Answer.");
+      return "Please Select Answer.";
+    }
+    return EMPTY_STRING;
   };
 
   const {
@@ -162,7 +171,6 @@ const EditExamContainer = () => {
         loadingStatuesName: LOADING_EXAM_DATA,
         apiHasToCancel: true,
         successFunction,
-        addAccessToken: true,
       });
     };
     getExamDetail();
@@ -171,6 +179,10 @@ const EditExamContainer = () => {
   const handelNext = () => {
     const allValidate = validateAllField();
     if (allValidate && whereToAdd + 1 <= 14) {
+      if (!state.answer) {
+        validateAnswer(state);
+        return null;
+      }
       dispatch(addQuestion({ question: state }));
       if (allQuestion[whereToAdd + 1]) {
         dispatch(clearError({ name: EDIT_EXAM_FORM_NAME }));
@@ -211,6 +223,10 @@ const EditExamContainer = () => {
   const handelSubmit = async () => {
     const allValidate = validateAllField();
     if (allValidate) {
+      if (!state.answer) {
+        validateAnswer(state);
+        return null;
+      }
       const { subject, ...newQuestion } = state;
       const allNewQuestion = allQuestion.map((value, index) => {
         return index === whereToAdd ? newQuestion : value;
@@ -257,7 +273,6 @@ const EditExamContainer = () => {
         apiHasToCancel: true,
         successFunction,
         showToast: true,
-        addAccessToken: true,
       });
     }
   };

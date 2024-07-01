@@ -41,7 +41,9 @@ const ResetPassword = () => {
             innerText={RESET_PASSWORD_SUBMIT_NAME}
             {...ATTRIBUTE_SUBMIT_BUTTON}
             loading={isLoading}
-          />
+          >
+            {RESET_PASSWORD_SUBMIT_NAME}
+          </EDLoading>
         </div>
       </div>
     </>

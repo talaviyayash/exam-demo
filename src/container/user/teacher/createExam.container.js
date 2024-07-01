@@ -25,11 +25,12 @@ import {
 import { CREATE_EXAM_URL } from "../../../description/api.description";
 import { useNavigate } from "react-router-dom";
 import { PROFILE_PATH } from "../../../utils/constants";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import lSSetItem from "../../../hook/lSSetItem";
 import lSGetItem from "../../../hook/lSGetItem";
 import lSRemoveItem from "../../../hook/lSRemoveItem";
 import useApi from "../../../hook/useApi";
+import { toastError } from "../../../utils/toastFunction";
 
 const CreateExamContainer = () => {
   const dispatch = useDispatch();
@@ -37,8 +38,7 @@ const CreateExamContainer = () => {
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
   const apiCaller = useApi();
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
-  const { isLoading, isError } =
+  const { isLoading } =
     useSelector((state) => state?.apiState?.[CREATE_EXAM_SUBMIT_STATE]) ?? {};
 
   const sameQuestionValidation = (allValue) => {
@@ -76,7 +76,7 @@ const CreateExamContainer = () => {
 
     const optionError = allOptionValue.reduce((total, val, index) => {
       const optionName = `options${index + 1}`;
-      return { ...total, [optionName]: isAnySame(val) };
+      return { ...total, [optionName]: val ? isAnySame(val) : "" };
     }, {});
 
     dispatch(
@@ -87,6 +87,16 @@ const CreateExamContainer = () => {
     );
 
     return optionError[name];
+  };
+
+  const validateAnswer = (allValue) => {
+    const { answer } = allValue;
+    console.log(answer);
+    if (!answer) {
+      toastError("Please Select Answer.");
+      return "Please Select Answer.";
+    }
+    return EMPTY_STRING;
   };
 
   const allOptionValidationInObj = () => {
@@ -109,12 +119,17 @@ const CreateExamContainer = () => {
     customValidation: {
       question: sameQuestionValidation,
       ...allOptionValidationInObj(),
+      // answer: validateAnswer,
     },
   });
 
   const handelNext = () => {
     const allValidate = validateAllField();
     if (allValidate && whereToAdd + 1 <= 14) {
+      if (!state.answer) {
+        validateAnswer(state);
+        return null;
+      }
       dispatch(addQuestion({ question: state }));
       if (allQuestion[whereToAdd + 1]) {
         dispatch(clearError({ name: CREATE_EXAM_FORM_NAME }));
@@ -155,6 +170,10 @@ const CreateExamContainer = () => {
   const handelSubmit = async () => {
     const allValidate = validateAllField();
     if (allValidate) {
+      if (!state.answer) {
+        validateAnswer(state);
+        return null;
+      }
       const { subject, ...newQuestion } = state;
       const allNewQuestion = [...allQuestion, newQuestion];
       let apiFormateData = allNewQuestion.reduce(
@@ -187,7 +206,7 @@ const CreateExamContainer = () => {
         data: apiFormateData,
       };
 
-      const successFunction = (response) => {
+      const successFunction = () => {
         navigate(PROFILE_PATH);
         lSRemoveItem("examFormState");
         lSRemoveItem("examState");
@@ -198,7 +217,6 @@ const CreateExamContainer = () => {
         showToast: true,
         apiHasToCancel: true,
         successFunction,
-        addAccessToken: true,
       });
     }
   };

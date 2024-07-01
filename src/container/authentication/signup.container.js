@@ -47,6 +47,7 @@ const SignUpContainer = () => {
         apiHasToCancel: true,
         successFunction,
         showToast: true,
+        addAccessToken: false,
       });
     }
   };

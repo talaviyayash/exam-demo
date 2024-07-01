@@ -56,7 +56,6 @@ const EditProfileContainer = () => {
         apiHasToCancel: true,
         showToast: true,
         successFunction,
-        addAccessToken: true,
       });
     }
   };

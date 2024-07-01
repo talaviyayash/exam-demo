@@ -6,31 +6,82 @@ export const CREATE_EXAM_HEADER_NAME = "Create Exam";
 
 export const ATTRIBUTE_NEXT_BUTTON = {
   innerText: "Next",
-  sx: {
-    width: "100px",
-    height: "50px",
-    fontSize: "18px",
-  },
+  className: "btn-all",
 };
 
 export const ATTRIBUTE_PREV_BUTTON = {
   innerText: "Prev",
-  sx: {
-    width: "100px",
-    height: "50px",
-    fontSize: "18px",
-  },
+  className: "btn-all",
 };
-
-export const totalOption = 4;
 
 export const ATTRIBUTE_SUBMIT_BUTTON = {
   innerText: "SUBMIT",
-  sx: {
-    width: "100px",
-    height: "50px",
-    fontSize: "18px",
-  },
+  className: "btn-all",
+};
+
+export const ALPHABETS = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+  "T",
+  "U",
+  "V",
+  "W",
+  "X",
+  "Y",
+  "Z",
+];
+
+export const totalOption = 4;
+
+const makeQuestion = (totalOption) => {
+  const options = [];
+  for (let i = 1; i <= totalOption; i++) {
+    options.push({
+      name: "answer",
+      type: "radio",
+      required: {
+        isRequired: false,
+        defaultMsg: "Please select one option.",
+      },
+      labelName: ALPHABETS[i - 1],
+      attributes: {
+        name: "answer",
+        id: ALPHABETS[i - 1],
+        value: `options${i}`,
+      },
+    });
+    options.push({
+      name: `options${i}`,
+      type: "text",
+      required: {
+        isRequired: true,
+        defaultMsg: "Please add answer of option.",
+      },
+      attributes: {
+        name: `options${i}`,
+        id: `options${i}`,
+      },
+      labelName: `Options${i}`,
+    });
+  }
+  return options;
 };
 
 export const createExamForm = [
@@ -46,6 +97,9 @@ export const createExamForm = [
       id: "subject",
     },
     labelName: "Subject",
+    wrapElement: {
+      style: { gridColumn: "1/3" },
+    },
   },
   {
     name: "question",
@@ -59,115 +113,11 @@ export const createExamForm = [
       id: "question",
     },
     labelName: "Question",
-  },
-  {
-    name: "answer",
-    type: "radio",
-    required: {
-      isRequired: true,
-      defaultMsg: "Please select one option.",
-    },
-    labelName: "A",
-    attributes: {
-      name: "answer",
-      id: "A",
-      value: "options1",
+    wrapElement: {
+      style: { gridColumn: "1/3" },
     },
   },
-  {
-    name: "options1",
-    type: "text",
-    required: {
-      isRequired: true,
-      defaultMsg: "Please add answer of option.",
-    },
-    attributes: {
-      name: "options1",
-      id: "options1",
-    },
-    labelName: "Options1",
-  },
-  {
-    name: "answer",
-    type: "radio",
-    required: {
-      isRequired: true,
-      defaultMsg: "Please select one option.",
-    },
-    labelName: "B",
-    attributes: {
-      name: "answer",
-      id: "B",
-      value: "options2",
-    },
-  },
-  {
-    name: "options2",
-    type: "text",
-    required: {
-      isRequired: true,
-      defaultMsg: "Please add answer of option.",
-    },
-    attributes: {
-      name: "options2",
-      id: "options2",
-    },
-    labelName: "Options2",
-  },
-  {
-    name: "answer",
-    type: "radio",
-    required: {
-      isRequired: true,
-      defaultMsg: "Please select one option.",
-    },
-    labelName: "C",
-    attributes: {
-      name: "answer",
-      id: "C",
-      value: "options3",
-    },
-  },
-  {
-    name: "options3",
-    type: "text",
-    required: {
-      isRequired: true,
-      defaultMsg: "Please add answer of option.",
-    },
-    attributes: {
-      name: "options3",
-      id: "options3",
-    },
-    labelName: "Options3",
-  },
-  {
-    name: "answer",
-    type: "radio",
-    required: {
-      isRequired: true,
-      defaultMsg: "Please select one option.",
-    },
-    labelName: "D",
-    attributes: {
-      id: "D",
-      name: "answer",
-      value: "options4",
-    },
-  },
-  {
-    name: "options4",
-    type: "text",
-    required: {
-      isRequired: true,
-      defaultMsg: "Please add answer of option.",
-    },
-    attributes: {
-      name: "options4",
-      id: "options4",
-    },
-    labelName: "Options4",
-  },
+  ...makeQuestion(4),
   {
     name: "note",
     type: "text",
@@ -179,5 +129,8 @@ export const createExamForm = [
       id: "note",
     },
     labelName: "Note",
+    wrapElement: {
+      style: { gridColumn: "1/3" },
+    },
   },
 ];

@@ -1,5 +1,5 @@
 import React from "react";
-import CreateExamForm from "../../../shared/DDForm/CreateExamForm";
+import ExamForm from "../../../shared/DDForm/ExamForm";
 
 import CreateExamContainer from "../../../container/user/teacher/createExam.container";
 import {
@@ -29,10 +29,10 @@ const CreateExam = () => {
   return (
     <>
       <div className="container">
-        <div className="style-form simple-style-form">
-          <h1 className="form-header">{CREATE_EXAM_HEADER_NAME}</h1>
-          <h2 className="form-header">Question No :-{whereToAdd + 1}</h2>
-          <CreateExamForm
+        <h1 className="form-header">{CREATE_EXAM_HEADER_NAME}</h1>
+        <h2 className="form-header">Question No :-{whereToAdd + 1}</h2>
+        <div className="exam-form">
+          <ExamForm
             handelChangeType={handelChangeType}
             state={state}
             validateAllField={validateAllField}
@@ -41,30 +41,24 @@ const CreateExam = () => {
             configArray={configArray}
             formName={CREATE_EXAM_FORM_NAME}
           />
-
-          {whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION && (
-            <EDButton
-              {...ATTRIBUTE_NEXT_BUTTON}
-              onClick={handelNext}
-              disabled={isLoading}
-            />
-          )}
-
-          {whereToAdd + 1 === TOTAL_NUMBER_OF_QUESTION && (
-            <EDLoading
-              {...ATTRIBUTE_SUBMIT_BUTTON}
-              onClick={handelSubmit}
-              loading={isLoading}
-            />
-          )}
-
-          {whereToAdd !== 0 && (
-            <EDButton
-              {...ATTRIBUTE_PREV_BUTTON}
-              onClick={handelPrev}
-              disabled={isLoading}
-            />
-          )}
+        </div>
+        <div className="btn-container">
+          <EDButton
+            {...ATTRIBUTE_PREV_BUTTON}
+            onClick={handelPrev}
+            disabled={isLoading || whereToAdd === 0}
+          />
+          <EDLoading
+            {...ATTRIBUTE_SUBMIT_BUTTON}
+            onClick={handelSubmit}
+            loading={isLoading}
+            disabled={whereToAdd + 1 !== TOTAL_NUMBER_OF_QUESTION}
+          />
+          <EDButton
+            {...ATTRIBUTE_NEXT_BUTTON}
+            onClick={handelNext}
+            disabled={isLoading || !(whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION)}
+          />
         </div>
       </div>
     </>

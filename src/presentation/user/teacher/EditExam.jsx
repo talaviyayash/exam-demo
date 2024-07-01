@@ -33,9 +33,9 @@ const EditExam = () => {
     <>
       <>
         <div className="container">
-          <div className="style-form">
-            <h1 className="form-header">{EDIT_EXAM_HEADER_NAME}</h1>
-            <h2 className="form-header">Question No :-{whereToAdd + 1}</h2>
+          <h1 className="form-header">{EDIT_EXAM_HEADER_NAME}</h1>
+          <h2 className="form-header">Question No :-{whereToAdd + 1}</h2>
+          <div className="exam-form">
             <EDForm
               handelChangeType={handelChangeType}
               state={state}
@@ -45,13 +45,13 @@ const EditExam = () => {
               configArray={configArray}
               formName={EDIT_EXAM_FORM_NAME}
             />
-            {whereToAdd !== 0 && (
-              <EDButton
-                {...ATTRIBUTE_PREV_BUTTON}
-                onClick={handelPrev}
-                disabled={isSubmitting}
-              />
-            )}
+          </div>
+          <div className="btn-container">
+            <EDButton
+              {...ATTRIBUTE_PREV_BUTTON}
+              onClick={handelPrev}
+              disabled={isSubmitting || whereToAdd === 0}
+            />
 
             <EDLoading
               {...ATTRIBUTE_SUBMIT_BUTTON}
@@ -59,13 +59,13 @@ const EditExam = () => {
               loading={isSubmitting}
             />
 
-            {whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION && (
-              <EDButton
-                {...ATTRIBUTE_NEXT_BUTTON}
-                onClick={handelNext}
-                disabled={isSubmitting}
-              />
-            )}
+            <EDButton
+              {...ATTRIBUTE_NEXT_BUTTON}
+              onClick={handelNext}
+              disabled={
+                isSubmitting || !(whereToAdd + 1 < TOTAL_NUMBER_OF_QUESTION)
+              }
+            />
           </div>
         </div>
       </>

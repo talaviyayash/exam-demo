@@ -49,6 +49,7 @@ const SignInContainer = () => {
         apiHasToCancel: true,
         successFunction,
         showToast: true,
+        addAccessToken: false,
       });
     }
   };

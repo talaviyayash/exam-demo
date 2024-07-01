@@ -40,10 +40,11 @@ const NewPassword = () => {
 
           <EDLoading
             onClick={handelSubmit}
-            innerText={NEW_PASSWORD_SUBMIT_NAME}
             {...ATTRIBUTE_SUBMIT_BUTTON}
             loading={isCreatingNewPassword}
-          />
+          >
+            {NEW_PASSWORD_SUBMIT_NAME}
+          </EDLoading>
         </div>
       </div>
     </>

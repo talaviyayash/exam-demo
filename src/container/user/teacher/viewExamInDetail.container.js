@@ -8,17 +8,12 @@ import { addSuccessState } from "../../../redux/slice/apiLoadingSlice";
 
 const ViewExamInDetailContainer = () => {
   const { id, subject } = useParams();
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const dispatch = useDispatch();
   const apiCaller = useApi();
-  const {
-    isLoading,
-    isError,
-    data: examDetail = [],
-  } = useSelector((state) => state?.apiState?.[EXAM_DETAIL_LOADING_STATE]) ??
-  {};
+  const { isLoading, data: examDetail = [] } =
+    useSelector((state) => state?.apiState?.[EXAM_DETAIL_LOADING_STATE]) ?? {};
 
   useEffect(() => {
     const getExamDetail = async () => {
@@ -44,7 +39,6 @@ const ViewExamInDetailContainer = () => {
         showToast: false,
         apiHasToCancel: true,
         successFunction,
-        addAccessToken: true,
       });
     };
     getExamDetail();

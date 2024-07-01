@@ -65,7 +65,6 @@ const ChangePasswordContainer = () => {
         showToast: true,
         successFunction,
         errorFunction,
-        addAccessToken: true,
       });
     }
   };

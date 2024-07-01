@@ -14,7 +14,6 @@ import {
   whereToAddUpdate,
 } from "../../../redux/slice/giveExamSlice";
 import { EMPTY_STRING } from "../../../description/globel.description";
-import { toast } from "react-toastify";
 import { SHOW_EXAM_FOR_STUDENT } from "../../../utils/constants";
 import lSSetItem from "../../../hook/lSSetItem";
 import useApi from "../../../hook/useApi";
@@ -25,7 +24,6 @@ import {
 import { toastError } from "../../../utils/toastFunction";
 
 const GiveExamContainer = () => {
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const { id, subject } = useParams();
   const [decodedSubject] = useState(atob(subject));
   const { isLoading = true } =
@@ -86,7 +84,6 @@ const GiveExamContainer = () => {
       apiHasToCancel: true,
       showToast: true,
       successFunction,
-      addAccessToken: true,
     });
   };
 
@@ -110,6 +107,7 @@ const GiveExamContainer = () => {
             dispatch(
               whereToAddUpdate({ whereToAdd: localStorageData.whereToAdd ?? 0 })
             );
+            setCurrentAnswer(localStorageData.answer[whereToAdd].answer);
           } else {
             lSSetItem("giveExam", { id: id, answer: [] });
           }
@@ -120,10 +118,8 @@ const GiveExamContainer = () => {
         axiosConfig,
         loadingStatuesName: GET_EXAM_LOADING,
         apiHasToCancel: true,
-        showToast: true,
         successFunction,
         errorFunction,
-        addAccessToken: true,
       });
     };
     getExamDetail();

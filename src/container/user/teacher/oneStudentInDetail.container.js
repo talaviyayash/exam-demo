@@ -8,7 +8,6 @@ import { addDataState } from "../../../redux/slice/apiLoadingSlice";
 
 const OneStudentInDetailContainer = () => {
   const { id } = useParams();
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
   const apiCaller = useApi();
   const dispatch = useDispatch();
   const { isLoading, data: studentInfo = [] } =
@@ -37,7 +36,6 @@ const OneStudentInDetailContainer = () => {
         showToast: false,
         apiHasToCancel: true,
         successFunction,
-        addAccessToken: true,
       });
     };
 
