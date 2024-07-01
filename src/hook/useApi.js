@@ -48,8 +48,8 @@ const useApi = () => {
     });
     dispatch(addLoadingState({ name: loadingStatuesName }));
     axiosConfig.headers = {
-      ...(axiosConfig.headers ?? {}),
       "access-token": addAccessToken ? token : undefined,
+      ...(axiosConfig.headers ?? {}),
     };
     const response = await callApi({
       ...axiosConfig,
