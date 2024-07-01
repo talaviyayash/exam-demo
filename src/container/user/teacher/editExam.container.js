@@ -187,7 +187,7 @@ const EditExamContainer = () => {
         dispatch(
           addValue({
             name: EDIT_EXAM_FORM_NAME,
-            value: { ...allQuestion[whereToAdd + 1] },
+            value: { ...allQuestion[whereToAdd + 1], note: "" },
           })
         );
       } else {
