@@ -52,6 +52,7 @@ const EditProfileContainer = () => {
         apiHasToCancel: true,
         showToast: true,
         successFunction,
+        toastMsg: "Profile Updated Successfully.",
       });
     }
   };
