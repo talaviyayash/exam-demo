@@ -148,6 +148,9 @@ td {
     display: grid;
     grid-template-columns: 70px 300px !important;
   }
+  .btn-container {
+    width: 100% !important;
+  }
 }
 
 @media screen and (max-width: 500px) {
@@ -187,10 +190,15 @@ td {
   grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   justify-items: center;
+  width: 450px;
 }
 
 .btn-all {
   width: 80px;
   height: 40px;
   font-size: 18px;
+}
+
+.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
+  width: 1000px !important;
 }

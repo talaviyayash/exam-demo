@@ -103,9 +103,12 @@ const GiveExamContainer = () => {
           if (id === localStorageData.id) {
             dispatch(addAllAnswer({ answer: localStorageData.answer }));
             dispatch(
-              whereToAddUpdate({ whereToAdd: localStorageData.whereToAdd ?? 0 })
+              whereToAddUpdate({
+                whereToAdd: localStorageData.whereToAdd ?? 0,
+              })
             );
-            setCurrentAnswer(localStorageData.answer[whereToAdd].answer);
+            if (localStorageData?.answer.length > 0)
+              setCurrentAnswer(localStorageData.answer[whereToAdd].answer);
           } else {
             lSSetItem("giveExam", { id: id, answer: [] });
           }

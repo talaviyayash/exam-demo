@@ -253,7 +253,7 @@ const EditExamContainer = () => {
         }
       );
       if (apiFormateData.notes.length === 0) {
-        return toastError("Please at least add only one note");
+        return toastError("Please at least add one note");
       }
       apiFormateData = { subjectName: state.subject, ...apiFormateData };
       const axiosConfig = {

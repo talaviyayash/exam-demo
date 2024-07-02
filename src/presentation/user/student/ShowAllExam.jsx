@@ -32,7 +32,12 @@ const ShowAllExam = () => {
         <h1> All Exam</h1>
         <TableContainer
           component={Paper}
-          sx={{ maxWidth: "1000px", overflowX: "auto" }}
+          sx={{
+            maxWidth: "1000px",
+            overflowX: "auto",
+            display: "flex",
+            justifyContent: "center",
+          }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
