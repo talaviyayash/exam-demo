@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react";
-import { GET_ALL_EXAM_FOR_STUDENT } from "../../../description/api.description";
+import {
+  GET,
+  GET_ALL_EXAM_FOR_STUDENT,
+} from "../../../description/api.description";
 import { useSelector } from "react-redux";
 import { GET_EXAM_LOADING } from "../../../description/student/showAllExam.description";
 import useAllHook from "../../../hook/useAllHook";
+import { API_STATE } from "../../../utils/constants";
 
 const ShowAllExamContainer = () => {
   const [showResult, setShowResult] = useState({ show: false });
   const { apiCaller, navigate } = useAllHook();
   const { isLoading = true, data: allExam } =
-    useSelector((state) => state?.apiState?.[GET_EXAM_LOADING]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[GET_EXAM_LOADING]) ?? {};
 
   const redirectToGiveExam = (subject, id) => {
     const encodedSubjectName = btoa(subject);
@@ -21,7 +25,7 @@ const ShowAllExamContainer = () => {
     const getAllExamForStudent = async () => {
       const axiosConfig = {
         url: GET_ALL_EXAM_FOR_STUDENT,
-        method: "get",
+        method: GET,
       };
       await apiCaller({
         axiosConfig,

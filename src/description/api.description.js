@@ -31,3 +31,7 @@ export const RESET_PASSWORD_URL = "/users/ResetPassword";
 export const GET_EXAM_PAPER_URL = "/student/examPaper";
 
 export const GIVE_EXAM_PAPER_URL = "/student/giveExam";
+
+export const POST = "post";
+
+export const GET = "get";

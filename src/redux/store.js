@@ -4,13 +4,14 @@ import formSlice from "./slice/formSlice";
 import examSlice from "./slice/examSlice";
 import apiLoadingSlice from "./slice/apiLoadingSlice";
 import giveExamSlice from "./slice/giveExamSlice";
+import { API_STATE, USER_INFORMATION } from "../utils/constants";
 
 export const store = configureStore({
   reducer: {
-    userInformation: userInfoSlice,
+    [USER_INFORMATION]: userInfoSlice,
     form: formSlice,
     exam: examSlice,
-    apiState: apiLoadingSlice,
+    [API_STATE]: apiLoadingSlice,
     giveExam: giveExamSlice,
   },
 });

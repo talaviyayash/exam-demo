@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import {
+  GET,
   GET_EXAM_PAPER_URL,
   GIVE_EXAM_PAPER_URL,
+  POST,
 } from "../../../description/api.description";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -12,8 +14,15 @@ import {
   resetGiveExamState,
   whereToAddUpdate,
 } from "../../../redux/slice/giveExamSlice";
-import { EMPTY_STRING } from "../../../description/globel.description";
-import { SHOW_EXAM_FOR_STUDENT } from "../../../utils/constants";
+import {
+  ANSWER_ERROR_MSG,
+  EMPTY_STRING,
+} from "../../../description/globel.description";
+import {
+  API_STATE,
+  GIVE_EXAM,
+  SHOW_EXAM_FOR_STUDENT,
+} from "../../../utils/constants";
 import {
   GET_EXAM_LOADING,
   SUBMITTING_EXAM_LOADING,
@@ -26,9 +35,9 @@ const GiveExamContainer = () => {
   const { id, subject } = useParams();
   const [decodedSubject] = useState(atob(subject));
   const { isLoading = true } =
-    useSelector((state) => state?.apiState?.[GET_EXAM_LOADING]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[GET_EXAM_LOADING]) ?? {};
   const { isLoading: isSubmittingExam = false } =
-    useSelector((state) => state?.apiState?.[SUBMITTING_EXAM_LOADING]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[SUBMITTING_EXAM_LOADING]) ?? {};
   const [currentAnswer, setCurrentAnswer] = useState(EMPTY_STRING);
   const { apiCaller, navigate, dispatch } = useAllHook();
 
@@ -47,7 +56,7 @@ const GiveExamContainer = () => {
       setCurrentAnswer(EMPTY_STRING);
       dispatch(whereToAddUpdate({ whereToAdd: whereToAdd + 1 }));
     } else {
-      toastError("Please select answer.");
+      toastError(ANSWER_ERROR_MSG);
     }
   };
 
@@ -59,8 +68,7 @@ const GiveExamContainer = () => {
   };
 
   const handelSubmit = async () => {
-    if (currentAnswer === EMPTY_STRING)
-      return toastError("Please select answer.");
+    if (currentAnswer === EMPTY_STRING) return toastError(ANSWER_ERROR_MSG);
     const answerObj = {
       question: currentQuestion._id,
       answer: currentAnswer,
@@ -69,7 +77,7 @@ const GiveExamContainer = () => {
     apiSendData[questions.length - 1] = answerObj;
     const axiosConfig = {
       url: GIVE_EXAM_PAPER_URL,
-      method: "post",
+      method: POST,
       data: apiSendData,
       params: {
         id,
@@ -87,11 +95,11 @@ const GiveExamContainer = () => {
 
   useEffect(() => {
     dispatch(resetGiveExamState());
-    const localStorageData = lSGetItem("giveExam") ?? {};
+    const localStorageData = lSGetItem(GIVE_EXAM) ?? {};
     const getExamDetail = async () => {
       const axiosConfig = {
         url: GET_EXAM_PAPER_URL,
-        method: "get",
+        method: GET,
         params: {
           id,
         },
@@ -110,7 +118,7 @@ const GiveExamContainer = () => {
             if (localStorageData?.answer.length > 0)
               setCurrentAnswer(localStorageData.answer[whereToAdd].answer);
           } else {
-            lSSetItem("giveExam", { id: id, answer: [] });
+            lSSetItem(GIVE_EXAM, { id: id, answer: [] });
           }
         }
       };
@@ -132,8 +140,8 @@ const GiveExamContainer = () => {
   }, [whereToAdd]);
 
   useEffect(() => {
-    const localStorageData = lSGetItem("giveExam") ?? {};
-    lSSetItem("giveExam", {
+    const localStorageData = lSGetItem(GIVE_EXAM) ?? {};
+    lSSetItem(GIVE_EXAM, {
       id,
       answer:
         answerOfQuestion.length === 0
@@ -156,7 +164,7 @@ const GiveExamContainer = () => {
     handelPrev,
     totalQuestion: questions.length,
     handelSubmit,
-    isSubmittingExma: isSubmittingExam,
+    isSubmittingExam,
   };
 };
 

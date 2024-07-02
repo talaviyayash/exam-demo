@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import Loading from "../../../shared/Loading";
 import NotFound from "../../../shared/NotFound";
+import { NO_RESULT_FOUND } from "../../../description/teacher/oneStudentInDetail.description";
 
 const OneStudentInDetail = () => {
   const { studentInfo, isLoading } = OneStudentInDetailContainer();
@@ -56,7 +57,7 @@ const OneStudentInDetail = () => {
           </TableContainer>
         ) : (
           <>
-            <NotFound text={"No Result found"} />
+            <NotFound text={NO_RESULT_FOUND} />
           </>
         )}
       </div>

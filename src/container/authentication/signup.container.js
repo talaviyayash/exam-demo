@@ -5,16 +5,17 @@ import {
   VERIFICATION_MSG,
   signUpForm as configArray,
 } from "../../description/form/signup.description";
-import { SIGNUP_URL } from "../../description/api.description";
+import { POST, SIGNUP_URL } from "../../description/api.description";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
 import useAllHook from "../../hook/useAllHook";
+import { API_STATE } from "../../utils/constants";
 
 const SignUpContainer = () => {
   const { apiCaller, dispatch } = useAllHook();
   const { isLoading: isSigningUp } =
-    useSelector((state) => state?.apiState?.[SIGNUP_STATE_LOADING]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[SIGNUP_STATE_LOADING]) ?? {};
   const {
     handelChangeType,
     state,
@@ -31,7 +32,7 @@ const SignUpContainer = () => {
     if (allFieldValid) {
       const axiosConfig = {
         url: SIGNUP_URL,
-        method: "post",
+        method: POST,
         data: state,
       };
       const successFunction = () => {

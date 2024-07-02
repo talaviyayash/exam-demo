@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import {
   DELETE_EXAM_URL,
+  GET,
   SHOW_EXAM_URL,
 } from "../../../description/api.description";
 import {
@@ -12,6 +13,10 @@ import {
 import { API_STATE } from "../../../utils/constants";
 import { toastSuccess } from "../../../utils/toastFunction";
 import useAllHook from "../../../hook/useAllHook";
+import {
+  DELETE_EXAM_MSG,
+  DELETE_EXAM_SUCCESS_MSG,
+} from "../../../description/globel.description";
 
 const ShowExamContainer = () => {
   const { isLoading, data: allExam } =
@@ -23,7 +28,7 @@ const ShowExamContainer = () => {
   const allExamApi = async () => {
     const axiosConfig = {
       url: SHOW_EXAM_URL,
-      method: "get",
+      method: GET,
     };
     await apiCaller({
       axiosConfig,
@@ -40,9 +45,7 @@ const ShowExamContainer = () => {
     navigate(`/view-in-detail/${subject}/${id}`);
 
   const deleteExam = async (id) => {
-    const isApproved = window.confirm(
-      "Are you sure you want to delete this exam?"
-    );
+    const isApproved = window.confirm(DELETE_EXAM_MSG);
     if (!isApproved) return null;
     const axiosConfig = {
       url: DELETE_EXAM_URL,
@@ -51,7 +54,7 @@ const ShowExamContainer = () => {
         id,
       },
     };
-    const successFunction = () => toastSuccess(`Delete exam successfully`);
+    const successFunction = () => toastSuccess(DELETE_EXAM_SUCCESS_MSG);
     await apiCaller({
       axiosConfig,
       loadingStatuesName: DELETE_EXAM_STATE,

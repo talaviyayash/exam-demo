@@ -1,12 +1,17 @@
 import DDFormContainer from "../../form/ddform.container";
-import { RESET_PASSWORD_URL } from "../../../description/api.description";
+import { POST, RESET_PASSWORD_URL } from "../../../description/api.description";
 import { clearForm } from "../../../redux/slice/formSlice";
 import {
   RESET_PASSWORD_FORM_NAME as formName,
   resetPasswordForm as configArray,
   SUBMIT_PASSWORD_LOADING,
 } from "../../../description/form/resetPassword.description";
-import { PROFILE_PATH, SIGN_IN_PATH } from "../../../utils/constants";
+import {
+  API_STATE,
+  CONFIRM_PASSWORD_MSG,
+  PROFILE_PATH,
+  SIGN_IN_PATH,
+} from "../../../utils/constants";
 import { EMPTY_STRING } from "../../../description/globel.description";
 import { useSelector } from "react-redux";
 import useAllHook from "../../../hook/useAllHook";
@@ -14,14 +19,14 @@ import useAllHook from "../../../hook/useAllHook";
 const ChangePasswordContainer = () => {
   const { apiCaller, navigate, dispatch } = useAllHook();
   const { isLoading = false } =
-    useSelector((state) => state?.apiState?.[SUBMIT_PASSWORD_LOADING]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[SUBMIT_PASSWORD_LOADING]) ?? {};
 
   const ConfirmPassword = (allValue) => {
     const PasswordValue = allValue?.Password;
     const confirmPasswordValue = allValue?.ConfirmPassword;
     return confirmPasswordValue === PasswordValue
       ? EMPTY_STRING
-      : "Confirm Password doesn't match Password ";
+      : CONFIRM_PASSWORD_MSG;
   };
 
   const {
@@ -43,7 +48,7 @@ const ChangePasswordContainer = () => {
     if (allFieldValid) {
       const axiosConfig = {
         url: RESET_PASSWORD_URL,
-        method: "post",
+        method: POST,
         data: state,
       };
       const successFunction = () => {

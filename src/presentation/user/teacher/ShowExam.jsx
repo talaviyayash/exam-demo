@@ -20,15 +20,17 @@ const ShowExam = () => {
     editExamNavigate,
     deleteExam,
   } = ShowExamContainer();
-  console.log(isLoading);
-  if (isLoading || deleteIsLoading === false) return <Loading />;
+  if ((isLoading || deleteIsLoading) === true) return <Loading />;
 
   return (
     <>
       <div className="table-container">
         <h1>All Exam</h1>
         <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table
+            sx={{ maxWidth: "1000px", overflowX: "auto" }}
+            aria-label="simple table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell>Subject Name</TableCell>

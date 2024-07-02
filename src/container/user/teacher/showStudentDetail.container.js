@@ -1,15 +1,17 @@
 import { useEffect } from "react";
-import { STUDENT_DETAIL_URL } from "../../../description/api.description";
+import { GET, STUDENT_DETAIL_URL } from "../../../description/api.description";
 import { useSelector } from "react-redux";
 import { GET_STUDENT_LOADING_NAME } from "../../../description/teacher/showStudentDetail.description";
 import useAllHook from "../../../hook/useAllHook";
+import { API_STATE } from "../../../utils/constants";
 
 const ShowStudentDetailContainer = () => {
   const {
     isLoading,
     isError,
     data: allStudent = [],
-  } = useSelector((state) => state?.apiState?.[GET_STUDENT_LOADING_NAME]) ?? {};
+  } = useSelector((state) => state?.[API_STATE]?.[GET_STUDENT_LOADING_NAME]) ??
+  {};
   const { apiCaller, navigate } = useAllHook();
 
   const navigateToStudentInDetail = (id) => navigate(`/student-detail/${id}`);
@@ -18,7 +20,7 @@ const ShowStudentDetailContainer = () => {
     const getAllStudentData = async () => {
       const axiosConfig = {
         url: STUDENT_DETAIL_URL,
-        method: "get",
+        method: GET,
       };
 
       await apiCaller({

@@ -18,12 +18,15 @@ import {
   clearForm,
 } from "../../../redux/slice/formSlice";
 import {
+  ANSWER_ERROR_MSG,
   EMPTY_STRING,
   EXAM_FORM_STATE,
   EXAM_STATE,
+  OPTION_CUSTOM_ERROR_MSG,
+  QUESTION_CUSTOM_ERROR_MSG,
 } from "../../../description/globel.description";
-import { CREATE_EXAM_URL } from "../../../description/api.description";
-import { PROFILE_PATH } from "../../../utils/constants";
+import { CREATE_EXAM_URL, POST } from "../../../description/api.description";
+import { API_STATE, PROFILE_PATH } from "../../../utils/constants";
 import { useEffect } from "react";
 import { toastError } from "../../../utils/toastFunction";
 import { lSGetItem, lSRemoveItem, lSSetItem } from "../../../utils/lSFunction";
@@ -34,7 +37,8 @@ const CreateExamContainer = () => {
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
   const { isLoading } =
-    useSelector((state) => state?.apiState?.[CREATE_EXAM_SUBMIT_STATE]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[CREATE_EXAM_SUBMIT_STATE]) ??
+    {};
 
   const sameQuestionValidation = (allValue) => {
     const { question: currentQuestion } = allValue;
@@ -51,7 +55,7 @@ const CreateExamContainer = () => {
       (indexOfArray.includes(whereToAdd) && filterQuestion.length > 1) ||
       (!indexOfArray.includes(whereToAdd) && filterQuestion.length > 0);
 
-    return questionIsSame ? "Question cannot be same." : EMPTY_STRING;
+    return questionIsSame ? QUESTION_CUSTOM_ERROR_MSG : EMPTY_STRING;
   };
 
   const validateAllOption = (allValue, name) => {
@@ -60,7 +64,7 @@ const CreateExamContainer = () => {
       allOptionValue.push(allValue?.[`options${i}`]);
     }
 
-    const optionErrorMsg = "All options must be different";
+    const optionErrorMsg = OPTION_CUSTOM_ERROR_MSG;
 
     const isAnySame = (compareOptionsValue) =>
       allOptionValue.filter((val) => {
@@ -85,8 +89,8 @@ const CreateExamContainer = () => {
 
   const validateAnswer = (allValue) => {
     if (!allValue.answer) {
-      toastError("Please Select Answer.");
-      return "Please Select Answer.";
+      toastError(ANSWER_ERROR_MSG);
+      return ANSWER_ERROR_MSG;
     }
     return EMPTY_STRING;
   };
@@ -192,13 +196,13 @@ const CreateExamContainer = () => {
       apiFormateData = { subjectName: state.subject, ...apiFormateData };
       const axiosConfig = {
         url: CREATE_EXAM_URL,
-        method: "post",
+        method: POST,
         data: apiFormateData,
       };
       const successFunction = () => {
         navigate(PROFILE_PATH);
-        lSRemoveItem("examFormState");
-        lSRemoveItem("examState");
+        lSRemoveItem(EXAM_FORM_STATE);
+        lSRemoveItem(EXAM_STATE);
       };
       await apiCaller({
         axiosConfig,

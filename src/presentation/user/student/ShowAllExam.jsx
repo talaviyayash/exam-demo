@@ -9,6 +9,8 @@ import ShowAllExamContainer from "../../../container/user/student/showAllExam.co
 import Loading from "../../../shared/Loading";
 import { Button } from "@mui/material";
 import ShowResult from "./ShowResult";
+import { SHOW_EXAM } from "../../../description/student/showAllExam.description";
+import { GIVE_EXAM } from "../../../utils/constants";
 
 const ShowAllExam = () => {
   const {
@@ -39,7 +41,10 @@ const ShowAllExam = () => {
             justifyContent: "center",
           }}
         >
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+          <Table
+            sx={{ maxWidth: "1000px", overflowX: "auto" }}
+            aria-label="simple table"
+          >
             <TableHead>
               <TableRow>
                 <TableCell>Subject Name</TableCell>
@@ -69,7 +74,7 @@ const ShowAllExam = () => {
                         showResultHandel(row.Result);
                       }}
                     >
-                      {row.Result.length === 0 ? "Give Exam" : "Show Results"}
+                      {row.Result.length === 0 ? GIVE_EXAM : SHOW_EXAM}
                     </Button>
                   </TableCell>
                 </TableRow>

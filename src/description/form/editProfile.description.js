@@ -8,6 +8,8 @@ export const EDIT_PROFILE_SUBMIT_NAME = "Update Profile";
 
 export const SUBMIT_PROFILE_LOADING = "editProfile";
 
+export const PROFILE_UPDATE_MSG = "Profile Updated Successfully.";
+
 export const nameElement = {
   name: "name",
   type: "text",

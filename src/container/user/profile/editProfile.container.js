@@ -1,22 +1,28 @@
 import { useSelector } from "react-redux";
 import {
   EDIT_PROFILE_FORM_NAME,
+  PROFILE_UPDATE_MSG,
   SUBMIT_PROFILE_LOADING,
   nameElement,
 } from "../../../description/form/editProfile.description";
 import DDFormContainer from "../../form/ddform.container";
 import { UPDATE_PROFILE_URL } from "../../../description/api.description";
 import { addUserInfo } from "../../../redux/slice/userInfoSlice";
-import { PROFILE_PATH } from "../../../utils/constants";
+import {
+  API_STATE,
+  PROFILE_PATH,
+  USER_INFO,
+  USER_INFORMATION,
+} from "../../../utils/constants";
 import { useEffect } from "react";
 import { lSSetItem } from "../../../utils/lSFunction";
 import useAllHook from "../../../hook/useAllHook";
 
 const EditProfileContainer = () => {
   const { apiCaller, navigate, dispatch } = useAllHook();
-  const userInfo = useSelector((state) => state.userInformation.userInfo);
+  const userInfo = useSelector((state) => state[USER_INFORMATION][USER_INFO]);
   const { isLoading } =
-    useSelector((state) => state?.apiState?.[SUBMIT_PROFILE_LOADING]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[SUBMIT_PROFILE_LOADING]) ?? {};
   let configArray = nameElement;
   useEffect(() => {
     configArray.value = userInfo.name;
@@ -43,7 +49,7 @@ const EditProfileContainer = () => {
       };
       const successFunction = (response) => {
         dispatch(addUserInfo(response.data));
-        lSSetItem("userInfo", { ...userInfo, ...response.data });
+        lSSetItem(USER_INFO, { ...userInfo, ...response.data });
         navigate(PROFILE_PATH);
       };
       await apiCaller({
@@ -52,7 +58,7 @@ const EditProfileContainer = () => {
         apiHasToCancel: true,
         showToast: true,
         successFunction,
-        toastMsg: "Profile Updated Successfully.",
+        toastMsg: PROFILE_UPDATE_MSG,
       });
     }
   };

@@ -33,3 +33,13 @@ export const RESET_PASSWORD_PATH = "/reset-password";
 export const TOTAL_NUMBER_OF_QUESTION = 15;
 
 export const API_STATE = "apiState";
+
+export const CONFIRM_PASSWORD_MSG = "Confirm Password doesn't match Password.";
+
+export const ACCESS_TOKEN = "access-token";
+
+export const USER_INFO = "userInfo";
+
+export const USER_INFORMATION = "userInformation";
+
+export const GIVE_EXAM = "giveExam";

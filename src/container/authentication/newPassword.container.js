@@ -1,7 +1,9 @@
 import DDFormContainer from "../form/ddform.container";
 import {
   CREATE_NEW_PASSWORD_URL,
+  GET,
   NEW_PASSWORD_VERIFY_URL,
+  POST,
 } from "../../description/api.description";
 import { useSelector } from "react-redux";
 import { clearForm } from "../../redux/slice/formSlice";
@@ -15,7 +17,13 @@ import {
 import { useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { EMPTY_STRING } from "../../description/globel.description";
-import { FORGET_PASSWORD_PATH, SIGN_IN_PATH } from "../../utils/constants";
+import {
+  ACCESS_TOKEN,
+  API_STATE,
+  CONFIRM_PASSWORD_MSG,
+  FORGET_PASSWORD_PATH,
+  SIGN_IN_PATH,
+} from "../../utils/constants";
 import useAllHook from "../../hook/useAllHook";
 
 const NewPasswordContainer = () => {
@@ -24,16 +32,17 @@ const NewPasswordContainer = () => {
   const { apiCaller, navigate, dispatch } = useAllHook();
 
   const { isLoading: isTokenVerifying = true } =
-    useSelector((state) => state?.apiState?.[VERIFYING_TOKEN_STATE]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[VERIFYING_TOKEN_STATE]) ?? {};
   const { isLoading: isCreatingNewPassword } =
-    useSelector((state) => state?.apiState?.[SUBMITTING_PASSWORD_STATE]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[SUBMITTING_PASSWORD_STATE]) ??
+    {};
 
   const ConfirmPassword = (allValue) => {
     const PasswordValue = allValue?.Password;
     const confirmPasswordValue = allValue?.ConfirmPassword;
     return confirmPasswordValue === PasswordValue
       ? EMPTY_STRING
-      : "Confirm Password doesn't match Password.";
+      : CONFIRM_PASSWORD_MSG;
   };
 
   const {
@@ -55,7 +64,7 @@ const NewPasswordContainer = () => {
     if (allFieldValid) {
       const axiosConfig = {
         url: CREATE_NEW_PASSWORD_URL,
-        method: "post",
+        method: POST,
         data: state,
         params: {
           token,
@@ -81,9 +90,9 @@ const NewPasswordContainer = () => {
         console.log(token);
         const axiosConfig = {
           url: NEW_PASSWORD_VERIFY_URL,
-          method: "get",
+          method: GET,
           headers: {
-            "access-token": token,
+            ACCESS_TOKEN: token,
           },
         };
         const errorFunction = () => navigate(FORGET_PASSWORD_PATH);

@@ -1,25 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { lSClear } from "../../utils/lSFunction";
+import { USER_INFO, USER_INFORMATION } from "../../utils/constants";
 
 const initialState = {
   isLogin: false,
-  userInfo: {},
+  [USER_INFO]: {},
 };
 const userInfoSlice = createSlice({
-  name: "userInformation",
+  name: [USER_INFORMATION],
   initialState: initialState,
   reducers: {
     loginSuccess: (state, action) => {
       state.isLogin = true;
-      state.userInfo = action.payload.userInfo;
+      state[USER_INFO] = action.payload[USER_INFO];
     },
     logOutSuccess: (state) => {
       state.isLogin = false;
-      state.userInfo = {};
+      state[USER_INFO] = {};
       lSClear();
     },
     addUserInfo: (state, action) => {
-      state.userInfo = { ...state.userInfo, ...action.payload };
+      state[USER_INFO] = { ...state[USER_INFO], ...action.payload };
     },
   },
 });

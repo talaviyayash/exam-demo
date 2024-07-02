@@ -8,14 +8,14 @@ import {
 import { useEffect, useState } from "react";
 import { logOutSuccess } from "../redux/slice/userInfoSlice";
 import { useNavigate } from "react-router-dom";
-import { SIGN_IN_PATH } from "../utils/constants";
+import { SIGN_IN_PATH, USER_INFO, USER_INFORMATION } from "../utils/constants";
 import { toastError, toastSuccess } from "../utils/toastFunction";
 
 const useApi = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [controller, setController] = useState([]);
-  const { token } = useSelector((state) => state.userInformation.userInfo);
+  const { token } = useSelector((state) => state[USER_INFORMATION][USER_INFO]);
   useEffect(() => {
     return () => {
       let controllerInArray = controller;
@@ -48,7 +48,7 @@ const useApi = () => {
     });
     dispatch(addLoadingState({ name: loadingStatuesName }));
     axiosConfig.headers = {
-      "access-token": addAccessToken ? token : undefined,
+      ACCESS_TOKEN: addAccessToken ? token : undefined,
       ...(axiosConfig.headers ?? {}),
     };
     const response = await callApi({

@@ -4,17 +4,17 @@ import {
   signInForm as configArray,
 } from "../../description/form/signin.description";
 import DDFormContainer from "../form/ddform.container";
-import { SIGNIN_URL } from "../../description/api.description";
+import { POST, SIGNIN_URL } from "../../description/api.description";
 import { useSelector } from "react-redux";
 import { loginSuccess } from "../../redux/slice/userInfoSlice";
-import { PROFILE_PATH } from "../../utils/constants";
+import { API_STATE, PROFILE_PATH, USER_INFO } from "../../utils/constants";
 import { lSSetItem } from "../../utils/lSFunction";
 import useAllHook from "../../hook/useAllHook";
 
 const SignInContainer = () => {
   const { apiCaller, navigate, dispatch } = useAllHook();
   const { isLoading: isSigningIn } =
-    useSelector((state) => state?.apiState?.[SIGNIN_STATE_LOADING]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[SIGNIN_STATE_LOADING]) ?? {};
 
   const {
     handelChangeType,
@@ -32,13 +32,13 @@ const SignInContainer = () => {
     if (allFieldValid) {
       const axiosConfig = {
         url: SIGNIN_URL,
-        method: "post",
+        method: POST,
         data: state,
       };
       const successFunction = (response) => {
         navigate(PROFILE_PATH);
-        dispatch(loginSuccess({ userInfo: response.data }));
-        lSSetItem("userInfo", response.data);
+        dispatch(loginSuccess({ [USER_INFO]: response.data }));
+        lSSetItem(USER_INFO, response.data);
       };
       await apiCaller({
         axiosConfig,

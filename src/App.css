@@ -200,5 +200,5 @@ td {
 }
 
 .css-11xur9t-MuiPaper-root-MuiTableContainer-root {
-  width: 1000px !important;
+  max-width: 1000px !important;
 }

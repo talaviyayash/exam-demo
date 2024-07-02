@@ -7,7 +7,12 @@ import {
   UPDATE_EXAM_STATE,
 } from "../../../description/form/editExam.description";
 import { useEffect } from "react";
-import { EMPTY_STRING } from "../../../description/globel.description";
+import {
+  ANSWER_ERROR_MSG,
+  EMPTY_STRING,
+  OPTION_CUSTOM_ERROR_MSG,
+  QUESTION_CUSTOM_ERROR_MSG,
+} from "../../../description/globel.description";
 import {
   addError,
   addValue,
@@ -17,13 +22,14 @@ import {
 import {
   EDIT_EXAM_URL,
   EDIT_GET_EXAM_URL,
+  GET,
 } from "../../../description/api.description";
 import {
   addAllState,
   addQuestion,
   whereToAddUpdate,
 } from "../../../redux/slice/examSlice";
-import { PROFILE_PATH } from "../../../utils/constants";
+import { API_STATE, PROFILE_PATH } from "../../../utils/constants";
 import {
   createExamForm as configArray,
   totalOption,
@@ -37,9 +43,9 @@ const EditExamContainer = () => {
   const examState = useSelector((state) => state.exam);
   const { questions: allQuestion, whereToAdd, subjectName } = examState;
   const { isLoading } =
-    useSelector((state) => state?.apiState?.[LOADING_EXAM_DATA]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[LOADING_EXAM_DATA]) ?? {};
   const { isLoading: isSubmitting } =
-    useSelector((state) => state?.apiState?.[UPDATE_EXAM_STATE]) ?? {};
+    useSelector((state) => state?.[API_STATE]?.[UPDATE_EXAM_STATE]) ?? {};
 
   const sameQuestionValidation = (allValue) => {
     const { question: currentQuestion } = allValue;
@@ -56,7 +62,7 @@ const EditExamContainer = () => {
       (indexOfArray.includes(whereToAdd) && filterQuestion.length > 1) ||
       (!indexOfArray.includes(whereToAdd) && filterQuestion.length > 0);
 
-    return questionIsSame ? "Question cannot be same." : EMPTY_STRING;
+    return questionIsSame ? QUESTION_CUSTOM_ERROR_MSG : EMPTY_STRING;
   };
 
   const validateAllOption = (allValue, name) => {
@@ -65,7 +71,7 @@ const EditExamContainer = () => {
       allOptionValue.push(allValue?.[`options${i}`]);
     }
 
-    const optionErrorMsg = "All options must be different";
+    const optionErrorMsg = OPTION_CUSTOM_ERROR_MSG;
 
     const isAnySame = (compareOptionsValue) =>
       allOptionValue.filter((val) => {
@@ -100,8 +106,8 @@ const EditExamContainer = () => {
     const { answer } = allValue;
     console.log(answer);
     if (!answer) {
-      toastError("Please Select Answer.");
-      return "Please Select Answer.";
+      toastError(ANSWER_ERROR_MSG);
+      return ANSWER_ERROR_MSG;
     }
     return EMPTY_STRING;
   };
@@ -159,7 +165,7 @@ const EditExamContainer = () => {
       };
       const axiosConfig = {
         url: EDIT_GET_EXAM_URL,
-        method: "get",
+        method: GET,
         params: {
           id,
         },

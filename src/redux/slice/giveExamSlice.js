@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { GIVE_EXAM } from "../../utils/constants";
 
 const initialState = {
   questions: [],
@@ -7,7 +8,7 @@ const initialState = {
 };
 
 const giveExamSlice = createSlice({
-  name: "giveExam",
+  name: GIVE_EXAM,
   initialState: initialState,
   reducers: {
     addQuestion: (state, action) => {

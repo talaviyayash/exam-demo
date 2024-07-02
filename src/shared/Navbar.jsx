@@ -23,10 +23,11 @@ import {
   TEACHER,
 } from "../description/globel.description";
 import { useSelector } from "react-redux";
+import { USER_INFORMATION } from "../utils/constants";
 
 const Navbar = () => {
   let pages = notLoginShowArray;
-  const { isLogin, userInfo } = useSelector((state) => state.userInformation);
+  const { isLogin, userInfo } = useSelector((state) => state[USER_INFORMATION]);
   if (!isLogin) pages = notLoginShowArray;
   if (isLogin) {
     if (userInfo.role === TEACHER) pages = forTeacherShowArray;

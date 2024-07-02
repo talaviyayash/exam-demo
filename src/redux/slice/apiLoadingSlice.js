@@ -1,9 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { API_STATE } from "../../utils/constants";
 
 const initialState = {};
 
 const apiLoadingSlice = createSlice({
-  name: "apiState",
+  name: API_STATE,
   initialState: initialState,
   reducers: {
     addLoadingState: (state, action) => {
