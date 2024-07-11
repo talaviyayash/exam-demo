@@ -23,20 +23,24 @@ const OneStudentInDetail = () => {
   }
   return (
     <>
-      <div className="stud-info-container">
-        <div>Name :- {studentInfo?.name}</div>
-        <div>Email :- {studentInfo?.email}</div>
+      <div className="table-container-wrapper">
+        <div className="table-container" style={{ flex: "none" }}>
+          {/* <div className="stud-info-container"> */}
+          <div className="text-center">Name :- {studentInfo?.name}</div>
+          <div className="text-center">Email :- {studentInfo?.email}</div>
 
-        {studentInfo?.Result?.length > 0 ? (
-          <EDTabel
-            headerArray={studentHeaderArray}
-            data={studentInfo?.Result}
-          />
-        ) : (
-          <>
-            <NotFound text={"No Result found"} />
-          </>
-        )}
+          {studentInfo?.Result?.length > 0 ? (
+            <EDTabel
+              headerArray={studentHeaderArray}
+              data={studentInfo?.Result}
+            />
+          ) : (
+            <>
+              <NotFound text={"No Result found"} />
+            </>
+          )}
+          {/* </div> */}
+        </div>
       </div>
     </>
   );

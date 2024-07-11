@@ -86,7 +86,7 @@ const EDTabel = ({
 
   return (
     <>
-      <div style={{ width: "1000px", justifyContent: "end", display: "flex" }}>
+      <div style={{ width: "100%", justifyContent: "end", display: "flex" }}>
         <EDInput
           value={searchValue}
           label="Search"
@@ -94,70 +94,68 @@ const EDTabel = ({
           onChange={handelSearch}
         />
       </div>
-      <div style={{ height: "366px" }}>
-        <TableContainer
-          component={Paper}
-          sx={{ width: "1000px !important", maxHeight: "366px" }}
+
+      {/* <div style={{ height: "366px" }}> */}
+      <TableContainer
+        component={Paper}
+        sx={{ width: "100%", maxHeight: "400px" }}
+      >
+        <Table
+          sx={
+            {
+              // minWidth: 650,
+            }
+          }
+          aria-label="simple table"
         >
-          <Table
-            sx={{
-              minWidth: 650,
-            }}
-            aria-label="simple table"
-          >
-            <TableHead>
-              <TableRow>
-                {headerArray.map(({ name, align = "left" }, index) => (
+          <TableHead>
+            <TableRow>
+              {headerArray.map(({ name, align = "left" }, index) => (
+                <TableCell key={index} align={align}>
+                  {name}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {dataToShow.map((row, parentIndex) => (
+              <TableRow
+                key={parentIndex}
+                sx={{
+                  "&:last-child td, &:last-child th": { border: 0 },
+                }}
+                height={20}
+              >
+                {headerArray.map(({ key, isAction, align = "left" }, index) => (
                   <TableCell key={index} align={align}>
-                    {name}
+                    {isAction
+                      ? actionObj[key]?.map(({ Component, onClick }, index) => (
+                          <Component
+                            key={index}
+                            onClick={() => onClick(row, parentIndex)}
+                            row={row}
+                          />
+                        ))
+                      : row[key]}
                   </TableCell>
                 ))}
               </TableRow>
-            </TableHead>
-            <TableBody>
-              {dataToShow.map((row, parentIndex) => (
-                <TableRow
-                  key={parentIndex}
-                  sx={{
-                    "&:last-child td, &:last-child th": { border: 0 },
-                  }}
-                  height={20}
-                >
-                  {headerArray.map(
-                    ({ key, isAction, align = "left" }, index) => (
-                      <TableCell key={index} align={align}>
-                        {isAction
-                          ? actionObj[key]?.map(
-                              ({ Component, onClick }, index) => (
-                                <Component
-                                  key={index}
-                                  onClick={() => onClick(row, parentIndex)}
-                                  row={row}
-                                />
-                              )
-                            )
-                          : row[key]}
-                      </TableCell>
-                    )
-                  )}
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        {formateData.length === 0 && (
-          <div
-            style={{
-              textAlign: "center",
-              margin: "50px 0 0 0",
-              fontSize: "25px",
-            }}
-          >
-            No Result Found.
-          </div>
-        )}
-      </div>
-
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      {formateData.length === 0 && (
+        <div
+          style={{
+            textAlign: "center",
+            margin: "50px 0 0 0",
+            fontSize: "25px",
+          }}
+        >
+          No Result Found.
+        </div>
+      )}
+      {/* </div> */}
       <div className="pagination">
         <SelectOption
           option={rowPerPageArray}

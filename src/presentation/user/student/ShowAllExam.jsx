@@ -47,16 +47,18 @@ const ShowAllExam = () => {
           data={showResult?.result[0]}
         />
       )}
-      <div
-        className="table-container"
-        style={{ display: !showResult.show ? "flex" : "none" }}
-      >
-        <h1> All Exam</h1>
-        <EDTabel
-          headerArray={allExamTableHeader}
-          data={allExam}
-          actionObj={actionObj}
-        />
+      <div className="table-container-wrapper">
+        <div
+          className="table-container"
+          style={{ display: !showResult.show ? "flex" : "none" }}
+        >
+          <h1 className="text-center"> All Exam</h1>
+          <EDTabel
+            headerArray={allExamTableHeader}
+            data={allExam}
+            actionObj={actionObj}
+          />
+        </div>
       </div>
     </>
   );

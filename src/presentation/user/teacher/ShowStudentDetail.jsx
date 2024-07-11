@@ -38,14 +38,16 @@ const ShowStudentDetail = () => {
 
   return (
     <>
-      <div className="table-container">
-        <h1>All Student Detail </h1>
+      <div className="table-container-wrapper">
+        <div className="table-container">
+          <h1 className="text-center">All Student Detail </h1>
 
-        <EDTabel
-          headerArray={studentTableHeaderArray}
-          data={allStudent}
-          actionObj={actionObj}
-        />
+          <EDTabel
+            headerArray={studentTableHeaderArray}
+            data={allStudent}
+            actionObj={actionObj}
+          />
+        </div>
       </div>
     </>
   );

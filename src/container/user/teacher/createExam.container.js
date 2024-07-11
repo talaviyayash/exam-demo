@@ -201,14 +201,14 @@ const CreateExamContainer = () => {
         navigate(VIEW_EXAM_PATH);
         lSRemoveItem("examFormState");
         lSRemoveItem("examState");
-        // dispatch(
-        //   addAllState({
-        //     questions: [],
-        //     subjectName: "",
-        //     whereToAdd: 0,
-        //     notes: [],
-        //   })
-        // );
+        dispatch(
+          addAllState({
+            questions: [],
+            subjectName: "",
+            whereToAdd: 0,
+            notes: [],
+          })
+        );
       };
       await apiCaller({
         axiosConfig,

@@ -37,18 +37,20 @@ const ShowExam = () => {
   };
   return (
     <>
-      <div className="table-container">
-        <h1>Exam</h1>
-        <EDTabel
-          headerArray={tableHeaderArray}
-          data={allExam}
-          actionObj={actionObj}
-          rowPerPageArray={rowPerPageArray}
-        />
+      <div className="table-container-wrapper">
+        <div className="table-container">
+          <h1 className="text-center">Exam</h1>
+          <EDTabel
+            headerArray={tableHeaderArray}
+            data={allExam}
+            actionObj={actionObj}
+            rowPerPageArray={rowPerPageArray}
+          />
+        </div>
+        {allExam.length === 0 && (
+          <h2 style={{ textAlign: "center" }}>There is no exam.</h2>
+        )}
       </div>
-      {allExam.length === 0 && (
-        <h2 style={{ textAlign: "center" }}>There is no exam.</h2>
-      )}
     </>
   );
 };
