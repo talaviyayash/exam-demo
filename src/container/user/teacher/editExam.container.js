@@ -148,7 +148,7 @@ const EditExamContainer = () => {
             note: notes[index] ?? "",
           };
         });
-        console.log(formatArray);
+
         const objectToDispatch = {
           questions: formatArray,
           subjectName: subject,

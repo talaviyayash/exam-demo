@@ -40,7 +40,7 @@ const ShowStudentDetail = () => {
     <>
       <div className="table-container">
         <h1>All Student Detail </h1>
-        {console.log(allStudent)}
+
         <EDTabel
           headerArray={studentTableHeaderArray}
           data={allStudent}

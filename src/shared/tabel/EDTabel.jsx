@@ -84,7 +84,6 @@ const EDTabel = ({
       ? `${page * rowPerPage - rowPerPage + 1} - ${lengthOfFormateData}`
       : `${page * rowPerPage - rowPerPage + 1} - ${page * rowPerPage}`;
 
-  console.log(page);
   return (
     <>
       <div style={{ width: "1000px", justifyContent: "end", display: "flex" }}>
