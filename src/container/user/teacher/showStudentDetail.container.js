@@ -12,7 +12,8 @@ const ShowStudentDetailContainer = () => {
   } = useSelector((state) => state?.apiState?.[GET_STUDENT_LOADING_NAME]) ?? {};
   const { apiCaller, navigate } = useAllHook();
 
-  const navigateToStudentInDetail = (id) => navigate(`/student-detail/${id}`);
+  const navigateToStudentInDetail = ({ _id }) =>
+    navigate(`/student-detail/${_id}`);
 
   useEffect(() => {
     const getAllStudentData = async () => {
@@ -28,7 +29,7 @@ const ShowStudentDetailContainer = () => {
         apiHasToCancel: true,
       });
     };
-    getAllStudentData();
+    if (allStudent.length === 0) getAllStudentData();
   }, []);
 
   return {

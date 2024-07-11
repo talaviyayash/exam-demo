@@ -55,7 +55,6 @@ const useApi = () => {
       ...axiosConfig,
       signal: newController.signal,
     });
-
     if (response) {
       if (response.statusCode === 200) {
         dispatch(
@@ -70,13 +69,12 @@ const useApi = () => {
           dispatch(logOutSuccess());
           toastError(errorToastMsg || response.message);
           navigate(SIGN_IN_PATH);
-        } else {
-          if (showToast) toastError(response.message);
-        }
+        } else if (showToast) toastError(response.message);
         if (errorFunction) errorFunction(response);
         return { ...response, isError: true, isApiCancelled: false };
       }
     }
+    dispatch(addErrorState({ name: loadingStatuesName }));
     return {
       isApiCancelled: true,
     };

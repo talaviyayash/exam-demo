@@ -78,7 +78,6 @@ const NewPasswordContainer = () => {
   useEffect(() => {
     if (token) {
       const verifyToken = async () => {
-        console.log(token);
         const axiosConfig = {
           url: NEW_PASSWORD_VERIFY_URL,
           method: "get",

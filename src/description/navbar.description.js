@@ -11,10 +11,10 @@ import {
 
 export const notLoginShowArray = {
   leftSide: [
-    {
-      name: "Home",
-      routingPath: HOME_PATH,
-    },
+    // {
+    //   name: "Home",
+    //   routingPath: HOME_PATH,
+    // },
   ],
   rightSide: [
     {
@@ -57,10 +57,10 @@ export const forTeacherShowArray = {
 
 export const forStudentShowArray = {
   leftSide: [
-    {
-      name: "Home",
-      routingPath: HOME_PATH,
-    },
+    // {
+    //   name: "Home",
+    //   routingPath: HOME_PATH,
+    // },
     {
       name: "Show All Exam",
       routingPath: SHOW_EXAM_FOR_STUDENT,

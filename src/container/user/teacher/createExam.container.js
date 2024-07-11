@@ -23,7 +23,7 @@ import {
   EXAM_STATE,
 } from "../../../description/globel.description";
 import { CREATE_EXAM_URL } from "../../../description/api.description";
-import { PROFILE_PATH } from "../../../utils/constants";
+import { VIEW_EXAM_PATH } from "../../../utils/constants";
 import { useEffect } from "react";
 import { toastError } from "../../../utils/toastFunction";
 import { lSGetItem, lSRemoveItem, lSSetItem } from "../../../utils/lSFunction";
@@ -111,7 +111,6 @@ const CreateExamContainer = () => {
     customValidation: {
       question: sameQuestionValidation,
       ...allOptionValidationInObj(),
-      // answer: validateAnswer,
     },
   });
 
@@ -190,15 +189,26 @@ const CreateExamContainer = () => {
         }
       );
       apiFormateData = { subjectName: state.subject, ...apiFormateData };
+      if (apiFormateData.notes.length === 0) {
+        return toastError("Please at least add one note");
+      }
       const axiosConfig = {
         url: CREATE_EXAM_URL,
         method: "post",
         data: apiFormateData,
       };
       const successFunction = () => {
-        navigate(PROFILE_PATH);
+        navigate(VIEW_EXAM_PATH);
         lSRemoveItem("examFormState");
         lSRemoveItem("examState");
+        // dispatch(
+        //   addAllState({
+        //     questions: [],
+        //     subjectName: "",
+        //     whereToAdd: 0,
+        //     notes: [],
+        //   })
+        // );
       };
       await apiCaller({
         axiosConfig,

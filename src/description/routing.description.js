@@ -19,6 +19,7 @@ import ProtectedRoute from "../router/ProtectedRoute";
 import StudentRoute from "../router/StudentRoute";
 import TeacherRoute from "../router/TeacherRoute";
 import Navbar from "../shared/Navbar";
+import PageNotFound from "../shared/PageNotFound";
 
 import {
   CREATE_EXAM_PATH,
@@ -40,7 +41,6 @@ import {
 
 export const routingArray = [
   {
-    path: "/",
     element: <Navbar />,
     children: [
       {
@@ -127,6 +127,10 @@ export const routingArray = [
             ],
           },
         ],
+      },
+      {
+        path: "/*",
+        element: <PageNotFound />,
       },
     ],
   },

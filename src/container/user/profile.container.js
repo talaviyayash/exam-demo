@@ -1,5 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 import {
   RESET_PASSWORD_PATH,
   EDIT_PROFILE_PATH,

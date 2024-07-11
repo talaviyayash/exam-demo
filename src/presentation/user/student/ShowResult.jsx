@@ -1,7 +1,7 @@
 import React from "react";
 import EDButton from "../../../shared/button/EDButton";
 
-const ShowResult = ({ data, setShowResult }) => {
+const ShowResult = ({ data, setShowResult, show }) => {
   const goToMainPage = () => setShowResult({ show: false });
   return (
     <>

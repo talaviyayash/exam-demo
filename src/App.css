@@ -99,8 +99,14 @@ a {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 50px;
-  margin-top: 50px;
+  gap: 30px;
+  border: 2px solid black;
+  padding: 20px;
+  margin: 50px 50px 0 50px;
+  border-radius: 20px;
+}
+.table-container > div > table > tbody > tr {
+  height: 20px;
 }
 
 .give-exam-container {
@@ -143,6 +149,55 @@ td {
   font-size: 30px;
 }
 
+.exam-form {
+  display: grid;
+  grid-template-columns: 70px 400px;
+  justify-content: center;
+  align-items: center;
+  row-gap: 10px;
+}
+
+.give-exam-button {
+  grid-template-columns: 1fr 1fr !important;
+}
+
+.btn-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 100%;
+  justify-items: center;
+  width: 450px;
+}
+
+.btn-all {
+  width: 80px;
+  height: 40px;
+  font-size: 18px;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-content: end;
+  gap: 20px;
+  width: 1000px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.search-input {
+  width: 20px;
+}
+
+.deactivate {
+  color: #c1c1c1;
+}
+
+.active {
+  color: black;
+}
+
 @media screen and (max-width: 550px) {
   .exam-form {
     display: grid;
@@ -175,30 +230,4 @@ td {
   .simple-style-form {
     width: 250px;
   }
-}
-
-.exam-form {
-  display: grid;
-  grid-template-columns: 70px 400px;
-  justify-content: center;
-  align-items: center;
-  row-gap: 30px;
-}
-
-.btn-container {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  width: 100%;
-  justify-items: center;
-  width: 450px;
-}
-
-.btn-all {
-  width: 80px;
-  height: 40px;
-  font-size: 18px;
-}
-
-.css-11xur9t-MuiPaper-root-MuiTableContainer-root {
-  width: 1000px !important;
 }

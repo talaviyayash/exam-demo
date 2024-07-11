@@ -19,7 +19,7 @@ import {
   SUBMITTING_EXAM_LOADING,
 } from "../../../description/student/giveExam.description";
 import { toastError } from "../../../utils/toastFunction";
-import { lSGetItem, lSSetItem } from "../../../utils/lSFunction";
+import { lSGetItem, lSRemoveItem, lSSetItem } from "../../../utils/lSFunction";
 import useAllHook from "../../../hook/useAllHook";
 
 const GiveExamContainer = () => {
@@ -27,6 +27,8 @@ const GiveExamContainer = () => {
   const [decodedSubject] = useState(atob(subject));
   const { isLoading = true } =
     useSelector((state) => state?.apiState?.[GET_EXAM_LOADING]) ?? {};
+  const { isLoading: isSubmitting = true } =
+    useSelector((state) => state?.apiState?.[GET_EXAM_PAPER_URL]) ?? {};
   const { isLoading: isSubmittingExam = false } =
     useSelector((state) => state?.apiState?.[SUBMITTING_EXAM_LOADING]) ?? {};
   const [currentAnswer, setCurrentAnswer] = useState(EMPTY_STRING);
@@ -85,6 +87,11 @@ const GiveExamContainer = () => {
     });
   };
 
+  const handelCancel = () => {
+    navigate(SHOW_EXAM_FOR_STUDENT);
+    lSRemoveItem("giveExam");
+  };
+
   useEffect(() => {
     dispatch(resetGiveExamState());
     const localStorageData = lSGetItem("giveExam") ?? {};
@@ -107,7 +114,7 @@ const GiveExamContainer = () => {
                 whereToAdd: localStorageData.whereToAdd ?? 0,
               })
             );
-            if (localStorageData?.answer.length > 0)
+            if (localStorageData?.answer?.length > 0)
               setCurrentAnswer(localStorageData.answer[whereToAdd].answer);
           } else {
             lSSetItem("giveExam", { id: id, answer: [] });
@@ -143,6 +150,8 @@ const GiveExamContainer = () => {
     });
   }, [answerOfQuestion, whereToAdd]);
 
+  useEffect(() => {});
+
   return {
     decodedSubject,
     isLoading,
@@ -156,7 +165,9 @@ const GiveExamContainer = () => {
     handelPrev,
     totalQuestion: questions.length,
     handelSubmit,
-    isSubmittingExma: isSubmittingExam,
+    isSubmittingExam: isSubmittingExam,
+    isSubmitting,
+    handelCancel,
   };
 };
 

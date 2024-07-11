@@ -4,6 +4,7 @@ import Loading from "../../../shared/Loading";
 import GiveExamRadioButton from "../../../shared/exam/GiveaExamRadioButton";
 import EDLoading from "../../../shared/button/EDLoading";
 import {
+  ATTRIBUTE_CANCEL_BUTTON,
   ATTRIBUTE_NEXT_BUTTON,
   ATTRIBUTE_PREV_BUTTON,
   ATTRIBUTE_SUBMIT_BUTTON,
@@ -14,7 +15,7 @@ const GiveExam = () => {
     decodedSubject,
     isLoading,
     whereToAdd,
-    currentQuestion,
+    currentQuestion = [],
     currentAnswer,
     handelOption,
     handelNext,
@@ -22,7 +23,9 @@ const GiveExam = () => {
     handelSubmit,
     totalQuestion,
     isSubmittingExam,
+    handelCancel,
   } = GiveExamContainer();
+
   if (isLoading) return <Loading />;
 
   return (
@@ -36,7 +39,7 @@ const GiveExam = () => {
         </div>
         <div className="question-container">
           <div> No :- {whereToAdd + 1}</div>
-          {currentQuestion?.options.map((value, index) => {
+          {currentQuestion?.options?.map((value, index) => {
             return (
               <GiveExamRadioButton
                 value={currentAnswer}
@@ -65,6 +68,11 @@ const GiveExam = () => {
             disabled={!(whereToAdd < totalQuestion - 1)}
           />
         </div>
+        <EDLoading
+          {...ATTRIBUTE_CANCEL_BUTTON}
+          onClick={handelCancel}
+          disabled={isSubmittingExam}
+        />
       </div>
     </>
   );

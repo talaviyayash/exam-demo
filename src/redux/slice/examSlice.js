@@ -22,10 +22,11 @@ const examSlice = createSlice({
       state.subjectName = subject;
     },
     addAllState: (state, action) => {
-      const { questions, subjectName, whereToAdd } = action.payload;
+      const { questions, subjectName, whereToAdd, notes } = action.payload;
       state.subjectName = subjectName;
       state.questions = questions;
       state.whereToAdd = whereToAdd;
+      state.notes = notes || state.notes;
     },
     whereToAddUpdate: (state, action) => {
       state.whereToAdd = action.payload.whereToAdd;

@@ -7,7 +7,7 @@ import useAllHook from "../../../hook/useAllHook";
 const ShowAllExamContainer = () => {
   const [showResult, setShowResult] = useState({ show: false });
   const { apiCaller, navigate } = useAllHook();
-  const { isLoading = true, data: allExam } =
+  const { isLoading = true, data: allExam = [] } =
     useSelector((state) => state?.apiState?.[GET_EXAM_LOADING]) ?? {};
 
   const redirectToGiveExam = (subject, id) => {

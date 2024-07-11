@@ -8,7 +8,7 @@ import { lSGetItem } from "../utils/lSFunction";
 
 const Routing = () => {
   const router = createBrowserRouter(routingArray);
-  const userInfo = lSGetItem("userInfo");
+  const userInfo = lSGetItem("userInfo") ?? {};
   const dispatch = useDispatch();
   const [isRenderRoute, setIsRenderRoute] = useState(false);
 

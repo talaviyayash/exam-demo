@@ -40,23 +40,20 @@ const ViewExamInDetail = () => {
             );
           })}
         </div>
-        <div>
-          {currentIndex + 1 === TOTAL_NUMBER_OF_QUESTION || (
-            <EDButton
-              {...ATTRIBUTE_NEXT_BUTTON}
-              onClick={nextButtonClickHandel}
-            />
-          )}
-          {currentIndex === 0 || (
-            <>
-              <br />
-              <br />
-              <EDButton
-                {...ATTRIBUTE_PREV_BUTTON}
-                onClick={prevButtonClickHandel}
-              />
-            </>
-          )}
+        <div
+          className="btn-container"
+          style={{ gridTemplateColumns: "1fr 1fr", width: "300px" }}
+        >
+          <EDButton
+            {...ATTRIBUTE_PREV_BUTTON}
+            onClick={prevButtonClickHandel}
+            disabled={currentIndex === 0}
+          />
+          <EDButton
+            {...ATTRIBUTE_NEXT_BUTTON}
+            onClick={nextButtonClickHandel}
+            disabled={currentIndex + 1 === TOTAL_NUMBER_OF_QUESTION}
+          />
         </div>
       </div>
     </>

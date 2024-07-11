@@ -23,13 +23,14 @@ import {
   addQuestion,
   whereToAddUpdate,
 } from "../../../redux/slice/examSlice";
-import { PROFILE_PATH } from "../../../utils/constants";
+import { VIEW_EXAM_PATH } from "../../../utils/constants";
 import {
   createExamForm as configArray,
   totalOption,
 } from "../../../description/form/createExam.description";
 import { toastError } from "../../../utils/toastFunction";
 import useAllHook from "../../../hook/useAllHook";
+import { lSGetItem, lSRemoveItem } from "../../../utils/lSFunction";
 
 const EditExamContainer = () => {
   const { apiCaller, navigate, dispatch } = useAllHook();
@@ -98,7 +99,6 @@ const EditExamContainer = () => {
   };
   const validateAnswer = (allValue) => {
     const { answer } = allValue;
-    console.log(answer);
     if (!answer) {
       toastError("Please Select Answer.");
       return "Please Select Answer.";
@@ -125,6 +125,8 @@ const EditExamContainer = () => {
     const getExamDetail = async () => {
       const successFunction = (response) => {
         const { questions } = response.data;
+        let { _id, notes } = lSGetItem("notes") ?? [];
+        if (id !== _id) notes = [];
         const formatArray = questions.map((value, index) => {
           const { options, answer } = value;
           let answerForOption;
@@ -138,13 +140,15 @@ const EditExamContainer = () => {
               [optionKey]: element,
             };
           }, {});
+
           return {
             question: value.question,
             answer: answerForOption,
             ...formatOption,
+            note: notes[index] ?? "",
           };
         });
-
+        console.log(formatArray);
         const objectToDispatch = {
           questions: formatArray,
           subjectName: subject,
@@ -187,7 +191,7 @@ const EditExamContainer = () => {
         dispatch(
           addValue({
             name: EDIT_EXAM_FORM_NAME,
-            value: { ...allQuestion[whereToAdd + 1], note: "" },
+            value: { ...allQuestion[whereToAdd + 1] },
           })
         );
       } else {
@@ -264,7 +268,10 @@ const EditExamContainer = () => {
           id,
         },
       };
-      const successFunction = () => navigate(PROFILE_PATH);
+      const successFunction = () => {
+        navigate(VIEW_EXAM_PATH);
+        lSRemoveItem("notes");
+      };
       await apiCaller({
         axiosConfig,
         loadingStatuesName: UPDATE_EXAM_STATE,

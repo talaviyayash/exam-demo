@@ -10,6 +10,7 @@ import { loginSuccess } from "../../redux/slice/userInfoSlice";
 import { PROFILE_PATH } from "../../utils/constants";
 import { lSSetItem } from "../../utils/lSFunction";
 import useAllHook from "../../hook/useAllHook";
+import { toastError } from "../../utils/toastFunction";
 
 const SignInContainer = () => {
   const { apiCaller, navigate, dispatch } = useAllHook();
@@ -40,11 +41,17 @@ const SignInContainer = () => {
         dispatch(loginSuccess({ userInfo: response.data }));
         lSSetItem("userInfo", response.data);
       };
+      const errorFunction = (response) => {
+        if (response?.data?.statusCode === 400) {
+          toastError("Password or Email is incorrect.");
+        }
+      };
       await apiCaller({
         axiosConfig,
         loadingStatuesName: SIGNIN_STATE_LOADING,
         apiHasToCancel: true,
         successFunction,
+        errorFunction,
         showToast: true,
         addAccessToken: false,
       });
